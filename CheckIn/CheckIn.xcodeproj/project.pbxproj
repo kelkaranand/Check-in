@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB0FCF20337C6E00D3C1BB /* AppDelegate.swift */; };
-		B1AB0FD220337C6E00D3C1BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB0FD120337C6E00D3C1BB /* ViewController.swift */; };
+		B1AB0FD220337C6E00D3C1BB /* StudnetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB0FD120337C6E00D3C1BB /* StudnetTableViewController.swift */; };
 		B1AB0FD520337C6E00D3C1BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1AB0FD320337C6E00D3C1BB /* Main.storyboard */; };
 		B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1AB0FD620337C6E00D3C1BB /* CheckIn.xcdatamodeld */; };
 		B1AB0FDA20337C6E00D3C1BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1AB0FD920337C6E00D3C1BB /* Assets.xcassets */; };
@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		B1AB0FCC20337C6E00D3C1BB /* CheckIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1AB0FCF20337C6E00D3C1BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B1AB0FD120337C6E00D3C1BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B1AB0FD120337C6E00D3C1BB /* StudnetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudnetTableViewController.swift; sourceTree = "<group>"; };
 		B1AB0FD420337C6E00D3C1BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B1AB0FD720337C6E00D3C1BB /* CheckIn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CheckIn.xcdatamodel; sourceTree = "<group>"; };
 		B1AB0FD920337C6E00D3C1BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				B1AB0FCF20337C6E00D3C1BB /* AppDelegate.swift */,
-				B1AB0FD120337C6E00D3C1BB /* ViewController.swift */,
+				B1AB0FD120337C6E00D3C1BB /* StudnetTableViewController.swift */,
 				B1AB0FD320337C6E00D3C1BB /* Main.storyboard */,
 				B1AB0FD920337C6E00D3C1BB /* Assets.xcassets */,
 				B1AB0FDB20337C6E00D3C1BB /* LaunchScreen.storyboard */,
@@ -262,7 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1AB0FD220337C6E00D3C1BB /* ViewController.swift in Sources */,
+				B1AB0FD220337C6E00D3C1BB /* StudnetTableViewController.swift in Sources */,
 				B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */,
 				B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */,
 			);
