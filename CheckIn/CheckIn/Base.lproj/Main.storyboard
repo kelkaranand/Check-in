@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C6h-8W-go5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKV-Yg-M4s">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -86,12 +86,27 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="476" y="133.5832083958021"/>
+            <point key="canvasLocation" x="-810" y="2091"/>
+        </scene>
+        <!--Settings Controller-->
+        <scene sceneID="2YZ-TK-yyR">
+            <objects>
+                <viewController storyboardIdentifier="Settings" id="OZH-sd-a1b" customClass="SettingsController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8sw-vB-7Fc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.016229599059999999" green="0.01755054834" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="iXe-bh-A2i"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GTv-kw-3pj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="175" y="1263"/>
         </scene>
         <!--Scanner Controller-->
         <scene sceneID="VN2-8f-kpv">
             <objects>
-                <viewController id="C6h-8W-go5" customClass="QRScannerController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QR" id="C6h-8W-go5" customClass="QRScannerController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1fZ-Dt-aQR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,12 +128,20 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MBX-Gw-tpx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-306.39999999999998" y="887.40629685157433"/>
+            <point key="canvasLocation" x="-1737" y="1263"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="wkT-uO-stg">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="LKV-Yg-M4s" customClass="PageViewController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Si-DO-DUv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-810" y="291"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GHq-q8-iWU">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XHX-gk-P66" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Search" automaticallyAdjustsScrollViewInsets="NO" id="XHX-gk-P66" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jrx-2c-JWl">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -131,7 +154,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ajr-Lg-LrO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-342" y="134"/>
+            <point key="canvasLocation" x="-810" y="1263"/>
         </scene>
     </scenes>
 </document>
