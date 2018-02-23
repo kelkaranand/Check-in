@@ -131,6 +131,30 @@ class StudentTableViewController: UIViewController {
         }
     }
     
+    func checkInStudent(studentId: String, numGuests: Int16){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        var filteredStudent: [NSManagedObject] = []
+        filteredStudent = students.filter({( student: NSManagedObject) -> Bool in
+            let id = student.value(forKey: "studentId") as! String
+            return id.elementsEqual(studentId)
+        })
+        
+        filteredStudent.first?.setValue(numGuests, forKey: "numGuests")
+        filteredStudent.first?.setValue(true, forKey: "checkedIn")
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("error")
+        }
+        
+    }
+    
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -148,6 +172,31 @@ class StudentTableViewController: UIViewController {
     
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    @IBAction func unwindToStudentList(sender: UIStoryboardSegue){
+        if let sourceViewController = sender.source as? StudentDetailsViewController, let numGuestsInt = sourceViewController.numGuestsInt as? Int16, let studentIdString = sourceViewController.studentIdString as? String {
+            checkInStudent(studentId: studentIdString, numGuests: numGuestsInt)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        super.prepare(for: segue, sender: sender)
+        
+        guard let studentDetailViewController = segue.destination as? StudentDetailsViewController else {
+            fatalError()
+        }
+        
+        guard let selectedStudentCell = sender as? StudentTableViewCell else {
+            fatalError()
+        }
+        
+        guard let indexPath = studentTableView.indexPath(for: selectedStudentCell) else {
+            fatalError()
+        }
+        
+        let selectedStudent = students[indexPath.row]
+        studentDetailViewController.setStudent(student: selectedStudent)
     }
     
 
