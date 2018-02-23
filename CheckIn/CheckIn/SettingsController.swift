@@ -11,5 +11,6 @@ import UIKit
 
 class SettingsController :UIViewController
 {
+    @IBOutlet weak var count: UILabel!
     
 }

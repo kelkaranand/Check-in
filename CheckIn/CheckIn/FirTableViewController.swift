@@ -44,7 +44,7 @@ class FirTableViewController : UITableViewController{
                 var studentRecord = student(fname: fname, lname: lname, media: media, id: id)
                 self.students.append(studentRecord)
                 
-                
+                print(fname)
             }
         })
         

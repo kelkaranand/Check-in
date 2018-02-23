@@ -24,8 +24,9 @@ class StudentDetailsViewController: UIViewController {
     
     
     var student = NSManagedObject()
-    var numGuestsInt: Int16 = 0
-    var studentIdString: String = ""
+    var guests: String = ""
+    var id: String = ""
+    var media: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +50,8 @@ class StudentDetailsViewController: UIViewController {
             guard let button = sender as? UIButton, button === checkInButton else {
                     return
             }
-            numGuestsInt = Int16(numGuestsTextField.text!)!
-            studentIdString = studentId.text!
+            guests = numGuestsTextField.text!
+            id = studentId.text!
             
             return
         }

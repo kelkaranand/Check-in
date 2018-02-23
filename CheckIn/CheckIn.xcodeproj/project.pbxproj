@@ -13,7 +13,6 @@
 		142E12FB20362420009FA335 /* StudentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12FA20362420009FA335 /* StudentDetailsViewController.swift */; };
 		1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1497D14D203DD05D005824EA /* GoogleService-Info.plist */; };
 		14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */; };
-		14B2E9B82040915000A459C3 /* StudentData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B62040915000A459C3 /* StudentData.xcdatamodeld */; };
 		17E2EC6D519EF46F72D8F5D6 /* Pods_CheckInUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */; };
 		2997EEBF262EA3FEDE249A4B /* Pods_CheckIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAED172584136CC47B4A6F3 /* Pods_CheckIn.framework */; };
 		2D90C33BFC472DB098E42765 /* Pods_CheckInTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD76409DB730BB6B87928BBD /* Pods_CheckInTests.framework */; };
@@ -53,7 +52,6 @@
 		142E12FA20362420009FA335 /* StudentDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDetailsViewController.swift; sourceTree = "<group>"; };
 		1497D14D203DD05D005824EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirTableViewController.swift; sourceTree = "<group>"; };
-		14B2E9B72040915000A459C3 /* StudentData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StudentData.xcdatamodel; sourceTree = "<group>"; };
 		1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.release.xcconfig"; sourceTree = "<group>"; };
 		3C146E9A3B6824943B471C57 /* Pods-CheckIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.debug.xcconfig"; sourceTree = "<group>"; };
 		A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckInUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,7 +154,6 @@
 				142E12F8203619CB009FA335 /* PageViewController.swift */,
 				142E12FA20362420009FA335 /* StudentDetailsViewController.swift */,
 				14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */,
-				14B2E9B62040915000A459C3 /* StudentData.xcdatamodeld */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -489,7 +486,6 @@
 			files = (
 				B1AB0FD220337C6E00D3C1BB /* StudnetTableViewController.swift in Sources */,
 				142E12FB20362420009FA335 /* StudentDetailsViewController.swift in Sources */,
-				14B2E9B82040915000A459C3 /* StudentData.xcdatamodeld in Sources */,
 				142E12F720361826009FA335 /* SettingsController.swift in Sources */,
 				B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */,
 				142E12F9203619CB009FA335 /* PageViewController.swift in Sources */,
@@ -797,16 +793,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		14B2E9B62040915000A459C3 /* StudentData.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				14B2E9B72040915000A459C3 /* StudentData.xcdatamodel */,
-			);
-			currentVersion = 14B2E9B72040915000A459C3 /* StudentData.xcdatamodel */;
-			path = StudentData.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		B1AB0FD620337C6E00D3C1BB /* CheckIn.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

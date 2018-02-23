@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import os.log
+import Firebase
 
 class StudentTableViewCell: UITableViewCell {
     @IBOutlet weak var studentId: UILabel!
@@ -28,8 +29,14 @@ class StudentTableViewController: UIViewController {
     var filteredStudents: [NSManagedObject] = []
     let searchController = UISearchController(searchResultsController: nil)
     
+    var ref: DatabaseReference!
+    //var students=[student]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        clearCoreData()
+        loadStudentsFromFirebase()
         
         // Setup search controller
         searchController.searchResultsUpdater = self
@@ -59,53 +66,26 @@ class StudentTableViewController: UIViewController {
         }
     }
     
-    //REMOVE WHEN WE HAVE ACTUAL DATA PULL FROM GOOGLE SHEETS!!!!!!
-    @IBAction func addStudent(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "New Student", message: "Add a student", preferredStyle: .alert)
+    func loadStudentsFromFirebase() {
+        ref=Database.database().reference(withPath: "students")
         
-        let saveAction = UIAlertAction(title: "Save", style: .default) {
-            [unowned self] action in
+        ref.observeSingleEvent(of:.value, with: { snapshot in
             
-            guard let textField = alert.textFields?[0],
-                let studentId = textField.text else {
-                    return
+            for data in snapshot.children {
+                var studentData = data as! DataSnapshot
+                var fields = studentData.value as? [String:AnyObject]
+                var fname=fields!["fname"] as! String
+                var lname=fields!["lname"] as! String
+                var media=fields!["media"] as! String
+                var id=fields!["id"] as! String
+                var studentRecord = student(fname: fname, lname: lname, media: media, id: id)
+                //self.students.append(studentRecord)
+                self.save(studentId: id, firstName: fname, lastName: lname, school: "school")
+                
+                print(fname)
             }
-            guard let textField2 = alert.textFields?[1],
-                let firstName = textField2.text else {
-                    return
-            }
-            guard let textField3 = alert.textFields?[2],
-                let lastName = textField3.text else {
-                    return
-            }
-            guard let textField4 = alert.textFields?[3],
-                let school = textField4.text else {
-                    return
-            }
-            
-            self.save(studentId: studentId, firstName: firstName, lastName: lastName, school: school)
             self.studentTableView.reloadData()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
-        
-        alert.addTextField{ (textField) in
-            textField.text = " "
-        }
-        alert.addTextField{ (textField2) in
-            textField2.text = " "
-        }
-        alert.addTextField{ (textField3) in
-            textField3.text = " "
-        }
-        alert.addTextField{ (textField4) in
-            textField4.text = " "
-        }
-        
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true)
+        })
     }
     
     func save(studentId: String, firstName: String, lastName: String, school: String) {
@@ -131,26 +111,43 @@ class StudentTableViewController: UIViewController {
         }
     }
     
-    func checkInStudent(studentId: String, numGuests: Int16){
+    func clearCoreData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else{
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+            for managedObject in results {
+                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
+                managedContext.delete(managedObjectData)
+            }
+        } catch let error as NSError {
+            print(error)
+        }
+    }
+    
+    func checkInStudent(studentId: String, numGuests: String, media: String){
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "CheckedInStudent", in: managedContext)
+        let student = NSManagedObject(entity: entity!, insertInto: managedContext)
         
-        var filteredStudent: [NSManagedObject] = []
-        filteredStudent = students.filter({( student: NSManagedObject) -> Bool in
-            let id = student.value(forKey: "studentId") as! String
-            return id.elementsEqual(studentId)
-        })
-        
-        filteredStudent.first?.setValue(numGuests, forKey: "numGuests")
-        filteredStudent.first?.setValue(true, forKey: "checkedIn")
+        student.setValue(studentId, forKeyPath: "id")
+        student.setValue(numGuests, forKeyPath: "guests")
+        student.setValue(media, forKeyPath: "media")
         
         do {
             try managedContext.save()
+            students.append(student)
         } catch let error as NSError {
-            print("error")
+            print("Could not save")
         }
         
     }
@@ -175,8 +172,8 @@ class StudentTableViewController: UIViewController {
     }
     
     @IBAction func unwindToStudentList(sender: UIStoryboardSegue){
-        if let sourceViewController = sender.source as? StudentDetailsViewController, let numGuestsInt = sourceViewController.numGuestsInt as? Int16, let studentIdString = sourceViewController.studentIdString as? String {
-            checkInStudent(studentId: studentIdString, numGuests: numGuestsInt)
+        if let sourceViewController = sender.source as? StudentDetailsViewController, let guests = sourceViewController.guests as? String, let id = sourceViewController.studentIdString as? String, let media = sourceViewController.media as? String {
+            checkInStudent(studentId: id, numGuests: guests, media: media)
         }
     }
     
