@@ -172,7 +172,7 @@ class StudentTableViewController: UIViewController {
     }
     
     @IBAction func unwindToStudentList(sender: UIStoryboardSegue){
-        if let sourceViewController = sender.source as? StudentDetailsViewController, let guests = sourceViewController.guests as? String, let id = sourceViewController.studentIdString as? String, let media = sourceViewController.media as? String {
+        if let sourceViewController = sender.source as? StudentDetailsViewController, let guests = sourceViewController.guests as? String, let id = sourceViewController.id as? String, let media = sourceViewController.media as? String {
             checkInStudent(studentId: id, numGuests: guests, media: media)
         }
     }
