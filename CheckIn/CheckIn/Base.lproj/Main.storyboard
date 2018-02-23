@@ -74,13 +74,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="2ee-tE-P1I">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="m1g-44-ckH">
-                            <connections>
-                                <action selector="addStudent:" destination="BYZ-38-t0r" id="svR-ef-QAe"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="2ee-tE-P1I"/>
                     <connections>
                         <outlet property="studentTableView" destination="GyM-ZV-zBY" id="j3a-kj-100"/>
                     </connections>
