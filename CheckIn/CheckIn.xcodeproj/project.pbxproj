@@ -10,7 +10,6 @@
 		142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F420360D3A009FA335 /* QRCodeScanner.swift */; };
 		142E12F720361826009FA335 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F620361826009FA335 /* SettingsController.swift */; };
 		142E12F9203619CB009FA335 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F8203619CB009FA335 /* PageViewController.swift */; };
-		142E12FB20362420009FA335 /* StudentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12FA20362420009FA335 /* StudentDetailsViewController.swift */; };
 		1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1497D14D203DD05D005824EA /* GoogleService-Info.plist */; };
 		14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */; };
 		17E2EC6D519EF46F72D8F5D6 /* Pods_CheckInUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */; };
@@ -49,7 +48,6 @@
 		142E12F420360D3A009FA335 /* QRCodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanner.swift; sourceTree = "<group>"; };
 		142E12F620361826009FA335 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		142E12F8203619CB009FA335 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
-		142E12FA20362420009FA335 /* StudentDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDetailsViewController.swift; sourceTree = "<group>"; };
 		1497D14D203DD05D005824EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirTableViewController.swift; sourceTree = "<group>"; };
 		1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 				142E12F420360D3A009FA335 /* QRCodeScanner.swift */,
 				142E12F620361826009FA335 /* SettingsController.swift */,
 				142E12F8203619CB009FA335 /* PageViewController.swift */,
-				142E12FA20362420009FA335 /* StudentDetailsViewController.swift */,
 				14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */,
 			);
 			path = CheckIn;
@@ -485,7 +482,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1AB0FD220337C6E00D3C1BB /* StudnetTableViewController.swift in Sources */,
-				142E12FB20362420009FA335 /* StudentDetailsViewController.swift in Sources */,
 				142E12F720361826009FA335 /* SettingsController.swift in Sources */,
 				B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */,
 				142E12F9203619CB009FA335 /* PageViewController.swift in Sources */,

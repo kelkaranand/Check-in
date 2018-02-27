@@ -9,10 +9,11 @@ import Foundation
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class QRScannerController: UIViewController {
     
-    @IBOutlet weak var messageLabel: UILabel!
+//    @IBOutlet weak var messageLabel: UILabel!
     
     var captureSession = AVCaptureSession()
     
@@ -77,14 +78,14 @@ class QRScannerController: UIViewController {
         captureSession.startRunning()
         
         // Move the message label and top bar to the front
-        view.bringSubview(toFront: messageLabel)
+        //view.bringSubview(toFront: messageLabel)
         
         // Initialize QR Code Frame to highlight the QR code
         qrCodeFrameView = UIView()
         
         if let qrCodeFrameView = qrCodeFrameView {
             qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
-            qrCodeFrameView.layer.borderWidth = 2
+            qrCodeFrameView.layer.borderWidth = 5
             view.addSubview(qrCodeFrameView)
             view.bringSubview(toFront: qrCodeFrameView)
         }
@@ -95,6 +96,125 @@ class QRScannerController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //Shows the alert pop up when QRCode is scanned
+    func showAlert(id: String) {
+        
+        //Find student record by APS ID
+        var student : [NSManagedObject]
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+        fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
+        
+        do {
+            student = try managedContext.fetch(fetchRequest)
+            
+            if(student.isEmpty)
+            {
+                var invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
+                invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
+                self.present(invalidQrAlert, animated:true)
+            }
+            else{
+            //Fields and labels
+            var studentRecord=student.first
+            var fname=studentRecord?.value(forKey:"firstName") as! String
+            var lname=studentRecord?.value(forKey:"lastName") as! String
+            var sname=studentRecord?.value(forKey:"school") as! String
+            var media=studentRecord?.value(forKey:"media") as! String
+            var id=studentRecord?.value(forKey:"studentId") as! String
+            var flabel="First Name: "
+            var llabel="Last Name: "
+            var ilabel="APS ID: "
+            var mlabel="Media Waiver: "
+            var slabel="School Name: "
+            var nextLine="\n"
+            
+            //Create alert on screen
+            var alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
+            
+            alert.addTextField(configurationHandler: {(textField) in
+                    textField.placeholder = "Number of Guests"
+                })
+                
+            alert.addAction(UIAlertAction(title: "Check-in", style: .default, handler:
+                {
+                    (alertAction: UIAlertAction) in
+                    //Code after Check-in is pressed
+                    //Check if media waiver is not accepted and show alert as required
+                    var guests:String=alert.textFields![0].text!
+                    self.checkMediaWaiver(indicator: media, id:id, fname:fname, lname:lname, guests: guests)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true)
+            
+            }
+            
+        } catch let error as NSError {
+            print ("Could not fetch data")
+        }
+    }
+    
+    //Function to check if media waiver has been accepted
+    func checkMediaWaiver(indicator: String, id:String, fname: String, lname: String, guests: String)
+    {
+        //If media waiver is not accepted, display alert
+        if indicator=="N"
+        {
+            var mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
+            
+            
+            //Make Check in call once accepted
+            mediaAlert.addAction(UIAlertAction(title:"Accepted", style: .default, handler: {(alert:UIAlertAction) in
+                self.checkInStudent(id: id, fname: fname, lname: lname, guests:guests)
+            }))
+            self.present(mediaAlert, animated: true)
+        }
+        //If media waiver is accepted, proceed with check-in
+        else{
+            self.checkInStudent(id: id, fname:fname, lname:lname, guests:guests)
+        }
+    }
+    
+    
+    //Function to complete the check in
+    func checkInStudent(id: String, fname: String, lname: String, guests:String)
+    {
+        var space=" "
+        var successlabel="Successfully checked in "
+        
+        //Write to local data
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "CheckedInStudent", in: managedContext)
+        let checkedStudent = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        checkedStudent.setValue(id, forKey: "id")
+        checkedStudent.setValue("Y", forKey: "media")
+        if(!guests.isEmpty){
+        checkedStudent.setValue(guests, forKey: "guests")
+        }
+        do{
+            try managedContext.save()
+        }
+        catch let error as NSError{
+            print("Could not check-in student")
+        }
+        //Print final success message
+        var successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
+        successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:nil))
+        self.present(successAlert, animated: true)
+    }
+    
+    
+    
     
 }
 
@@ -104,7 +224,7 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
-            messageLabel.text = "No QR code is detected"
+            //messageLabel.text = "No QR code is detected"
             return
         }
         
@@ -117,7 +237,8 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                messageLabel.text = metadataObj.stringValue
+                //messageLabel.text = metadataObj.stringValue
+                showAlert(id:metadataObj.stringValue!)
             }
         }
     }

@@ -9,13 +9,12 @@
 import UIKit
 import CoreData
 import os.log
-import Firebase
 
 class StudentTableViewCell: UITableViewCell {
     @IBOutlet weak var studentId: UILabel!
     @IBOutlet weak var firstName: UILabel!
     @IBOutlet weak var lastName: UILabel!
-    @IBOutlet weak var school: UILabel!
+    //@IBOutlet weak var school: UILabel!
     
 }
 
@@ -29,14 +28,10 @@ class StudentTableViewController: UIViewController {
     var filteredStudents: [NSManagedObject] = []
     let searchController = UISearchController(searchResultsController: nil)
     
-    var ref: DatabaseReference!
     //var students=[student]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        clearCoreData()
-        loadStudentsFromFirebase()
         
         // Setup search controller
         searchController.searchResultsUpdater = self
@@ -47,6 +42,7 @@ class StudentTableViewController: UIViewController {
         
         title = "Check In"
         studentTableView.dataSource = self
+        studentTableView.delegate = self
         studentTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
@@ -66,90 +62,121 @@ class StudentTableViewController: UIViewController {
         }
     }
     
-    func loadStudentsFromFirebase() {
-        ref=Database.database().reference(withPath: "students")
+    //Shows the alert pop up when QRCode is scanned
+    func showAlert(id: String) {
         
-        ref.observeSingleEvent(of:.value, with: { snapshot in
-            
-            for data in snapshot.children {
-                var studentData = data as! DataSnapshot
-                var fields = studentData.value as? [String:AnyObject]
-                var fname=fields!["fname"] as! String
-                var lname=fields!["lname"] as! String
-                var media=fields!["media"] as! String
-                var id=fields!["id"] as! String
-                var studentRecord = student(fname: fname, lname: lname, media: media, id: id)
-                //self.students.append(studentRecord)
-                self.save(studentId: id, firstName: fname, lastName: lname, school: "school")
-                
-                print(fname)
-            }
-            self.studentTableView.reloadData()
-        })
-    }
-    
-    func save(studentId: String, firstName: String, lastName: String, school: String) {
+        //Find student record by APS ID
+        var student : [NSManagedObject]
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Student", in: managedContext)
-        let student = NSManagedObject(entity: entity!, insertInto: managedContext)
-        
-        student.setValue(studentId, forKeyPath: "studentId")
-        student.setValue(firstName, forKeyPath: "firstName")
-        student.setValue(lastName, forKeyPath: "lastName")
-        student.setValue(school, forKeyPath: "school")
-        
-        do {
-            try managedContext.save()
-            students.append(student)
-        } catch let error as NSError {
-            print("Could not save")
-        }
-    }
-    
-    func clearCoreData() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else{
-            return
-        }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+        fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
         
         do {
-            let results = try managedContext.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
-            for managedObject in results {
-                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
-                managedContext.delete(managedObjectData)
+            student = try managedContext.fetch(fetchRequest)
+            
+            if(student.isEmpty)
+            {
+                var invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
+                invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
+                self.present(invalidQrAlert, animated:true)
             }
+            else{
+                //Fields and labels
+                var studentRecord=student.first
+                var fname=studentRecord?.value(forKey:"firstName") as! String
+                var lname=studentRecord?.value(forKey:"lastName") as! String
+                var sname=studentRecord?.value(forKey:"school") as! String
+                var media=studentRecord?.value(forKey:"media") as! String
+                var id=studentRecord?.value(forKey:"studentId") as! String
+                var flabel="First Name: "
+                var llabel="Last Name: "
+                var ilabel="APS ID: "
+                var mlabel="Media Waiver: "
+                var slabel="School Name: "
+                var nextLine="\n"
+                
+                //Create alert on screen
+                var alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
+                
+                alert.addTextField(configurationHandler: {(textField) in
+                    textField.placeholder = "Number of Guests"
+                })
+                
+                alert.addAction(UIAlertAction(title: "Check-in", style: .default, handler:
+                    {
+                        (alertAction: UIAlertAction) in
+                        //Code after Check-in is pressed
+                        //Check if media waiver is not accepted and show alert as required
+                        var guests:String=alert.textFields![0].text!
+                        self.checkMediaWaiver(indicator: media, id:id, fname:fname, lname:lname, guests: guests)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true)
+                
+            }
+            
         } catch let error as NSError {
-            print(error)
+            print ("Could not fetch data")
         }
     }
     
-    func checkInStudent(studentId: String, numGuests: String, media: String){
+    //Function to check if media waiver has been accepted
+    func checkMediaWaiver(indicator: String, id:String, fname: String, lname: String, guests: String)
+    {
+        //If media waiver is not accepted, display alert
+        if indicator=="N"
+        {
+            var mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
+            
+            
+            //Make Check in call once accepted
+            mediaAlert.addAction(UIAlertAction(title:"Accepted", style: .default, handler: {(alert:UIAlertAction) in
+                self.checkInStudent(id: id, fname: fname, lname: lname, guests:guests)
+            }))
+            self.present(mediaAlert, animated: true)
+        }
+            //If media waiver is accepted, proceed with check-in
+        else{
+            self.checkInStudent(id: id, fname:fname, lname:lname, guests:guests)
+        }
+    }
+    
+    
+    //Function to complete the check in
+    func checkInStudent(id: String, fname: String, lname: String, guests:String)
+    {
+        var space=" "
+        var successlabel="Successfully checked in "
         
+        //Write to local data
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "CheckedInStudent", in: managedContext)
-        let student = NSManagedObject(entity: entity!, insertInto: managedContext)
+        let checkedStudent = NSManagedObject(entity: entity!, insertInto: managedContext)
         
-        student.setValue(studentId, forKeyPath: "id")
-        student.setValue(numGuests, forKeyPath: "guests")
-        student.setValue(media, forKeyPath: "media")
-        
-        do {
-            try managedContext.save()
-            students.append(student)
-        } catch let error as NSError {
-            print("Could not save")
+        checkedStudent.setValue(id, forKey: "id")
+        checkedStudent.setValue("Y", forKey: "media")
+        if(!guests.isEmpty){
+            checkedStudent.setValue(guests, forKey: "guests")
         }
-        
+        do{
+            try managedContext.save()
+        }
+        catch let error as NSError{
+            print("Could not check-in student")
+        }
+        //Print final success message
+        var successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
+        successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:nil))
+        self.present(successAlert, animated: true)
     }
     
     func searchBarIsEmpty() -> Bool {
@@ -160,7 +187,8 @@ class StudentTableViewController: UIViewController {
         filteredStudents = students.filter({( student: NSManagedObject) -> Bool in
             let fName = student.value(forKey: "firstName") as! String
             let lName = student.value(forKey: "lastName") as! String
-            let fullName = fName + " " + lName
+            let id = student.value(forKey: "studentId") as! String
+            let fullName = fName + " " + lName + " " + id
             return fullName.lowercased().contains(searchText.lowercased())
             
         })
@@ -171,32 +199,6 @@ class StudentTableViewController: UIViewController {
         return searchController.isActive && !searchBarIsEmpty()
     }
     
-    @IBAction func unwindToStudentList(sender: UIStoryboardSegue){
-        if let sourceViewController = sender.source as? StudentDetailsViewController, let guests = sourceViewController.guests as? String, let id = sourceViewController.id as? String, let media = sourceViewController.media as? String {
-            checkInStudent(studentId: id, numGuests: guests, media: media)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        super.prepare(for: segue, sender: sender)
-        
-        guard let studentDetailViewController = segue.destination as? StudentDetailsViewController else {
-            fatalError()
-        }
-        
-        guard let selectedStudentCell = sender as? StudentTableViewCell else {
-            fatalError()
-        }
-        
-        guard let indexPath = studentTableView.indexPath(for: selectedStudentCell) else {
-            fatalError()
-        }
-        
-        let selectedStudent = students[indexPath.row]
-        studentDetailViewController.setStudent(student: selectedStudent)
-    }
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -223,16 +225,22 @@ extension StudentTableViewController: UITableViewDataSource {
         }
         else {
             student = students[indexPath.row]
-            
         }
-        
         cell.studentId!.text = student.value(forKey: "studentId") as? String
         cell.firstName!.text = student.value(forKey: "firstName") as? String
         cell.lastName!.text = student.value(forKey: "lastName") as? String
-        cell.school!.text = student.value(forKey: "school") as? String
+        //cell.school!.text = student.value(forKey: "school") as? String
         
         return cell
+    }
+}
 
+extension StudentTableViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("CELL PRESSED")
+        let selectedStudent = students[indexPath.row]
+        showAlert(id: selectedStudent.value(forKey: "studentId") as! String)
     }
 }
 
