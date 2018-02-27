@@ -8,6 +8,7 @@ target 'CheckIn' do
   # Pods for CheckIn
 	pod 'Firebase/Core'
 	pod 'Firebase/Database'
+	pod ‘Firebase/Storage’
 
   target 'CheckInTests' do
     inherit! :search_paths

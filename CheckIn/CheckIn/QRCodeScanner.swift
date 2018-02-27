@@ -99,6 +99,11 @@ class QRScannerController: UIViewController {
     //Shows the alert pop up when QRCode is scanned
     func showAlert(id: String) {
         
+        //Find image
+        
+        
+        
+        
         //Find student record by APS ID
         var student : [NSManagedObject]
         
