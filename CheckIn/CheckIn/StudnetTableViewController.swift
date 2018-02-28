@@ -92,6 +92,7 @@ class StudentTableViewController: UIViewController {
                 var sname=studentRecord?.value(forKey:"school") as! String
                 var media=studentRecord?.value(forKey:"media") as! String
                 var id=studentRecord?.value(forKey:"studentId") as! String
+//                var imagedata=studentRecord?.value(forKey: "image") as! NSData
                 var flabel="First Name: "
                 var llabel="Last Name: "
                 var ilabel="APS ID: "
@@ -101,6 +102,10 @@ class StudentTableViewController: UIViewController {
                 
                 //Create alert on screen
                 var alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
+                
+//                var profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
+//                profilePicture.setValue(UIImage(data:imagedata as Data)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+//                alert.addAction(profilePicture)
                 
                 alert.addTextField(configurationHandler: {(textField) in
                     textField.placeholder = "Number of Guests"

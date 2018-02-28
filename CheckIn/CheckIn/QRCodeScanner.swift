@@ -119,28 +119,35 @@ class QRScannerController: UIViewController {
             
             if(student.isEmpty)
             {
-                var invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
+                let invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
                 invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
                 self.present(invalidQrAlert, animated:true)
             }
             else{
+                
             //Fields and labels
-            var studentRecord=student.first
-            var fname=studentRecord?.value(forKey:"firstName") as! String
-            var lname=studentRecord?.value(forKey:"lastName") as! String
-            var sname=studentRecord?.value(forKey:"school") as! String
-            var media=studentRecord?.value(forKey:"media") as! String
-            var id=studentRecord?.value(forKey:"studentId") as! String
-            var flabel="First Name: "
-            var llabel="Last Name: "
-            var ilabel="APS ID: "
-            var mlabel="Media Waiver: "
-            var slabel="School Name: "
-            var nextLine="\n"
+            let studentRecord=student.first
+            let fname=studentRecord?.value(forKey:"firstName") as! String
+            let lname=studentRecord?.value(forKey:"lastName") as! String
+            let sname=studentRecord?.value(forKey:"school") as! String
+            let media=studentRecord?.value(forKey:"media") as! String
+            let id=studentRecord?.value(forKey:"studentId") as! String
+//            let imagedata=studentRecord?.value(forKey: "image") as! NSData
+            let flabel="First Name: "
+            let llabel="Last Name: "
+            let ilabel="APS ID: "
+            let mlabel="Media Waiver: "
+            let slabel="School Name: "
+            let nextLine="\n"
             
             //Create alert on screen
-            var alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
             
+//            let profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
+//            profilePicture.setValue(UIImage(data:imagedata as Data)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+//            alert.addAction(profilePicture)
+                
+                
             alert.addTextField(configurationHandler: {(textField) in
                     textField.placeholder = "Number of Guests"
                 })
@@ -150,7 +157,7 @@ class QRScannerController: UIViewController {
                     (alertAction: UIAlertAction) in
                     //Code after Check-in is pressed
                     //Check if media waiver is not accepted and show alert as required
-                    var guests:String=alert.textFields![0].text!
+                    let guests:String=alert.textFields![0].text!
                     self.checkMediaWaiver(indicator: media, id:id, fname:fname, lname:lname, guests: guests)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
