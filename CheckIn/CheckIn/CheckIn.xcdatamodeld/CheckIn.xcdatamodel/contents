@@ -5,9 +5,11 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="media" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="media" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="school" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,6 +17,7 @@
     </entity>
     <elements>
         <element name="CheckedInStudent" positionX="-36" positionY="45" width="128" height="90"/>
-        <element name="Student" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="Student" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="Event" positionX="-36" positionY="54" width="128" height="60"/>
     </elements>
 </model>

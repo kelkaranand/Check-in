@@ -13,8 +13,6 @@ import CoreData
 
 class QRScannerController: UIViewController {
     
-//    @IBOutlet weak var messageLabel: UILabel!
-    
     var captureSession = AVCaptureSession()
     
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -60,7 +58,6 @@ class QRScannerController: UIViewController {
             // Set delegate and use the default dispatch queue to execute the call back
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             captureMetadataOutput.metadataObjectTypes = supportedCodeTypes
-            //            captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
             
         } catch {
             // If any error occurs, simply print it out and don't continue any more.
@@ -77,9 +74,6 @@ class QRScannerController: UIViewController {
         // Start video capture.
         captureSession.startRunning()
         
-        // Move the message label and top bar to the front
-        //view.bringSubview(toFront: messageLabel)
-        
         // Initialize QR Code Frame to highlight the QR code
         qrCodeFrameView = UIView()
         
@@ -95,6 +89,31 @@ class QRScannerController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
+    //Experimental code to get directory and get image
+    
+    func getDirectoryPath() -> String {
+        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
+        let documentsDirectory = path
+        return documentsDirectory
+    }
+    
+    func getImage(id: String) -> UIImage{
+        let fileManager = FileManager.default
+        let imagePAth = (self.getDirectoryPath() as NSString).appendingPathComponent(id+".jpg")
+        if fileManager.fileExists(atPath: imagePAth){
+            return UIImage(contentsOfFile: imagePAth)!
+        }else{
+            print("No Image")
+        }
+        print("Default image")
+        return UIImage(named:"default")!
+    }
+    
+    
+    //End Experimental code
     
     //Shows the alert pop up when QRCode is scanned
     func showAlert(id: String) {
@@ -114,6 +133,7 @@ class QRScannerController: UIViewController {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
         fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
         
+        
         do {
             student = try managedContext.fetch(fetchRequest)
             
@@ -132,7 +152,6 @@ class QRScannerController: UIViewController {
             let sname=studentRecord?.value(forKey:"school") as! String
             let media=studentRecord?.value(forKey:"media") as! String
             let id=studentRecord?.value(forKey:"studentId") as! String
-//            let imagedata=studentRecord?.value(forKey: "image") as! NSData
             let flabel="First Name: "
             let llabel="Last Name: "
             let ilabel="APS ID: "
@@ -143,9 +162,10 @@ class QRScannerController: UIViewController {
             //Create alert on screen
             let alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
             
-//            let profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
-//            profilePicture.setValue(UIImage(data:imagedata as Data)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
-//            alert.addAction(profilePicture)
+            //Show image by retrieving from directory
+            let profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
+            profilePicture.setValue(self.getImage(id: id).withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+            alert.addAction(profilePicture)
                 
                 
             alert.addTextField(configurationHandler: {(textField) in
@@ -166,7 +186,7 @@ class QRScannerController: UIViewController {
             
             }
             
-        } catch let error as NSError {
+        } catch _ as NSError {
             print ("Could not fetch data")
         }
     }
@@ -177,7 +197,7 @@ class QRScannerController: UIViewController {
         //If media waiver is not accepted, display alert
         if indicator=="N"
         {
-            var mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
+            let mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
             
             
             //Make Check in call once accepted
@@ -196,8 +216,8 @@ class QRScannerController: UIViewController {
     //Function to complete the check in
     func checkInStudent(id: String, fname: String, lname: String, guests:String)
     {
-        var space=" "
-        var successlabel="Successfully checked in "
+        let space=" "
+        let successlabel="Successfully checked in "
         
         //Write to local data
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -216,11 +236,11 @@ class QRScannerController: UIViewController {
         do{
             try managedContext.save()
         }
-        catch let error as NSError{
+        catch _ as NSError{
             print("Could not check-in student")
         }
         //Print final success message
-        var successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
+        let successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
         successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:nil))
         self.present(successAlert, animated: true)
     }
@@ -236,7 +256,6 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
-            //messageLabel.text = "No QR code is detected"
             return
         }
         
@@ -249,7 +268,6 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                //messageLabel.text = metadataObj.stringValue
                 showAlert(id:metadataObj.stringValue!)
             }
         }

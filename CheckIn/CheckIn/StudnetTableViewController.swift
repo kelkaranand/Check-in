@@ -57,10 +57,37 @@ class StudentTableViewController: UIViewController {
         
         do {
             students = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
+        } catch _ as NSError {
             print ("Could not fetch data")
         }
     }
+    
+    
+    
+    //Experimental code
+    
+    func getDirectoryPath() -> String {
+        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
+        let documentsDirectory = path
+        return documentsDirectory
+    }
+    
+    func getImage(id: String) -> UIImage{
+        let fileManager = FileManager.default
+        let imagePAth = (self.getDirectoryPath() as NSString).appendingPathComponent(id+".jpg")
+        if fileManager.fileExists(atPath: imagePAth){
+            //            self.imageView.image = UIImage(contentsOfFile: imagePAth)
+            return UIImage(contentsOfFile: imagePAth)!
+        }else{
+            print("No Image")
+        }
+        print("Default image")
+        return UIImage(named:"default")!
+    }
+    
+    
+    //End Experimental code
+    
     
     //Shows the alert pop up when QRCode is scanned
     func showAlert(id: String) {
@@ -80,32 +107,31 @@ class StudentTableViewController: UIViewController {
             
             if(student.isEmpty)
             {
-                var invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
+                let invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
                 invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
                 self.present(invalidQrAlert, animated:true)
             }
             else{
                 //Fields and labels
-                var studentRecord=student.first
-                var fname=studentRecord?.value(forKey:"firstName") as! String
-                var lname=studentRecord?.value(forKey:"lastName") as! String
-                var sname=studentRecord?.value(forKey:"school") as! String
-                var media=studentRecord?.value(forKey:"media") as! String
-                var id=studentRecord?.value(forKey:"studentId") as! String
-//                var imagedata=studentRecord?.value(forKey: "image") as! NSData
-                var flabel="First Name: "
-                var llabel="Last Name: "
-                var ilabel="APS ID: "
-                var mlabel="Media Waiver: "
-                var slabel="School Name: "
-                var nextLine="\n"
+                let studentRecord=student.first
+                let fname=studentRecord?.value(forKey:"firstName") as! String
+                let lname=studentRecord?.value(forKey:"lastName") as! String
+                let sname=studentRecord?.value(forKey:"school") as! String
+                let media=studentRecord?.value(forKey:"media") as! String
+                let id=studentRecord?.value(forKey:"studentId") as! String
+                let flabel="First Name: "
+                let llabel="Last Name: "
+                let ilabel="APS ID: "
+                let mlabel="Media Waiver: "
+                let slabel="School Name: "
+                let nextLine="\n"
                 
                 //Create alert on screen
-                var alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
+                let alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
                 
-//                var profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
-//                profilePicture.setValue(UIImage(data:imagedata as Data)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
-//                alert.addAction(profilePicture)
+                let profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
+                profilePicture.setValue(self.getImage(id: id).withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+                alert.addAction(profilePicture)
                 
                 alert.addTextField(configurationHandler: {(textField) in
                     textField.placeholder = "Number of Guests"
@@ -116,7 +142,7 @@ class StudentTableViewController: UIViewController {
                         (alertAction: UIAlertAction) in
                         //Code after Check-in is pressed
                         //Check if media waiver is not accepted and show alert as required
-                        var guests:String=alert.textFields![0].text!
+                        let guests:String=alert.textFields![0].text!
                         self.checkMediaWaiver(indicator: media, id:id, fname:fname, lname:lname, guests: guests)
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -125,7 +151,7 @@ class StudentTableViewController: UIViewController {
                 
             }
             
-        } catch let error as NSError {
+        } catch _ as NSError {
             print ("Could not fetch data")
         }
     }
@@ -136,7 +162,7 @@ class StudentTableViewController: UIViewController {
         //If media waiver is not accepted, display alert
         if indicator=="N"
         {
-            var mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
+            let mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
             
             
             //Make Check in call once accepted
@@ -155,8 +181,8 @@ class StudentTableViewController: UIViewController {
     //Function to complete the check in
     func checkInStudent(id: String, fname: String, lname: String, guests:String)
     {
-        var space=" "
-        var successlabel="Successfully checked in "
+        let space=" "
+        let successlabel="Successfully checked in "
         
         //Write to local data
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -175,11 +201,11 @@ class StudentTableViewController: UIViewController {
         do{
             try managedContext.save()
         }
-        catch let error as NSError{
+        catch _ as NSError{
             print("Could not check-in student")
         }
         //Print final success message
-        var successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
+        let successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
         successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:nil))
         self.present(successAlert, animated: true)
     }
@@ -234,7 +260,6 @@ extension StudentTableViewController: UITableViewDataSource {
         cell.studentId!.text = student.value(forKey: "studentId") as? String
         cell.firstName!.text = student.value(forKey: "firstName") as? String
         cell.lastName!.text = student.value(forKey: "lastName") as? String
-        //cell.school!.text = student.value(forKey: "school") as? String
         
         return cell
     }
