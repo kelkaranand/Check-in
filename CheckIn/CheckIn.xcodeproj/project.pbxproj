@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1419C2F2204878FB00850B36 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1419C2F1204878FB00850B36 /* LandingViewController.swift */; };
 		142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F420360D3A009FA335 /* QRCodeScanner.swift */; };
 		142E12F720361826009FA335 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F620361826009FA335 /* SettingsController.swift */; };
 		142E12F9203619CB009FA335 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F8203619CB009FA335 /* PageViewController.swift */; };
 		144849562045D93A00898655 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144849552045D93A00898655 /* ProfileViewController.swift */; };
+		1478EA892049085F00DA2C02 /* InternetConnectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */; };
 		1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1497D14D203DD05D005824EA /* GoogleService-Info.plist */; };
 		14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */; };
 		17E2EC6D519EF46F72D8F5D6 /* Pods_CheckInUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */; };
@@ -46,10 +48,12 @@
 /* Begin PBXFileReference section */
 		07147C1E21A5A76F62DDA549 /* Pods-CheckInUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckInUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckInUITests/Pods-CheckInUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		13C132B97EAEE1B59F01FFF2 /* Pods-CheckInUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckInUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckInUITests/Pods-CheckInUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1419C2F1204878FB00850B36 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		142E12F420360D3A009FA335 /* QRCodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanner.swift; sourceTree = "<group>"; };
 		142E12F620361826009FA335 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		142E12F8203619CB009FA335 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		144849552045D93A00898655 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectionTest.swift; sourceTree = "<group>"; };
 		1497D14D203DD05D005824EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirTableViewController.swift; sourceTree = "<group>"; };
 		1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.release.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				142E12F8203619CB009FA335 /* PageViewController.swift */,
 				14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */,
 				144849552045D93A00898655 /* ProfileViewController.swift */,
+				1419C2F1204878FB00850B36 /* LandingViewController.swift */,
+				1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -490,9 +496,11 @@
 				142E12F720361826009FA335 /* SettingsController.swift in Sources */,
 				B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */,
 				142E12F9203619CB009FA335 /* PageViewController.swift in Sources */,
+				1478EA892049085F00DA2C02 /* InternetConnectionTest.swift in Sources */,
 				142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */,
 				B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */,
 				144849562045D93A00898655 /* ProfileViewController.swift in Sources */,
+				1419C2F2204878FB00850B36 /* LandingViewController.swift in Sources */,
 				14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

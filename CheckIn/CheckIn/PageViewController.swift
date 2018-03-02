@@ -12,8 +12,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
 
 
     lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newVc(viewController :"Search"), self.newVc(viewController: "QR"),
-                self.newVc(viewController: "Settings")]
+        return [self.newVc(viewController :"Landing"), self.newVc(viewController: "QR"),
+                self.newVc(viewController: "Search")]
     }()
     
     var pageControl = UIPageControl()

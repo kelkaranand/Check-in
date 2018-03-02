@@ -35,13 +35,13 @@ class FirTableViewController : UITableViewController{
         ref.observe(.value, with: { snapshot in
 
             for data in snapshot.children {
-                var studentData = data as! DataSnapshot
+                let studentData = data as! DataSnapshot
                 var fields = studentData.value as? [String:AnyObject]
-                var fname=fields!["fname"] as! String
-                var lname=fields!["lname"] as! String
-                var media=fields!["media"] as! String
-                var id=fields!["id"] as! String
-                var studentRecord = student(fname: fname, lname: lname, media: media, id: id)
+                let fname=fields!["fname"] as! String
+                let lname=fields!["lname"] as! String
+                let media=fields!["media"] as! String
+                let id=fields!["id"] as! String
+                let studentRecord = student(fname: fname, lname: lname, media: media, id: id)
                 self.students.append(studentRecord)
                 
                 print(fname)

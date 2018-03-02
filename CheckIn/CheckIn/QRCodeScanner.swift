@@ -118,11 +118,6 @@ class QRScannerController: UIViewController {
     //Shows the alert pop up when QRCode is scanned
     func showAlert(id: String) {
         
-        //Find image
-        
-        
-        
-        
         //Find student record by APS ID
         var student : [NSManagedObject]
         
@@ -177,7 +172,11 @@ class QRScannerController: UIViewController {
                     (alertAction: UIAlertAction) in
                     //Code after Check-in is pressed
                     //Check if media waiver is not accepted and show alert as required
-                    let guests:String=alert.textFields![0].text!
+                    var guests:String=alert.textFields![0].text!
+                    if(guests.isEmpty)
+                    {
+                        guests="0"
+                    }
                     self.checkMediaWaiver(indicator: media, id:id, fname:fname, lname:lname, guests: guests)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

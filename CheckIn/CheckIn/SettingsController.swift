@@ -35,8 +35,13 @@ class SettingsController :UIViewController
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true)
-        
-        
+        updateTable()
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+    }
+    
+    func updateTable()
+    {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
     
     @IBAction func imagePull(_ sender: UIButton) {
@@ -48,18 +53,27 @@ class SettingsController :UIViewController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CheckedInStudent")
-        
-        do {
-            students = try managedContext.fetch(fetchRequest)
-        } catch _ as NSError {
-            print ("Could not fetch data")
-        }
-        count.text = String(students.count)
+        let alert = UIAlertController(title: "Warning", message: "You are entering the admin page, do you want to continue?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:
+            {
+                (alertAction: UIAlertAction) in
+                if (!InternetConnectionTest.isInternetAvailable())
+                {
+                    let internetAlert = UIAlertController(title: "No internet connection.", message: "The device is not connected to the internet at the moment. Admin functions cannot be performed without an internet connection.", preferredStyle: .alert)
+                    internetAlert.addAction(UIAlertAction(title: "Go back", style: .cancel, handler:
+                    {
+                        (alertAction: UIAlertAction) in
+                        self.performSegue(withIdentifier: "moveToOverview", sender: self)
+                    }))
+                    self.present(internetAlert, animated: true)
+                }
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler:
+            {
+                (alertAction: UIAlertAction) in
+                self.performSegue(withIdentifier: "moveToOverview", sender: self)
+        }))
+        self.present(alert, animated: true)
     }
     
     
@@ -112,18 +126,18 @@ class SettingsController :UIViewController
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        
+
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Student", in: managedContext)
-        
-        
-        
+
+
+
         let ref=Database.database().reference(withPath: "students")
-            
+
         ref.observe(.value, with: { snapshot in
             for data in snapshot.children {
                 let student = NSManagedObject(entity: entity!, insertInto: managedContext)
-                
+
                 let studentData = data as! DataSnapshot
                 var fields = studentData.value as? [String:AnyObject]
                 let fname=fields!["fname"] as! String
@@ -131,14 +145,14 @@ class SettingsController :UIViewController
                 let media=fields!["media"] as! String
                 let id=fields!["id"] as! String
                 let school=fields!["school"] as! String
-                
-                
+
+
                 student.setValue(fname, forKey: "firstName")
                 student.setValue(lname, forKey: "lastName")
                 student.setValue(media, forKey: "media")
                 student.setValue(id, forKey: "studentId")
                 student.setValue(school, forKey: "school")
-                
+
                 do{
                     try managedContext.save()
                 }
@@ -149,21 +163,20 @@ class SettingsController :UIViewController
         })
         
         
+        
         //Get event name
         let eventEntity = NSEntityDescription.entity(forEntityName: "Event", in: managedContext)
         let eventRef=Database.database().reference(withPath: "Event")
         eventRef.observe(.value, with: { snapshot in
-            for data in snapshot.children {
-                let event=NSManagedObject(entity: eventEntity!, insertInto: managedContext)
-                let eventName=(data as! DataSnapshot).value as! String
-                event.setValue(eventName, forKey: "name")
-                try! managedContext.save()
-            }
+            let event=NSManagedObject(entity: eventEntity!, insertInto: managedContext)
+            //Pull Event Name
+            let eventName=snapshot.childSnapshot(forPath: "name").value as! String
+            event.setValue(eventName, forKey: "name")
+            
+            try! managedContext.save()  
         })
         
-        
-        
-        
+        //Success alert
         let alert = UIAlertController(title: "Data Imported", message: "Student data successfully imported.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
@@ -190,7 +203,6 @@ class SettingsController :UIViewController
         DelAllReqVar = NSBatchDeleteRequest(fetchRequest: ReqVar)
         do { try managedContext.execute(DelAllReqVar) }
         catch { print("Error when clearing data"+error.localizedDescription) }
-
         
         //Create custom directory
         let fileManager = FileManager.default

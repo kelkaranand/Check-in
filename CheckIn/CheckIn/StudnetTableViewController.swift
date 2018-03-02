@@ -33,6 +33,8 @@ class StudentTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTalbe), name: NSNotification.Name(rawValue: "reload"), object: nil)
+        
         // Setup search controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -49,6 +51,15 @@ class StudentTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        loadTableData()
+    }
+    
+    @objc func reloadTalbe(){
+        loadTableData()
+        self.studentTableView.reloadData()
+    }
+    
+    func loadTableData(){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -60,6 +71,7 @@ class StudentTableViewController: UIViewController {
         } catch _ as NSError {
             print ("Could not fetch data")
         }
+        appDelegate.saveContext()
     }
     
     
@@ -142,7 +154,11 @@ class StudentTableViewController: UIViewController {
                         (alertAction: UIAlertAction) in
                         //Code after Check-in is pressed
                         //Check if media waiver is not accepted and show alert as required
-                        let guests:String=alert.textFields![0].text!
+                        var guests:String=alert.textFields![0].text!
+                        if(guests.isEmpty)
+                        {
+                            guests="0"
+                        }
                         self.checkMediaWaiver(indicator: media, id:id, fname:fname, lname:lname, guests: guests)
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
