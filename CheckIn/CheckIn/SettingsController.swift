@@ -44,9 +44,9 @@ class SettingsController :UIViewController
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
     
-    @IBAction func imagePull(_ sender: UIButton) {
-        self.pullImages()
-    }
+//    @IBAction func imagePull(_ sender: UIButton) {
+//        self.pullImages()
+//    }
     
     var students: [NSManagedObject] = []
     
@@ -204,81 +204,81 @@ class SettingsController :UIViewController
         do { try managedContext.execute(DelAllReqVar) }
         catch { print("Error when clearing data"+error.localizedDescription) }
         
-        //Create custom directory
-        let fileManager = FileManager.default
-        //Create direcotry path
-        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
-        //Check if directory exists at that path
-        if !fileManager.fileExists(atPath: path){
-            print("Creating new directory")
-            try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-        }else{
-            print("Directory already exists.")
-        }
+//        //Create custom directory
+//        let fileManager = FileManager.default
+//        //Create direcotry path
+//        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
+//        //Check if directory exists at that path
+//        if !fileManager.fileExists(atPath: path){
+//            print("Creating new directory")
+//            try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+//        }else{
+//            print("Directory already exists.")
+//        }
         
         managedContext.reset()
     }
     
-    //Experimental code - Firebase storage to retrieve images
-    func pullImages()
-    {
-        var students: [NSManagedObject] = []
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
-        
-        do {
-            students = try managedContext.fetch(fetchRequest)
-            print("Found students in local memory: "+String(students.count))
-        } catch _ as NSError {
-            print ("Could not fetch image data")
-        }
-        
-        for record in students{
-            let id=record.value(forKey: "studentId") as! String
-            print(id)
-        
-            let storageRef = Storage.storage().reference().child(id+".jpg")
-        
-            storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    self.saveImageDocumentDirectory(data: UIImageJPEGRepresentation(UIImage(named:"default")!,1)! as NSData, id: id)
-                    print("Set default image for "+id)
-                } else {
-                    self.saveImageDocumentDirectory(data: data! as NSData, id: id)
-                }
-            }
-            
-            do{
-                try managedContext.save()
-            }
-            catch let error as NSError{
-                print("Error when pulling new image data"+error.localizedDescription)
-            }
-        }
-        
-        let alert = UIAlertController(title: "Images Imported", message: "Student images successfully imported.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
-        
-    }
+//    //Experimental code - Firebase storage to retrieve images
+//    func pullImages()
+//    {
+//        var students: [NSManagedObject] = []
+//
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+//
+//        do {
+//            students = try managedContext.fetch(fetchRequest)
+//            print("Found students in local memory: "+String(students.count))
+//        } catch _ as NSError {
+//            print ("Could not fetch image data")
+//        }
+//
+//        for record in students{
+//            let id=record.value(forKey: "studentId") as! String
+//            print(id)
+//
+//            let storageRef = Storage.storage().reference().child(id+".jpg")
+//
+//            storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                    self.saveImageDocumentDirectory(data: UIImageJPEGRepresentation(UIImage(named:"default")!,1)! as NSData, id: id)
+//                    print("Set default image for "+id)
+//                } else {
+//                    self.saveImageDocumentDirectory(data: data! as NSData, id: id)
+//                }
+//            }
+//
+//            do{
+//                try managedContext.save()
+//            }
+//            catch let error as NSError{
+//                print("Error when pulling new image data"+error.localizedDescription)
+//            }
+//        }
+//
+//        let alert = UIAlertController(title: "Images Imported", message: "Student images successfully imported.", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        self.present(alert, animated: true)
+//
+//    }
     
     
-    //Function to save image to custom directory
-    func saveImageDocumentDirectory(data : NSData, id: String){
-        let fileManager = FileManager.default
-        let directoryPath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
-        let imageName=id+".jpg"
-        let path=(NSURL(string: directoryPath)!.appendingPathComponent(imageName))?.path
-        let image = UIImage(data: data as Data)
-        print(path!)
-        let imageData = UIImageJPEGRepresentation(image!, 0.5)
-        fileManager.createFile(atPath: path! as String, contents: imageData, attributes: nil)
-    }
+//    //Function to save image to custom directory
+//    func saveImageDocumentDirectory(data : NSData, id: String){
+//        let fileManager = FileManager.default
+//        let directoryPath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
+//        let imageName=id+".jpg"
+//        let path=(NSURL(string: directoryPath)!.appendingPathComponent(imageName))?.path
+//        let image = UIImage(data: data as Data)
+//        print(path!)
+//        let imageData = UIImageJPEGRepresentation(image!, 0.5)
+//        fileManager.createFile(atPath: path! as String, contents: imageData, attributes: nil)
+//    }
 
 
 }

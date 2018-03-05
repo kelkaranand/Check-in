@@ -99,23 +99,23 @@ class QRScannerController: UIViewController {
     
     //Experimental code to get directory and get image
     
-    func getDirectoryPath() -> String {
-        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
-        let documentsDirectory = path
-        return documentsDirectory
-    }
-    
-    func getImage(id: String) -> UIImage{
-        let fileManager = FileManager.default
-        let imagePAth = (self.getDirectoryPath() as NSString).appendingPathComponent(id+".jpg")
-        if fileManager.fileExists(atPath: imagePAth){
-            return UIImage(contentsOfFile: imagePAth)!
-        }else{
-            print("No Image")
-        }
-        print("Default image")
-        return UIImage(named:"default")!
-    }
+//    func getDirectoryPath() -> String {
+//        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
+//        let documentsDirectory = path
+//        return documentsDirectory
+//    }
+//
+//    func getImage(id: String) -> UIImage{
+//        let fileManager = FileManager.default
+//        let imagePAth = (self.getDirectoryPath() as NSString).appendingPathComponent(id+".jpg")
+//        if fileManager.fileExists(atPath: imagePAth){
+//            return UIImage(contentsOfFile: imagePAth)!
+//        }else{
+//            print("No Image")
+//        }
+//        print("Default image")
+//        return UIImage(named:"default")!
+//    }
     
     
     //End Experimental code
@@ -178,7 +178,14 @@ class QRScannerController: UIViewController {
                         self.gid=studentRecord?.value(forKey:"studentId") as! String
                         
                         //Retrieve image from directory
-                        self.gpicture = self.getImage(id: id)
+                        //self.gpicture = self.getImage(id: id)
+                        if(UIImage(named:self.gid) != nil)
+                        {
+                            self.gpicture=UIImage(named:self.gid)!
+                        }
+                        else{
+                            self.gpicture=UIImage(named:"default")!
+                        }
                         
                         self.performSegue(withIdentifier: "showProfile", sender: self)
                         
@@ -241,9 +248,9 @@ class QRScannerController: UIViewController {
             let alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
             
             //Show image by retrieving from directory
-            let profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
-            profilePicture.setValue(self.getImage(id: id).withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
-            alert.addAction(profilePicture)
+//            let profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
+//            profilePicture.setValue(self.getImage(id: id).withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+//            alert.addAction(profilePicture)
                 
                 
             alert.addTextField(configurationHandler: {(textField) in
