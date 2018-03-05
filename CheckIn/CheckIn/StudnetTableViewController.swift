@@ -101,6 +101,81 @@ class StudentTableViewController: UIViewController {
     //End Experimental code
     
     
+    var gid:String=""
+    var gfname:String=""
+    var glname:String=""
+    var gsname:String=""
+    var gmedia:String=""
+    var gpicture:UIImage=UIImage(named:"default")!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let profile = segue.destination as? ProfileViewController
+        {
+            profile.id=gid
+            profile.fname=gfname
+            profile.lname=glname
+            profile.sname=gsname
+            profile.media=gmedia
+            profile.spicture=gpicture
+        }
+    }
+    
+    func showProfile(id:String) {
+        
+        //Find student record by APS ID
+        var student : [NSManagedObject]
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+        fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
+        do {
+            student = try managedContext.fetch(fetchRequest)
+            
+            if(student.isEmpty)
+            {
+                let invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
+                invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
+                self.present(invalidQrAlert, animated:true)
+            }
+            else{
+                
+//                let foundAlert = UIAlertController(title:"Success", message:"Student record found.", preferredStyle: .alert)
+//                foundAlert.addAction(UIAlertAction(title:"Continue", style: .default, handler:
+//                    {
+//                        (alertAction: UIAlertAction) in
+                        
+                        //Fields and labels
+                        let studentRecord=student.first
+                        self.gfname=studentRecord?.value(forKey:"firstName") as! String
+                        self.glname=studentRecord?.value(forKey:"lastName") as! String
+                        self.gsname=studentRecord?.value(forKey:"school") as! String
+                        self.gmedia=studentRecord?.value(forKey:"media") as! String
+                        self.gid=studentRecord?.value(forKey:"studentId") as! String
+                        
+                        //Retrieve image from directory
+                        self.gpicture = self.getImage(id: id)
+                        
+                        self.performSegue(withIdentifier: "tableToProfile", sender: self)
+                        
+//                }
+//                ))
+//                self.present(foundAlert, animated:true)
+                
+            }
+        }catch _ as NSError {
+            print ("Could not fetch data")
+        }
+    }
+    
+    
+    
+    
+    
+    
     //Shows the alert pop up when QRCode is scanned
     func showAlert(id: String) {
         
@@ -286,7 +361,8 @@ extension StudentTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("CELL PRESSED")
         let selectedStudent = students[indexPath.row]
-        showAlert(id: selectedStudent.value(forKey: "studentId") as! String)
+//        showAlert(id: selectedStudent.value(forKey: "studentId") as! String)
+        showProfile(id: selectedStudent.value(forKey: "studentId") as! String)
     }
 }
 

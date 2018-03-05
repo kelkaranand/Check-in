@@ -10,10 +10,9 @@ import UIKit
 
 class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
-
     lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newVc(viewController :"Landing"), self.newVc(viewController: "QR"),
-                self.newVc(viewController: "Search")]
+        return [self.newVc(viewController :"Landing"), self.newVc(viewController: "QRScanFlow"),
+                self.newVc(viewController: "manualFlow")]
     }()
     
     var pageControl = UIPageControl()

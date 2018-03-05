@@ -29,8 +29,12 @@ class LandingViewController: UIViewController {
         //Get event name
         var fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Event")
         do{
-            EventName.text = try managedContext.fetch(fetchRequest).first?.value(forKey: "name") as! String
-            flag=true;
+            let temp = try managedContext.fetch(fetchRequest).first?.value(forKey: "name") as? String
+            if(!(temp==nil))
+            {
+                EventName.text=temp
+                flag=true;
+            }
         }
         catch _ as NSError {
             EventName.text = "Load data from the admin controls to set up the device for the event."

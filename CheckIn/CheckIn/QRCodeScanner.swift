@@ -33,6 +33,11 @@ class QRScannerController: UIViewController {
                                       AVMetadataObject.ObjectType.interleaved2of5,
                                       AVMetadataObject.ObjectType.qr]
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -114,6 +119,84 @@ class QRScannerController: UIViewController {
     
     
     //End Experimental code
+    
+    var gid:String=""
+    var gfname:String=""
+    var glname:String=""
+    var gsname:String=""
+    var gmedia:String=""
+    var gpicture:UIImage=UIImage(named:"default")!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let profile = segue.destination as? ProfileViewController
+        {
+            profile.id=gid
+            profile.fname=gfname
+            profile.lname=glname
+            profile.sname=gsname
+            profile.media=gmedia
+            profile.spicture=gpicture
+        }
+    }
+    
+    
+    //Function called for profile view
+    func showProfile(id:String) {
+        
+        //Find student record by APS ID
+        var student : [NSManagedObject]
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+        fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
+        do {
+            student = try managedContext.fetch(fetchRequest)
+            
+            if(student.isEmpty)
+            {
+                let invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
+                invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
+                self.present(invalidQrAlert, animated:true)
+            }
+            else{
+                
+                let foundAlert = UIAlertController(title:"Success", message:"Student record found.", preferredStyle: .alert)
+                foundAlert.addAction(UIAlertAction(title:"Continue", style: .default, handler:
+                    {
+                        (alertAction: UIAlertAction) in
+                        
+                        //Fields and labels
+                        let studentRecord=student.first
+                        self.gfname=studentRecord?.value(forKey:"firstName") as! String
+                        self.glname=studentRecord?.value(forKey:"lastName") as! String
+                        self.gsname=studentRecord?.value(forKey:"school") as! String
+                        self.gmedia=studentRecord?.value(forKey:"media") as! String
+                        self.gid=studentRecord?.value(forKey:"studentId") as! String
+                        
+                        //Retrieve image from directory
+                        self.gpicture = self.getImage(id: id)
+                        
+                        self.performSegue(withIdentifier: "showProfile", sender: self)
+                        
+                }
+                ))
+                self.present(foundAlert, animated:true)
+            
+            }
+        }catch _ as NSError {
+            print ("Could not fetch data")
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     //Shows the alert pop up when QRCode is scanned
     func showAlert(id: String) {
@@ -267,7 +350,8 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                showAlert(id:metadataObj.stringValue!)
+//                showAlert(id:metadataObj.stringValue!)
+                    showProfile(id: metadataObj.stringValue!)
             }
         }
     }
