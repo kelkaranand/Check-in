@@ -106,6 +106,7 @@ class StudentTableViewController: UIViewController {
     var glname:String=""
     var gsname:String=""
     var gmedia:String=""
+    var gvip:String=""
     var gpicture:UIImage=UIImage(named:"default")!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -118,6 +119,7 @@ class StudentTableViewController: UIViewController {
             profile.sname=gsname
             profile.media=gmedia
             profile.spicture=gpicture
+            profile.vip=gvip
         }
     }
     
@@ -155,6 +157,7 @@ class StudentTableViewController: UIViewController {
                         self.gsname=studentRecord?.value(forKey:"school") as! String
                         self.gmedia=studentRecord?.value(forKey:"media") as! String
                         self.gid=studentRecord?.value(forKey:"studentId") as! String
+                        self.gvip=studentRecord?.value(forKey: "vip") as! String
                         
                         //Retrieve image from directory
 //                        self.gpicture = self.getImage(id: id)

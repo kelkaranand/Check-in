@@ -18,6 +18,7 @@ class ProfileViewController : UIViewController {
     var lname : String = ""
     var sname : String = ""
     var media : String = ""
+    var vip : String = ""
     var spicture : UIImage = UIImage(named:"default")!
     
     
@@ -33,6 +34,7 @@ class ProfileViewController : UIViewController {
 //        })
 
     
+    @IBOutlet weak var vipBanner: UIImageView!
     @IBOutlet weak var mediaFlag: UISwitch!
     @IBOutlet weak var guestCount: UITextField!
     @IBOutlet weak var idLabel: UILabel!
@@ -98,6 +100,14 @@ class ProfileViewController : UIViewController {
         {
             mediaFlag.setOn(false, animated: true)
         }
+        if(vip=="Y")
+        {
+            vipBanner.isHidden=false
+        }
+        else if(vip=="N")
+        {
+            vipBanner.isHidden=true
+        }
     }
     
     //Function to check if media waiver has been accepted
@@ -157,6 +167,7 @@ class ProfileViewController : UIViewController {
             {
                 (alertAction: UIAlertAction) in
                 self.navigationController?.popToRootViewController(animated: true)
+                
         }))
         self.present(successAlert, animated: true)
     }

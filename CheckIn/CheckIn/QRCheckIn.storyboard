@@ -201,7 +201,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="wVs-ay-9f5">
-                                                <rect key="frame" x="132" y="5" width="131.5" height="30"/>
+                                                <rect key="frame" x="132" y="5.5" width="131.5" height="30"/>
                                                 <nil key="textColor"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="light" returnKeyType="continue" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
@@ -220,6 +220,9 @@
                                     <action selector="checkIn:" destination="SCa-h4-aXK" eventType="touchUpInside" id="nzS-Gc-aJz"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vip" translatesAutoresizingMaskIntoConstraints="NO" id="5oF-NX-GnW">
+                                <rect key="frame" x="37" y="74" width="61" height="61.5"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -231,8 +234,12 @@
                             <constraint firstItem="Pxf-Lt-Gd9" firstAttribute="top" secondItem="a2W-oB-BA6" secondAttribute="bottom" constant="20" id="Im6-RL-wz2"/>
                             <constraint firstItem="a2W-oB-BA6" firstAttribute="centerX" secondItem="Mvj-XL-nbM" secondAttribute="centerX" id="LZl-OM-LBL"/>
                             <constraint firstItem="AJq-uI-4ez" firstAttribute="width" secondItem="Mvj-XL-nbM" secondAttribute="width" multiplier="0.8" constant="1" id="TED-gb-XsF"/>
+                            <constraint firstItem="5oF-NX-GnW" firstAttribute="height" secondItem="AJq-uI-4ez" secondAttribute="height" multiplier="0.25" constant="1" id="a09-mL-6lg"/>
                             <constraint firstItem="a2W-oB-BA6" firstAttribute="top" secondItem="AJq-uI-4ez" secondAttribute="bottom" constant="10" id="fUw-lD-FSi"/>
+                            <constraint firstItem="5oF-NX-GnW" firstAttribute="top" secondItem="AJq-uI-4ez" secondAttribute="top" id="fja-ea-K8h"/>
                             <constraint firstItem="a2W-oB-BA6" firstAttribute="width" secondItem="Mvj-XL-nbM" secondAttribute="width" multiplier="0.7" constant="1" id="iXC-TN-0mp"/>
+                            <constraint firstItem="5oF-NX-GnW" firstAttribute="width" secondItem="AJq-uI-4ez" secondAttribute="width" multiplier="0.2" constant="1" id="k8r-Wa-DT6"/>
+                            <constraint firstItem="5oF-NX-GnW" firstAttribute="leading" secondItem="AJq-uI-4ez" secondAttribute="leading" id="kMW-m2-9A0"/>
                             <constraint firstItem="AJq-uI-4ez" firstAttribute="height" secondItem="Mvj-XL-nbM" secondAttribute="height" multiplier="0.4" constant="1" id="nbQ-6L-Fk0"/>
                             <constraint firstItem="AJq-uI-4ez" firstAttribute="centerX" secondItem="Mvj-XL-nbM" secondAttribute="centerX" id="xkT-Af-ftg"/>
                         </constraints>
@@ -247,13 +254,15 @@
                         <outlet property="mediaFlag" destination="nnQ-cv-6Tk" id="O8r-ba-j1T"/>
                         <outlet property="picture" destination="AJq-uI-4ez" id="0tC-cz-50u"/>
                         <outlet property="snameLabel" destination="SyX-Vl-itV" id="VtX-Jl-18x"/>
+                        <outlet property="vipBanner" destination="5oF-NX-GnW" id="9yB-57-mwb"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-1066" y="989"/>
+            <point key="canvasLocation" x="-1066.4000000000001" y="988.15592203898063"/>
         </scene>
     </scenes>
     <resources>
         <image name="default" width="200" height="200"/>
+        <image name="vip" width="1496" height="1496"/>
     </resources>
 </document>

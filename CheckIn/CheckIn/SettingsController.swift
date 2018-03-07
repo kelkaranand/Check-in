@@ -63,7 +63,7 @@ class SettingsController :UIViewController
                     internetAlert.addAction(UIAlertAction(title: "Go back", style: .cancel, handler:
                     {
                         (alertAction: UIAlertAction) in
-                        self.performSegue(withIdentifier: "moveToOverview", sender: self)
+                        self.navigationController?.popToRootViewController(animated: true)
                     }))
                     self.present(internetAlert, animated: true)
                 }
@@ -71,7 +71,7 @@ class SettingsController :UIViewController
         alert.addAction(UIAlertAction(title: "No", style: .default, handler:
             {
                 (alertAction: UIAlertAction) in
-                self.performSegue(withIdentifier: "moveToOverview", sender: self)
+                self.navigationController?.popToRootViewController(animated: true)
         }))
         self.present(alert, animated: true)
     }
@@ -145,6 +145,7 @@ class SettingsController :UIViewController
                 let media=fields!["media"] as! String
                 let id=fields!["id"] as! String
                 let school=fields!["school"] as! String
+                let vip=fields!["vip"] as! String
 
 
                 student.setValue(fname, forKey: "firstName")
@@ -152,6 +153,7 @@ class SettingsController :UIViewController
                 student.setValue(media, forKey: "media")
                 student.setValue(id, forKey: "studentId")
                 student.setValue(school, forKey: "school")
+                student.setValue(vip, forKey: "vip")
 
                 do{
                     try managedContext.save()

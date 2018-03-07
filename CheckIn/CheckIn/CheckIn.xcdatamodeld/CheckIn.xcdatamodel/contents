@@ -15,10 +15,11 @@
         <attribute name="media" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="school" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="studentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="CheckedInStudent" positionX="-36" positionY="45" width="128" height="90"/>
         <element name="Event" positionX="-36" positionY="54" width="128" height="75"/>
-        <element name="Student" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="Student" positionX="-54" positionY="-9" width="128" height="135"/>
     </elements>
 </model>
