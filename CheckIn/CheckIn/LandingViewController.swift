@@ -19,6 +19,10 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var CheckInCountLabel: UILabel!
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }

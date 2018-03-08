@@ -53,6 +53,10 @@ class SettingsController :UIViewController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        
+        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
         let alert = UIAlertController(title: "Warning", message: "You are entering the admin page, do you want to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:
             {
@@ -202,6 +206,12 @@ class SettingsController :UIViewController
         
         //Clear CheckIn data
         ReqVar = NSFetchRequest<NSFetchRequestResult>(entityName: "CheckedInStudent")
+        DelAllReqVar = NSBatchDeleteRequest(fetchRequest: ReqVar)
+        do { try managedContext.execute(DelAllReqVar) }
+        catch { print("Error when clearing data"+error.localizedDescription) }
+        
+        //Clear Event data
+        ReqVar = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         DelAllReqVar = NSBatchDeleteRequest(fetchRequest: ReqVar)
         do { try managedContext.execute(DelAllReqVar) }
         catch { print("Error when clearing data"+error.localizedDescription) }

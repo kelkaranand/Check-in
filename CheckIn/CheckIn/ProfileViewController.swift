@@ -84,8 +84,18 @@ class ProfileViewController : UIViewController {
     let snamePrefix = "School Name : "
     
     
+    override func viewDidLoad() {
+        //Code to dismiss keyboard when user clicks on the view
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
+    }
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
         picture.image=spicture
         idLabel.text=idPrefix+id
         fnameLabel.text=fnamePrefix+fname
@@ -173,3 +183,11 @@ class ProfileViewController : UIViewController {
     }
     
 }
+
+
+
+
+
+
+
+

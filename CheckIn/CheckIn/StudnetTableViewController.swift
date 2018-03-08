@@ -42,7 +42,7 @@ class StudentTableViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        title = "Check In"
+//        title = "Check In"
         studentTableView.dataSource = self
         studentTableView.delegate = self
         studentTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -50,6 +50,8 @@ class StudentTableViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
+        self.navigationController?.navigationBar.tintColor=UIColor.white
         
         loadTableData()
     }
@@ -379,6 +381,17 @@ extension StudentTableViewController: UITableViewDelegate {
 extension StudentTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        let newRed = CGFloat(red)/255
+        let newGreen = CGFloat(green)/255
+        let newBlue = CGFloat(blue)/255
+        
+        self.init(red: newRed, green: newGreen, blue: newBlue, alpha: 1.0)
     }
 }
 

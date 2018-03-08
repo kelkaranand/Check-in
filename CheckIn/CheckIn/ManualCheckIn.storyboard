@@ -254,9 +254,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="Vjx-jr-Ex7">
-                                                <rect key="frame" x="132" y="5" width="131.5" height="30"/>
+                                                <rect key="frame" x="132" y="5.5" width="131.5" height="30"/>
                                                 <nil key="textColor"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="light" returnKeyType="continue" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -274,7 +274,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vip" translatesAutoresizingMaskIntoConstraints="NO" id="yAc-Fk-kOf">
-                                <rect key="frame" x="37" y="74" width="61" height="61.5"/>
+                                <rect key="frame" x="37" y="74" width="60.5" height="62"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
