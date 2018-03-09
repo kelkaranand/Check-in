@@ -72,7 +72,7 @@ class SettingsController :UIViewController
                     self.present(internetAlert, animated: true)
                 }
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler:
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler:
             {
                 (alertAction: UIAlertAction) in
                 self.navigationController?.popToRootViewController(animated: true)
