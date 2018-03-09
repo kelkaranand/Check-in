@@ -94,7 +94,7 @@ class ProfileViewController : UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
         
         picture.image=spicture
         idLabel.text=idPrefix+id

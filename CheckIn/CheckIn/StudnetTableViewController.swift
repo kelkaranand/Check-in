@@ -33,6 +33,25 @@ class StudentTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+//        let textFieldInsideSearchBar = searchBar.value(forKey: "text") as? UITextField
+//        textFieldInsideSearchBar?.textColor = UIColor.white
+        
+        //searchController.searchBar.barTintColor=UIColor.white
+        //searchController.searchBar.tintColor=UIColor.white
+        //searchController.searchBar.keyboardAppearance
+//        UITextField.appearance().defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        
+        // TextField Color Customization
+        let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.white
+        
+        
+        //Sets the cancel button text color
+        let cancelButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTalbe), name: NSNotification.Name(rawValue: "reload"), object: nil)
         
         // Setup search controller
@@ -51,7 +70,7 @@ class StudentTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor=UIColor.white
+        self.navigationController?.navigationBar.tintColor=UIColor(red:253,green:201,blue:16)
         
         loadTableData()
     }

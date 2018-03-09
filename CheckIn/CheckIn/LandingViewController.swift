@@ -21,7 +21,7 @@ class LandingViewController: UIViewController {
         super .viewWillAppear(animated)
         
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return

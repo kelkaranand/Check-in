@@ -16,6 +16,8 @@
 		1478EA8B2049D3FC00DA2C02 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */; };
 		1478EA8D204A04CC00DA2C02 /* QRCheckIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */; };
 		1478EA8F204A5C8E00DA2C02 /* ManualCheckIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA8E204A5C8E00DA2C02 /* ManualCheckIn.storyboard */; };
+		1478EA932051CED100DA2C02 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1478EA922051CED100DA2C02 /* LaunchViewController.swift */; };
+		1478EA952051CF5000DA2C02 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA942051CF5000DA2C02 /* Launch.storyboard */; };
 		1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1497D14D203DD05D005824EA /* GoogleService-Info.plist */; };
 		14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */; };
 		17E2EC6D519EF46F72D8F5D6 /* Pods_CheckInUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */; };
@@ -60,6 +62,8 @@
 		1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCheckIn.storyboard; sourceTree = "<group>"; };
 		1478EA8E204A5C8E00DA2C02 /* ManualCheckIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManualCheckIn.storyboard; sourceTree = "<group>"; };
+		1478EA922051CED100DA2C02 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		1478EA942051CF5000DA2C02 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		1497D14D203DD05D005824EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirTableViewController.swift; sourceTree = "<group>"; };
 		1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.release.xcconfig"; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 		B1AB0FCE20337C6E00D3C1BB /* CheckIn */ = {
 			isa = PBXGroup;
 			children = (
+				1478EA942051CF5000DA2C02 /* Launch.storyboard */,
 				1478EA8E204A5C8E00DA2C02 /* ManualCheckIn.storyboard */,
 				1497D14D203DD05D005824EA /* GoogleService-Info.plist */,
 				B1AB0FCF20337C6E00D3C1BB /* AppDelegate.swift */,
@@ -169,6 +174,7 @@
 				1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */,
 				1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */,
 				1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */,
+				1478EA922051CED100DA2C02 /* LaunchViewController.swift */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -320,6 +326,7 @@
 				1478EA8F204A5C8E00DA2C02 /* ManualCheckIn.storyboard in Resources */,
 				B1AB0FDD20337C6E00D3C1BB /* LaunchScreen.storyboard in Resources */,
 				1478EA8D204A04CC00DA2C02 /* QRCheckIn.storyboard in Resources */,
+				1478EA952051CF5000DA2C02 /* Launch.storyboard in Resources */,
 				1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */,
 				B1AB0FDA20337C6E00D3C1BB /* Assets.xcassets in Resources */,
 				B1AB0FD520337C6E00D3C1BB /* Main.storyboard in Resources */,
@@ -512,6 +519,7 @@
 				142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */,
 				B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */,
 				144849562045D93A00898655 /* ProfileViewController.swift in Sources */,
+				1478EA932051CED100DA2C02 /* LaunchViewController.swift in Sources */,
 				1419C2F2204878FB00850B36 /* LandingViewController.swift in Sources */,
 				14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */,
 			);

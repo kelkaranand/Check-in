@@ -1,7 +1,57 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvN-o8-U1Q">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Launch View Controller-->
+        <scene sceneID="PQd-RH-rCa">
+            <objects>
+                <viewController id="qvN-o8-U1Q" customClass="LaunchViewController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GTw-Ae-78J">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nu-nj-rku">
+                                <rect key="frame" x="93" y="250" width="188.5" height="187.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0nu-nj-rku" secondAttribute="height" multiplier="1:1" constant="1" id="VcU-pp-TlT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0nu-nj-rku" firstAttribute="centerY" secondItem="uxg-os-iWH" secondAttribute="centerY" id="BfX-Xh-06z"/>
+                            <constraint firstItem="0nu-nj-rku" firstAttribute="width" secondItem="GTw-Ae-78J" secondAttribute="width" multiplier="0.5" constant="1" id="hDi-ZP-XuJ"/>
+                            <constraint firstItem="0nu-nj-rku" firstAttribute="centerX" secondItem="uxg-os-iWH" secondAttribute="centerX" id="oLV-JY-KTx"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uxg-os-iWH"/>
+                    </view>
+                    <connections>
+                        <outlet property="animatedView" destination="0nu-nj-rku" id="NLK-sr-CFN"/>
+                        <segue destination="7rB-CR-KlZ" kind="presentation" identifier="moveToMain" animates="NO" modalTransitionStyle="crossDissolve" id="RJ5-8o-wH3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q0n-UL-5Md" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-106" y="68"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="91f-fh-LWr">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="7rB-CR-KlZ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j1q-Ge-0TK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="811" y="67"/>
+        </scene>
+    </scenes>
 </document>

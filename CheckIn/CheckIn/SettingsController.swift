@@ -55,7 +55,7 @@ class SettingsController :UIViewController
         
         
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
         
         let alert = UIAlertController(title: "Warning", message: "You are entering the admin page, do you want to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:
