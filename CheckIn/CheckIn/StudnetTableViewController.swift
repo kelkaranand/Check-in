@@ -48,7 +48,7 @@ class StudentTableViewController: UIViewController {
         
         
         //Sets the cancel button text color
-        let cancelButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        let cancelButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor(red:253,green:201,blue:16)]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
         
         
@@ -71,6 +71,9 @@ class StudentTableViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
         self.navigationController?.navigationBar.tintColor=UIColor(red:253,green:201,blue:16)
+        
+        //Sets text color for text in the search bar
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
         
         loadTableData()
     }
@@ -158,13 +161,7 @@ class StudentTableViewController: UIViewController {
         do {
             student = try managedContext.fetch(fetchRequest)
             
-            if(student.isEmpty)
-            {
-                let invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
-                invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
-                self.present(invalidQrAlert, animated:true)
-            }
-            else{
+            
                 
 //                let foundAlert = UIAlertController(title:"Success", message:"Student record found.", preferredStyle: .alert)
 //                foundAlert.addAction(UIAlertAction(title:"Continue", style: .default, handler:
@@ -195,8 +192,7 @@ class StudentTableViewController: UIViewController {
 //                }
 //                ))
 //                self.present(foundAlert, animated:true)
-                
-            }
+            
         }catch _ as NSError {
             print ("Could not fetch data")
         }
@@ -391,9 +387,9 @@ extension StudentTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("CELL PRESSED")
-        let selectedStudent = students[indexPath.row]
+        let selectedCell = tableView.cellForRow(at: indexPath) as! StudentTableViewCell
 //        showAlert(id: selectedStudent.value(forKey: "studentId") as! String)
-        showProfile(id: selectedStudent.value(forKey: "studentId") as! String)
+        showProfile(id: selectedCell.studentId.text as! String)
     }
 }
 

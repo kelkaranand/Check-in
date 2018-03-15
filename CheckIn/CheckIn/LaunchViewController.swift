@@ -13,17 +13,28 @@ class LaunchViewController :UIViewController
 {
     @IBOutlet weak var animatedView: UIView!
     
-    override func viewDidLoad() {
+    let imagelayer=CALayer()
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super .viewDidAppear(animated)
         generateLogo()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super .viewDidLayoutSubviews()
+        imagelayer.position=animatedView.center
     }
     
     func generateLogo()
     {
-        let imagelayer=CALayer()
+        
         imagelayer.frame=animatedView.bounds
-        let image = UIImage(named: "LJFF-logo")!
-        imagelayer.contents = image.cgImage
-        imagelayer.contentsGravity = kCAGravityCenter
+        animatedView.layer.addSublayer(imagelayer)
+        
+        
+        
+        imagelayer.contents = UIImage(named: "LJFF-logo")?.cgImage
+        imagelayer.contentsGravity = kCAGravityResizeAspect
         imagelayer.backgroundColor=UIColor.black.cgColor
         imagelayer.shadowOpacity = 0.7
         imagelayer.shadowRadius = 10.0
@@ -31,13 +42,16 @@ class LaunchViewController :UIViewController
         imagelayer.isHidden = false
         imagelayer.masksToBounds = false
         
-        animatedView.layer.addSublayer(imagelayer)
+        
+    
+        
         
         UIView.animate(withDuration: 2.0, animations: {
             self.animatedView.alpha = 1.0
         }, completion: { finished in
             self.performSegue(withIdentifier: "moveToMain", sender: self)
         })
+        
         
         
     }

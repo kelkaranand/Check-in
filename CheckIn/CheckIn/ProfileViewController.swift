@@ -84,7 +84,24 @@ class ProfileViewController : UIViewController {
     let snamePrefix = "School Name : "
     
     
+    override func viewDidLayoutSubviews() {
+        picture.layer.shadowColor = UIColor.black.cgColor
+        picture.layer.backgroundColor=UIColor.white.cgColor
+        picture.layer.shadowOpacity = 1
+        picture.layer.shadowOffset = CGSize.zero
+        picture.layer.shadowRadius = 10
+        picture.layer.shadowPath = UIBezierPath(rect: picture.bounds).cgPath
+        picture.layer.shouldRasterize = false
+        picture.layer.cornerRadius = 10
+    }
+    
+    
     override func viewDidLoad() {
+        super .viewDidLoad()
+        
+        
+        
+        
         //Code to dismiss keyboard when user clicks on the view
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
     }
@@ -95,6 +112,9 @@ class ProfileViewController : UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
         self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
+        
+        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor(red:253,green:201,blue:16)]
+        UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
         
         picture.image=spicture
         idLabel.text=idPrefix+id

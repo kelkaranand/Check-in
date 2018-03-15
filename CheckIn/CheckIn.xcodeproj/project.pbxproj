@@ -12,6 +12,7 @@
 		142E12F720361826009FA335 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F620361826009FA335 /* SettingsController.swift */; };
 		142E12F9203619CB009FA335 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F8203619CB009FA335 /* PageViewController.swift */; };
 		144849562045D93A00898655 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144849552045D93A00898655 /* ProfileViewController.swift */; };
+		144C7A9A20580CA2005744EE /* LandingController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144C7A9920580CA2005744EE /* LandingController2.swift */; };
 		1478EA892049085F00DA2C02 /* InternetConnectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */; };
 		1478EA8B2049D3FC00DA2C02 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */; };
 		1478EA8D204A04CC00DA2C02 /* QRCheckIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */; };
@@ -58,6 +59,7 @@
 		142E12F620361826009FA335 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		142E12F8203619CB009FA335 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		144849552045D93A00898655 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		144C7A9920580CA2005744EE /* LandingController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingController2.swift; sourceTree = "<group>"; };
 		1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectionTest.swift; sourceTree = "<group>"; };
 		1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCheckIn.storyboard; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		B1AB0FCE20337C6E00D3C1BB /* CheckIn */ = {
 			isa = PBXGroup;
 			children = (
+				144C7A9920580CA2005744EE /* LandingController2.swift */,
 				1478EA942051CF5000DA2C02 /* Launch.storyboard */,
 				1478EA8E204A5C8E00DA2C02 /* ManualCheckIn.storyboard */,
 				1497D14D203DD05D005824EA /* GoogleService-Info.plist */,
@@ -517,6 +520,7 @@
 				142E12F9203619CB009FA335 /* PageViewController.swift in Sources */,
 				1478EA892049085F00DA2C02 /* InternetConnectionTest.swift in Sources */,
 				142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */,
+				144C7A9A20580CA2005744EE /* LandingController2.swift in Sources */,
 				B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */,
 				144849562045D93A00898655 /* ProfileViewController.swift in Sources */,
 				1478EA932051CED100DA2C02 /* LaunchViewController.swift in Sources */,
@@ -688,12 +692,15 @@
 			baseConfigurationReference = 3C146E9A3B6824943B471C57 /* Pods-CheckIn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V9MNS6CX39;
 				INFOPLIST_FILE = CheckIn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LJFF.CheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -704,12 +711,15 @@
 			baseConfigurationReference = 1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V9MNS6CX39;
 				INFOPLIST_FILE = CheckIn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = LJFF.CheckIn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

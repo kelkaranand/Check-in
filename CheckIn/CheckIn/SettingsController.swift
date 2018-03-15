@@ -13,11 +13,15 @@ import Firebase
 
 class SettingsController :UIViewController
 {
-    @IBOutlet weak var count: UILabel!
+    @IBOutlet weak var PushDataView: UIView!
+    @IBOutlet weak var PullDataView: UIView!
+    @IBOutlet weak var PushDataHeader: UILabel!
+    @IBOutlet weak var PushDataMessage: UILabel!
+    @IBOutlet weak var PullDataHeader: UILabel!
+    @IBOutlet weak var PullDataMessage: UILabel!
     
-    //Action on Push Data button
-    @IBAction func push(_ sender: UIButton) {
-        
+    
+    @objc func pushAction(_ : UITapGestureRecognizer){
         let alert=UIAlertController(title: "Data Upload", message: "You are about to upload the check-in data on this device into the database. Are you sure you want to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(alertAction : UIAlertAction) in
             self.pushData()
@@ -25,10 +29,9 @@ class SettingsController :UIViewController
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true)
     }
-    
-    //Action on Load Data button
-    @IBAction func pull(_ sender: UIButton) {
-    
+
+   @objc func pullAction(_ : UITapGestureRecognizer)
+    {
         let alert=UIAlertController(title: "Data Import", message: "You are about to import student data on this device from the database. Are you sure you want to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(alertAction : UIAlertAction) in
             self.getData()
@@ -36,7 +39,6 @@ class SettingsController :UIViewController
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true)
         updateTable()
-//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
     
     func updateTable()
@@ -44,9 +46,62 @@ class SettingsController :UIViewController
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
     
-//    @IBAction func imagePull(_ sender: UIButton) {
-//        self.pullImages()
-//    }
+    override func viewDidLayoutSubviews() {
+        PushDataView.layer.borderColor=UIColor.black.cgColor
+        PushDataView.layer.borderWidth=5
+        PushDataView.layer.backgroundColor=UIColor.white.cgColor
+        PushDataView.layer.shouldRasterize = false
+        PushDataView.layer.cornerRadius = 10
+        
+        PushDataHeader.text="Push Data"
+        PushDataHeader.font = UIFont(name: "HelveticaNeue-Bold", size: 600)
+        PushDataHeader.numberOfLines = 0
+        PushDataHeader.minimumScaleFactor = 0.1
+        PushDataHeader.baselineAdjustment = .alignCenters
+        PushDataHeader.textAlignment  = .center
+        PushDataHeader.adjustsFontSizeToFitWidth=true
+        PushDataHeader.textColor = UIColor(red:253,green:201,blue:16)
+
+        PushDataMessage.text="Push check-in data to cloud storage."
+        PushDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
+        PushDataMessage.numberOfLines = 0
+        PushDataMessage.minimumScaleFactor = 0.1
+        PushDataMessage.baselineAdjustment = .alignCenters
+        PushDataMessage.textAlignment  = .center
+        PushDataMessage.adjustsFontSizeToFitWidth=true
+        PushDataMessage.textColor = UIColor(red:253,green:201,blue:16)
+        
+        
+        
+        PullDataView.layer.borderColor=UIColor.black.cgColor
+        PullDataView.layer.borderWidth=5
+        PullDataView.layer.backgroundColor=UIColor.white.cgColor
+        PullDataView.layer.shouldRasterize = false
+        PullDataView.layer.cornerRadius = 10
+        
+        PullDataHeader.text="Pull Data"
+        PullDataHeader.font = UIFont(name: "HelveticaNeue-Bold", size: 600)
+        PullDataHeader.numberOfLines = 0
+        PullDataHeader.minimumScaleFactor = 0.1
+        PullDataHeader.baselineAdjustment = .alignCenters
+        PullDataHeader.textAlignment  = .center
+        PullDataHeader.adjustsFontSizeToFitWidth=true
+        PullDataHeader.textColor = UIColor(red:253,green:201,blue:16)
+        
+        PullDataMessage.text="Pull event data from cloud storage."
+        PullDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
+        PullDataMessage.numberOfLines = 0
+        PullDataMessage.minimumScaleFactor = 0.1
+        PullDataMessage.baselineAdjustment = .alignCenters
+        PullDataMessage.textAlignment  = .center
+        PullDataMessage.adjustsFontSizeToFitWidth=true
+        PullDataMessage.textColor = UIColor(red:253,green:201,blue:16)
+        
+        
+        
+        
+    }
+    
     
     var students: [NSManagedObject] = []
     
@@ -56,6 +111,16 @@ class SettingsController :UIViewController
         
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
         self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
+        
+        let pushClick = UITapGestureRecognizer(target:self, action:#selector(pushAction(_ :)))
+        
+        let pullClick = UITapGestureRecognizer(target: self, action:#selector(pullAction(_ :)))
+        
+        
+        self.PushDataView.addGestureRecognizer(pushClick)
+        self.PullDataView.addGestureRecognizer(pullClick)
+        
+        
         
         let alert = UIAlertController(title: "Warning", message: "You are entering the admin page, do you want to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:
@@ -216,82 +281,9 @@ class SettingsController :UIViewController
         do { try managedContext.execute(DelAllReqVar) }
         catch { print("Error when clearing data"+error.localizedDescription) }
         
-//        //Create custom directory
-//        let fileManager = FileManager.default
-//        //Create direcotry path
-//        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
-//        //Check if directory exists at that path
-//        if !fileManager.fileExists(atPath: path){
-//            print("Creating new directory")
-//            try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-//        }else{
-//            print("Directory already exists.")
-//        }
-        
         managedContext.reset()
     }
     
-//    //Experimental code - Firebase storage to retrieve images
-//    func pullImages()
-//    {
-//        var students: [NSManagedObject] = []
-//
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
-//
-//        do {
-//            students = try managedContext.fetch(fetchRequest)
-//            print("Found students in local memory: "+String(students.count))
-//        } catch _ as NSError {
-//            print ("Could not fetch image data")
-//        }
-//
-//        for record in students{
-//            let id=record.value(forKey: "studentId") as! String
-//            print(id)
-//
-//            let storageRef = Storage.storage().reference().child(id+".jpg")
-//
-//            storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                    self.saveImageDocumentDirectory(data: UIImageJPEGRepresentation(UIImage(named:"default")!,1)! as NSData, id: id)
-//                    print("Set default image for "+id)
-//                } else {
-//                    self.saveImageDocumentDirectory(data: data! as NSData, id: id)
-//                }
-//            }
-//
-//            do{
-//                try managedContext.save()
-//            }
-//            catch let error as NSError{
-//                print("Error when pulling new image data"+error.localizedDescription)
-//            }
-//        }
-//
-//        let alert = UIAlertController(title: "Images Imported", message: "Student images successfully imported.", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        self.present(alert, animated: true)
-//
-//    }
-    
-    
-//    //Function to save image to custom directory
-//    func saveImageDocumentDirectory(data : NSData, id: String){
-//        let fileManager = FileManager.default
-//        let directoryPath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
-//        let imageName=id+".jpg"
-//        let path=(NSURL(string: directoryPath)!.appendingPathComponent(imageName))?.path
-//        let image = UIImage(data: data as Data)
-//        print(path!)
-//        let imageData = UIImageJPEGRepresentation(image!, 0.5)
-//        fileManager.createFile(atPath: path! as String, contents: imageData, attributes: nil)
-//    }
-
 
 }
 

@@ -363,6 +363,7 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             if metadataObj.stringValue != nil {
 //                showAlert(id:metadataObj.stringValue!)
                     showProfile(id: metadataObj.stringValue!)
+//                print("QRData: "+metadataObj.stringValue!)
             }
         }
     }

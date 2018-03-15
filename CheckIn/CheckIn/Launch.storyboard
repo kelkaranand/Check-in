@@ -20,8 +20,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nu-nj-rku">
-                                <rect key="frame" x="93" y="250" width="188.5" height="187.5"/>
+                            <view autoresizesSubviews="NO" alpha="0.0" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="0nu-nj-rku">
+                                <rect key="frame" x="93.5" y="250" width="188.5" height="187.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0nu-nj-rku" secondAttribute="height" multiplier="1:1" constant="1" id="VcU-pp-TlT"/>
