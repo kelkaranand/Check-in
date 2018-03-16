@@ -107,6 +107,13 @@
                                     <constraint firstItem="hq2-OF-Qun" firstAttribute="centerX" secondItem="YoI-2i-3wS" secondAttribute="centerX" id="uxG-JL-USA"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1tx-Jp-7IU">
+                                <rect key="frame" x="36.5" y="261.5" width="301" height="5"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="5" id="vDD-vD-8Lm"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAb-Ef-79N">
                                 <rect key="frame" x="74.5" y="253" width="226" height="225"/>
                                 <constraints>
@@ -150,12 +157,15 @@
                             <constraint firstItem="YoI-2i-3wS" firstAttribute="width" secondItem="AM9-s4-4JI" secondAttribute="width" multiplier="0.7" constant="1" id="B2n-uR-Cwu"/>
                             <constraint firstItem="kAb-Ef-79N" firstAttribute="width" secondItem="AM9-s4-4JI" secondAttribute="width" multiplier="0.6" constant="1" id="ECj-WG-XwS"/>
                             <constraint firstItem="BUU-Nl-9FC" firstAttribute="width" secondItem="AM9-s4-4JI" secondAttribute="width" multiplier="0.7" constant="1" id="Ijv-5f-KoT"/>
+                            <constraint firstItem="1tx-Jp-7IU" firstAttribute="top" secondItem="YoI-2i-3wS" secondAttribute="bottom" constant="30" id="JEm-6p-GsR"/>
                             <constraint firstItem="BUU-Nl-9FC" firstAttribute="top" secondItem="YoI-2i-3wS" secondAttribute="bottom" constant="150" id="PyC-fE-8Fn"/>
+                            <constraint firstItem="1tx-Jp-7IU" firstAttribute="centerX" secondItem="97v-8h-5Km" secondAttribute="centerX" id="QJm-Xx-sXL"/>
                             <constraint firstItem="YoI-2i-3wS" firstAttribute="top" secondItem="97v-8h-5Km" secondAttribute="top" constant="80" id="RY8-uU-Rle"/>
                             <constraint firstItem="kAb-Ef-79N" firstAttribute="centerX" secondItem="97v-8h-5Km" secondAttribute="centerX" id="VWy-DO-y4e"/>
                             <constraint firstItem="BUU-Nl-9FC" firstAttribute="height" secondItem="AM9-s4-4JI" secondAttribute="height" multiplier="0.45" constant="1" id="W2g-KL-sIb"/>
                             <constraint firstItem="kAb-Ef-79N" firstAttribute="centerY" secondItem="97v-8h-5Km" secondAttribute="centerY" id="Wlm-m8-pdv"/>
                             <constraint firstItem="YoI-2i-3wS" firstAttribute="centerX" secondItem="97v-8h-5Km" secondAttribute="centerX" id="ZVe-Tn-8sb"/>
+                            <constraint firstItem="1tx-Jp-7IU" firstAttribute="width" secondItem="AM9-s4-4JI" secondAttribute="width" multiplier="0.8" constant="1" id="ebd-Tv-412"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="97v-8h-5Km"/>
                     </view>
@@ -169,6 +179,7 @@
                     <connections>
                         <outlet property="EventNameLabel" destination="hq2-OF-Qun" id="VsA-P1-Dfi"/>
                         <outlet property="EventNameView" destination="YoI-2i-3wS" id="ThL-N7-IYs"/>
+                        <outlet property="LineView" destination="1tx-Jp-7IU" id="CmH-Cu-z2z"/>
                         <outlet property="LoadDataMessage" destination="kAb-Ef-79N" id="jYQ-gL-ixn"/>
                         <outlet property="NumberLabel" destination="SrO-1B-zQ4" id="Qbd-0d-mUQ"/>
                         <outlet property="NumberMessageLabel" destination="2Co-X9-7pl" id="hPa-A9-3TA"/>

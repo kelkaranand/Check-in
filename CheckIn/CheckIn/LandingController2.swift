@@ -20,6 +20,7 @@ class LandingController2: UIViewController {
     @IBOutlet weak var EventNameLabel: UILabel!
     @IBOutlet weak var NumberView: UIView!
     
+    @IBOutlet weak var LineView: UIView!
     @IBOutlet weak var NumberLabel: UILabel!
     @IBOutlet weak var EventNameView: UIView!
     
@@ -33,6 +34,7 @@ class LandingController2: UIViewController {
             NumberView.isHidden=true
             EventNameView.isHidden=true
             LoadDataMessage.isHidden=false
+            LineView.isHidden=true
             
 //            LoadDataMessage.text="Load data from the admin controls to set up the device for the event."
 //            LoadDataMessage.font = UIFont(name: "Helvetica", size: 40)
@@ -49,6 +51,8 @@ class LandingController2: UIViewController {
             LoadDataMessage.isHidden=true
             NumberView.isHidden=false
             EventNameView.isHidden=false
+            LineView.isHidden=false
+            LineView.backgroundColor=UIColor(red:3,green:129,blue:0)
             
 //            EventNameView.layer.borderColor=UIColor.black.cgColor
 //            EventNameView.layer.borderWidth=1

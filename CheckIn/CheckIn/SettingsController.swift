@@ -35,10 +35,10 @@ class SettingsController :UIViewController
         let alert=UIAlertController(title: "Data Import", message: "You are about to import student data on this device from the database. Are you sure you want to continue?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(alertAction : UIAlertAction) in
             self.getData()
+            self.updateTable()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true)
-        updateTable()
     }
     
     func updateTable()
@@ -256,7 +256,6 @@ class SettingsController :UIViewController
         var temp = ""
         for i in x.indices
         {
-            print(x)
             temp=temp+decrypter[String(x[i])]!
         }
         return temp
@@ -333,7 +332,8 @@ class SettingsController :UIViewController
         }))
         self.present(alert, animated: true)
         
-        
+        print("UNCOMMITTED CHANGES?")
+        print(managedContext.hasChanges)
         
     }
     

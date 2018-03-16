@@ -52,7 +52,7 @@ class StudentTableViewController: UIViewController {
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
         
         
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTalbe), name: NSNotification.Name(rawValue: "reload"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "reload"), object: nil)
         
         // Setup search controller
         searchController.searchResultsUpdater = self
@@ -78,8 +78,9 @@ class StudentTableViewController: UIViewController {
         loadTableData()
     }
     
-    @objc func reloadTalbe(){
+    @objc func reloadTable(){
         loadTableData()
+        print("here")
         self.studentTableView.reloadData()
     }
     
@@ -96,6 +97,11 @@ class StudentTableViewController: UIViewController {
             print ("Could not fetch data")
         }
         appDelegate.saveContext()
+        do {
+            try managedContext.save()
+        } catch _ as NSError {
+            print ("Could not save data")
+        }
     }
     
     
