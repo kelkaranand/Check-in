@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>921492183539-kil5brog81o34p0h2gruvko4gp9j1ebc.apps.googleusercontent.com</string>
+	<string>389549890467-3d0u5k34atgim29lev0222f6uokmn0ai.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.921492183539-kil5brog81o34p0h2gruvko4gp9j1ebc</string>
+	<string>com.googleusercontent.apps.389549890467-3d0u5k34atgim29lev0222f6uokmn0ai</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCW0U9lsnTo7likqBPTd3umJ2KR4Ah7O0w</string>
+	<string>AIzaSyCnJwGDa2eJT3Xt72Vg5uguW_6paw32TmA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>921492183539</string>
+	<string>389549890467</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>LJFF.CheckIn</string>
 	<key>PROJECT_ID</key>
-	<string>checkin-40775</string>
+	<string>checkin-e07f4</string>
 	<key>STORAGE_BUCKET</key>
-	<string>checkin-40775.appspot.com</string>
+	<string>checkin-e07f4.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:921492183539:ios:114fbfff5603c2cf</string>
+	<string>1:389549890467:ios:114fbfff5603c2cf</string>
 	<key>DATABASE_URL</key>
-	<string>https://checkin-40775.firebaseio.com</string>
+	<string>https://checkin-e07f4.firebaseio.com</string>
 </dict>
 </plist>

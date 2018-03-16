@@ -56,7 +56,7 @@ class SettingsController :UIViewController
         PushDataHeader.text="Push Data"
         PushDataHeader.font = UIFont(name: "HelveticaNeue-Bold", size: 600)
         PushDataHeader.numberOfLines = 0
-        PushDataHeader.minimumScaleFactor = 0.1
+        PushDataHeader.minimumScaleFactor = 0.01
         PushDataHeader.baselineAdjustment = .alignCenters
         PushDataHeader.textAlignment  = .center
         PushDataHeader.adjustsFontSizeToFitWidth=true
@@ -65,7 +65,7 @@ class SettingsController :UIViewController
         PushDataMessage.text="Push check-in data to cloud storage."
         PushDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
         PushDataMessage.numberOfLines = 0
-        PushDataMessage.minimumScaleFactor = 0.1
+        PushDataMessage.minimumScaleFactor = 0.01
         PushDataMessage.baselineAdjustment = .alignCenters
         PushDataMessage.textAlignment  = .center
         PushDataMessage.adjustsFontSizeToFitWidth=true
@@ -82,7 +82,7 @@ class SettingsController :UIViewController
         PullDataHeader.text="Pull Data"
         PullDataHeader.font = UIFont(name: "HelveticaNeue-Bold", size: 600)
         PullDataHeader.numberOfLines = 0
-        PullDataHeader.minimumScaleFactor = 0.1
+        PullDataHeader.minimumScaleFactor = 0.01
         PullDataHeader.baselineAdjustment = .alignCenters
         PullDataHeader.textAlignment  = .center
         PullDataHeader.adjustsFontSizeToFitWidth=true
@@ -91,7 +91,7 @@ class SettingsController :UIViewController
         PullDataMessage.text="Pull event data from cloud storage."
         PullDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
         PullDataMessage.numberOfLines = 0
-        PullDataMessage.minimumScaleFactor = 0.1
+        PullDataMessage.minimumScaleFactor = 0.01
         PullDataMessage.baselineAdjustment = .alignCenters
         PullDataMessage.textAlignment  = .center
         PullDataMessage.adjustsFontSizeToFitWidth=true
@@ -168,12 +168,17 @@ class SettingsController :UIViewController
             }
             
             let alert = UIAlertController(title: "Data Uploaded", message: "Check-in data successfully uploaded.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler:
+                {
+                    (alertAction: UIAlertAction) in
+                    self.navigationController?.popToRootViewController(animated: true)
+            }))
             self.present(alert, animated: true)
             
         } catch _ as NSError {
             print ("Could not fetch data")
         }
+        
     }
     
     
@@ -186,9 +191,82 @@ class SettingsController :UIViewController
     }
     
     
+    var decrypter = [String:String]()
+    
+    func initializeDecrypter()
+    {
+        decrypter["d"]="a"
+        decrypter["q"]="b"
+        decrypter["e"]="c"
+        decrypter["r"]="d"
+        decrypter["f"]="e"
+        decrypter["s"]="f"
+        decrypter["g"]="g"
+        decrypter["t"]="h"
+        decrypter["h"]="i"
+        decrypter["u"]="j"
+        decrypter["i"]="k"
+        decrypter["v"]="l"
+        decrypter["j"]="m"
+        decrypter["w"]="n"
+        decrypter["k"]="o"
+        decrypter["x"]="p"
+        decrypter["l"]="q"
+        decrypter["y"]="r"
+        decrypter["m"]="s"
+        decrypter["z"]="t"
+        decrypter["n"]="u"
+        decrypter["c"]="v"
+        decrypter["o"]="w"
+        decrypter["b"]="x"
+        decrypter["p"]="y"
+        decrypter["a"]="z"
+    
+        decrypter["D"]="A"
+        decrypter["Q"]="B"
+        decrypter["E"]="C"
+        decrypter["R"]="D"
+        decrypter["F"]="E"
+        decrypter["S"]="F"
+        decrypter["G"]="G"
+        decrypter["T"]="H"
+        decrypter["H"]="I"
+        decrypter["U"]="J"
+        decrypter["I"]="K"
+        decrypter["V"]="L"
+        decrypter["J"]="M"
+        decrypter["W"]="N"
+        decrypter["K"]="O"
+        decrypter["X"]="P"
+        decrypter["L"]="Q"
+        decrypter["Y"]="R"
+        decrypter["M"]="S"
+        decrypter["Z"]="T"
+        decrypter["N"]="U"
+        decrypter["C"]="V"
+        decrypter["O"]="W"
+        decrypter["B"]="X"
+        decrypter["P"]="Y"
+        decrypter["A"]="Z"
+        decrypter[" "]=" "
+    }
+    
+    func decrypt(x:String) -> String
+    {
+        var temp = ""
+        for i in x.indices
+        {
+            print(x)
+            temp=temp+decrypter[String(x[i])]!
+        }
+        return temp
+    }
+    
+    
     //Function to read Student data from Firebase
     func pullData()
     {
+        initializeDecrypter()
         
         //Pull data from database
         
@@ -216,12 +294,11 @@ class SettingsController :UIViewController
                 let school=fields!["school"] as! String
                 let vip=fields!["vip"] as! String
 
-
-                student.setValue(fname, forKey: "firstName")
-                student.setValue(lname, forKey: "lastName")
+                student.setValue(self.decrypt(x:fname), forKey: "firstName")
+                student.setValue(self.decrypt(x:lname), forKey: "lastName")
                 student.setValue(media, forKey: "media")
                 student.setValue(id, forKey: "studentId")
-                student.setValue(school, forKey: "school")
+                student.setValue(self.decrypt(x:school), forKey: "school")
                 student.setValue(vip, forKey: "vip")
 
                 do{
@@ -249,8 +326,13 @@ class SettingsController :UIViewController
         
         //Success alert
         let alert = UIAlertController(title: "Data Imported", message: "Student data successfully imported.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:
+            {
+                (alertAction: UIAlertAction) in
+                self.navigationController?.popToRootViewController(animated: true)
+        }))
         self.present(alert, animated: true)
+        
         
         
     }

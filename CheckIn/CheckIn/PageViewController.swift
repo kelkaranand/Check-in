@@ -11,7 +11,7 @@ import UIKit
 class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
     lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newVc(viewController :"Landing"), self.newVc(viewController: "QRScanFlow"),
+        return [self.newVc(viewController :"QRScanFlow"), self.newVc(viewController: "Landing"),
                 self.newVc(viewController: "manualFlow")]
     }()
     
@@ -20,7 +20,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     func configurePageControl() {
         pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = orderedViewControllers.count
-        self.pageControl.currentPage = 0
+        self.pageControl.currentPage = 1
         self.pageControl.tintColor = UIColor.black
         self.pageControl.pageIndicatorTintColor = UIColor(red:253,green:201,blue:16)
         self.pageControl.currentPageIndicatorTintColor = UIColor(red:2,green:86,blue:0)
@@ -33,12 +33,17 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.dataSource = self
         
         // This sets up the first view that will show up on our page control
-        if let firstViewController = orderedViewControllers.first {
-            setViewControllers([firstViewController],
-                               direction: .forward,
-                               animated: true,
-                               completion: nil)
-        }
+//        if let firstViewController = orderedViewControllers.first {
+//            setViewControllers([firstViewController],
+//                               direction: .forward,
+//                               animated: true,
+//                               completion: nil)
+//        }
+        
+        setViewControllers([orderedViewControllers[1]],
+                           direction: .forward,
+                           animated: true,
+                           completion: nil)
 
         self.delegate = self
         configurePageControl()

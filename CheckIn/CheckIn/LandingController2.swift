@@ -50,16 +50,16 @@ class LandingController2: UIViewController {
             NumberView.isHidden=false
             EventNameView.isHidden=false
             
-            EventNameView.layer.borderColor=UIColor.black.cgColor
-            EventNameView.layer.borderWidth=1
-            EventNameView.layer.shadowColor = UIColor.black.cgColor
-            EventNameView.layer.backgroundColor=UIColor.white.cgColor
-            EventNameView.layer.shadowOpacity = 1
-            EventNameView.layer.shadowOffset = CGSize.zero
-            EventNameView.layer.shadowRadius = 10
-            EventNameView.layer.shadowPath = UIBezierPath(rect: EventNameView.bounds).cgPath
-            EventNameView.layer.shouldRasterize = false
-            EventNameView.layer.cornerRadius = 10
+//            EventNameView.layer.borderColor=UIColor.black.cgColor
+//            EventNameView.layer.borderWidth=1
+//            EventNameView.layer.shadowColor = UIColor.black.cgColor
+//            EventNameView.layer.backgroundColor=UIColor.white.cgColor
+//            EventNameView.layer.shadowOpacity = 1
+//            EventNameView.layer.shadowOffset = CGSize.zero
+//            EventNameView.layer.shadowRadius = 10
+//            EventNameView.layer.shadowPath = UIBezierPath(rect: EventNameView.bounds).cgPath
+//            EventNameView.layer.shouldRasterize = false
+//            EventNameView.layer.cornerRadius = 10
             
             
 //            EventNameLabel.text=EventName
@@ -71,16 +71,16 @@ class LandingController2: UIViewController {
 //            EventNameLabel.adjustsFontSizeToFitWidth=true
 //            EventNameLabel.textColor = UIColor(red:253,green:201,blue:16)
             
-            NumberView.layer.borderColor=UIColor.black.cgColor
-            NumberView.layer.borderWidth=1
-            NumberView.layer.shadowColor = UIColor.black.cgColor
-            NumberView.layer.backgroundColor=UIColor.white.cgColor
-            NumberView.layer.shadowOpacity = 1
-            NumberView.layer.shadowOffset = CGSize.zero
-            NumberView.layer.shadowRadius = 10
-            NumberView.layer.shadowPath = UIBezierPath(rect: NumberView.bounds).cgPath
-            NumberView.layer.shouldRasterize = false
-            NumberView.layer.cornerRadius = 10
+//            NumberView.layer.borderColor=UIColor.black.cgColor
+//            NumberView.layer.borderWidth=1
+//            NumberView.layer.shadowColor = UIColor.black.cgColor
+//            NumberView.layer.backgroundColor=UIColor.white.cgColor
+//            NumberView.layer.shadowOpacity = 1
+//            NumberView.layer.shadowOffset = CGSize.zero
+//            NumberView.layer.shadowRadius = 10
+//            NumberView.layer.shadowPath = UIBezierPath(rect: NumberView.bounds).cgPath
+//            NumberView.layer.shouldRasterize = false
+//            NumberView.layer.cornerRadius = 10
             
             
 //            NumberMessageLabel.text="Number of students checked in on this device:"
