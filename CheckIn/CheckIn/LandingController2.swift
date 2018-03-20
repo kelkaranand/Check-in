@@ -30,6 +30,7 @@ class LandingController2: UIViewController {
         //Check if data has been loaded by checking if event name is present
         if(EventName=="")
         {
+            
             self.view.backgroundColor=UIColor(red:2,green:86,blue:0)
             NumberView.isHidden=true
             EventNameView.isHidden=true
@@ -47,6 +48,8 @@ class LandingController2: UIViewController {
             
         }
         else{
+            
+            
             self.view.backgroundColor=UIColor.white
             LoadDataMessage.isHidden=true
             NumberView.isHidden=false
@@ -128,7 +131,19 @@ class LandingController2: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
+        
         checkEventName()
+        if(EventName=="")
+        {
+            //Disable swipe
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
+        }
+        else{
+            //Enable swipe
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createSwipeList"), object: nil)
+        }
+        
+        
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
         self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
         
@@ -211,10 +226,10 @@ class LandingController2: UIViewController {
         
     }
     
-    func checkEventName() -> BooleanLiteralType
+    func checkEventName()
     {
         guard let appDelegate = UIApplication.shared.delegate as?AppDelegate else {
-                return false
+                return
             }
         let managedContext = appDelegate.persistentContainer.viewContext
         //Get event name
@@ -224,14 +239,11 @@ class LandingController2: UIViewController {
                     if(!(temp==nil))
                     {
                         self.EventName=temp!
-                        return true
                     }
                 }
                 catch _ as NSError {
                     self.EventName = "Load data from the admin controls to set up the device for the event."
-                    return false
                 }
-        return false
     }
     
     

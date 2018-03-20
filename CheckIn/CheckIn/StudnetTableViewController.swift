@@ -34,6 +34,8 @@ class StudentTableViewController: UIViewController {
         super.viewDidLoad()
         
         
+        
+        
 //        let textFieldInsideSearchBar = searchBar.value(forKey: "text") as? UITextField
 //        textFieldInsideSearchBar?.textColor = UIColor.white
         
@@ -384,6 +386,25 @@ extension StudentTableViewController: UITableViewDataSource {
         cell.studentId!.text = student.value(forKey: "studentId") as? String
         cell.firstName!.text = student.value(forKey: "firstName") as? String
         cell.lastName!.text = student.value(forKey: "lastName") as? String
+        
+        cell.studentId.numberOfLines=0;
+        cell.studentId.font = UIFont(name: "HelveticaNeue", size: 25)
+        cell.studentId.minimumScaleFactor = 0.1
+        cell.studentId.adjustsFontSizeToFitWidth=true
+        cell.studentId.textColor=UIColor(red:3,green:129,blue:0)
+        
+        
+        cell.firstName.numberOfLines=0;
+        cell.firstName.font = UIFont(name: "HelveticaNeue", size: 25)
+        cell.firstName.minimumScaleFactor = 0.1
+        cell.firstName.adjustsFontSizeToFitWidth=true
+        cell.firstName.textColor = UIColor(red:253,green:201,blue:16)
+        
+        cell.lastName.numberOfLines=0;
+        cell.lastName.font = UIFont(name: "HelveticaNeue", size: 25)
+        cell.lastName.minimumScaleFactor = 0.1
+        cell.lastName.adjustsFontSizeToFitWidth=true
+        cell.lastName.textColor = UIColor(red:253,green:201,blue:16)
         
         return cell
     }

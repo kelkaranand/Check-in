@@ -20,6 +20,8 @@ class SettingsController :UIViewController
     @IBOutlet weak var PullDataHeader: UILabel!
     @IBOutlet weak var PullDataMessage: UILabel!
     
+    @IBOutlet var mainView: UIView!
+    
     
     @objc func pushAction(_ : UITapGestureRecognizer){
         let alert=UIAlertController(title: "Data Upload", message: "You are about to upload the check-in data on this device into the database. Are you sure you want to continue?", preferredStyle: .alert)
@@ -45,6 +47,8 @@ class SettingsController :UIViewController
     {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
+    
+    
     
     override func viewDidLayoutSubviews() {
         PushDataView.layer.borderColor=UIColor.black.cgColor
@@ -116,7 +120,6 @@ class SettingsController :UIViewController
         
         let pullClick = UITapGestureRecognizer(target: self, action:#selector(pullAction(_ :)))
         
-        
         self.PushDataView.addGestureRecognizer(pushClick)
         self.PullDataView.addGestureRecognizer(pullClick)
         
@@ -126,6 +129,9 @@ class SettingsController :UIViewController
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:
             {
                 (alertAction: UIAlertAction) in
+                
+                //Disable swipe
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
                 if (!InternetConnectionTest.isInternetAvailable())
                 {
                     let internetAlert = UIAlertController(title: "No internet connection.", message: "The device is not connected to the internet at the moment. Admin functions cannot be performed without an internet connection.", preferredStyle: .alert)

@@ -172,6 +172,7 @@
                     <navigationItem key="navigationItem" id="Zrp-r7-Hvs">
                         <barButtonItem key="leftBarButtonItem" title="Admin" style="plain" id="ZB9-O1-W46">
                             <connections>
+                                <action selector="AdminButtonClick:" destination="dbe-cx-cQ2" id="qyc-ca-HaM"/>
                                 <segue destination="lMh-Tw-OAR" kind="show" id="Fez-x0-1JN"/>
                             </connections>
                         </barButtonItem>
@@ -208,7 +209,7 @@
         <!--Settings Controller-->
         <scene sceneID="Ovx-Xn-1NR">
             <objects>
-                <viewController storyboardIdentifier="Settings" id="lMh-Tw-OAR" customClass="SettingsController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="settingsView" storyboardIdentifier="Settings" id="lMh-Tw-OAR" customClass="SettingsController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sHc-nb-6rq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -350,6 +351,7 @@
                         <outlet property="PushDataHeader" destination="BTR-XR-Y4K" id="Y4A-uQ-6yc"/>
                         <outlet property="PushDataMessage" destination="Tzr-GF-aLC" id="PTZ-Ua-sax"/>
                         <outlet property="PushDataView" destination="xb4-Yy-FOv" id="ZAj-2R-nVH"/>
+                        <outlet property="mainView" destination="sHc-nb-6rq" id="tdv-nn-3fl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aIp-lB-bxB" userLabel="First Responder" sceneMemberID="firstResponder"/>

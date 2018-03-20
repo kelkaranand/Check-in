@@ -17,6 +17,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     
     var pageControl = UIPageControl()
     
+    
     func configurePageControl() {
         pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = orderedViewControllers.count
@@ -32,24 +33,27 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         
         self.dataSource = self
         
-        // This sets up the first view that will show up on our page control
-//        if let firstViewController = orderedViewControllers.first {
-//            setViewControllers([firstViewController],
-//                               direction: .forward,
-//                               animated: true,
-//                               completion: nil)
-//        }
-        
         setViewControllers([orderedViewControllers[1]],
                            direction: .forward,
                            animated: true,
                            completion: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.disableSwipe(notification:)), name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.enableSwipe(notification:)), name: NSNotification.Name(rawValue: "createSwipeList"), object: nil)
+        
 
         self.delegate = self
         configurePageControl()
-        // Do any additional setup after loading the view.
     }
     
+    @objc func disableSwipe(notification: NSNotification){
+        self.dataSource = nil
+    }
+    
+    @objc func enableSwipe(notification: NSNotification){
+        self.dataSource = self
+        self.pageControl.currentPage=1
+    }
     
     
 
@@ -114,14 +118,5 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.pageControl.currentPage = orderedViewControllers.index(of: pageContentViewController)!
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

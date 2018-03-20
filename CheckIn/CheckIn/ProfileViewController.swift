@@ -99,11 +99,28 @@ class ProfileViewController : UIViewController {
     override func viewDidLoad() {
         super .viewDidLoad()
         
-        
-        
+        //Code to move view with keyboard
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         //Code to dismiss keyboard when user clicks on the view
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
     
     
@@ -138,6 +155,10 @@ class ProfileViewController : UIViewController {
         {
             vipBanner.isHidden=true
         }
+        fnameLabel.adjustsFontSizeToFitWidth=true
+        lnameLabel.adjustsFontSizeToFitWidth=true
+        snameLabel.adjustsFontSizeToFitWidth=true
+        
     }
     
     //Function to check if media waiver has been accepted
