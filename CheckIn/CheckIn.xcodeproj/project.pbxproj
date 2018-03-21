@@ -21,6 +21,7 @@
 		1478EA952051CF5000DA2C02 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA942051CF5000DA2C02 /* Launch.storyboard */; };
 		1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1497D14D203DD05D005824EA /* GoogleService-Info.plist */; };
 		14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */; };
+		14F86D46206186420026A016 /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F86D45206186420026A016 /* SignatureViewController.swift */; };
 		17E2EC6D519EF46F72D8F5D6 /* Pods_CheckInUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */; };
 		2997EEBF262EA3FEDE249A4B /* Pods_CheckIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAED172584136CC47B4A6F3 /* Pods_CheckIn.framework */; };
 		2D90C33BFC472DB098E42765 /* Pods_CheckInTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD76409DB730BB6B87928BBD /* Pods_CheckInTests.framework */; };
@@ -68,6 +69,7 @@
 		1478EA942051CF5000DA2C02 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		1497D14D203DD05D005824EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirTableViewController.swift; sourceTree = "<group>"; };
+		14F86D45206186420026A016 /* SignatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
 		1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.release.xcconfig"; sourceTree = "<group>"; };
 		3C146E9A3B6824943B471C57 /* Pods-CheckIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.debug.xcconfig"; sourceTree = "<group>"; };
 		A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckInUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,7 @@
 				1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */,
 				1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */,
 				1478EA922051CED100DA2C02 /* LaunchViewController.swift */,
+				14F86D45206186420026A016 /* SignatureViewController.swift */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */,
 				142E12F9203619CB009FA335 /* PageViewController.swift in Sources */,
 				1478EA892049085F00DA2C02 /* InternetConnectionTest.swift in Sources */,
+				14F86D46206186420026A016 /* SignatureViewController.swift in Sources */,
 				142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */,
 				144C7A9A20580CA2005744EE /* LandingController2.swift in Sources */,
 				B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */,
