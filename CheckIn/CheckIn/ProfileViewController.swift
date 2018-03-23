@@ -21,42 +21,31 @@ class ProfileViewController : UIViewController {
     var vip : String = ""
     var spicture : UIImage = UIImage(named:"default")!
     
+    //Data stack view
+    @IBOutlet weak var dataView: UIView!
     
-//    @IBOutlet weak var picture: UIImageView!
-//    @IBOutlet weak var idLabel: UILabel!
-//    @IBOutlet weak var fnameLabel: UILabel!
-//    @IBOutlet weak var lnameLabel: UILabel!
-//    @IBOutlet weak var snameLabel: UILabel!
-//    @IBAction func checkIn(_ sender: UIButton) {
-//        let guestAlert=UIAlertController(title: "Guests", message: "Enter the number of guests.", preferredStyle: .alert)
-//        guestAlert.addTextField(configurationHandler: {(textField) in
-//            textField.placeholder = "Number of Guests"
-//        })
-
+    //Headers
+    @IBOutlet weak var idHeader: UILabel!
+    @IBOutlet weak var fnameHeader: UILabel!
+    @IBOutlet weak var lnameHeader: UILabel!
+    @IBOutlet weak var snameHeader: UILabel!
+    @IBOutlet weak var mediaHeader: UILabel!
+    @IBOutlet weak var guestsHeader: UILabel!
     
-    @IBOutlet weak var vipBanner: UIImageView!
-    @IBOutlet weak var mediaFlag: UISwitch!
-    @IBOutlet weak var guestCount: UITextField!
+    //Data labels
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var fnameLabel: UILabel!
     @IBOutlet weak var lnameLabel: UILabel!
     @IBOutlet weak var snameLabel: UILabel!
+    @IBOutlet weak var mediaLabel: UILabel!
+    @IBOutlet weak var guestCount: UITextField!
+    
+    @IBOutlet weak var vipBanner: UIImageView!
     @IBOutlet weak var picture: UIImageView!
     @IBAction func checkIn(_ sender: UIButton) {
-//        let guestAlert=UIAlertController(title: "Guests", message: "Enter the number of guests.", preferredStyle: .alert)
-//            guestAlert.addTextField(configurationHandler: {(textField) in
-//                textField.placeholder = "Number of Guests"
-//        })
-//
-//        guestAlert.addAction(UIAlertAction(title: "Check-in", style: .default, handler:
-//            {
-//                (alertAction: UIAlertAction) in
-                //Code after Check-in is pressed
-                //Check if media waiver is not accepted and show alert as required
-        
         //Get status of media switch
         var flag:String
-        if(mediaFlag.isOn)
+        if(media=="Y")
         {
             flag="Y"
         }
@@ -74,14 +63,7 @@ class ProfileViewController : UIViewController {
             guests="0";
         }
         self.checkMediaWaiver(indicator: flag, id:self.id, fname:self.fname, lname:self.lname, guests: guests!)
-//        }))
-//        self.present(guestAlert, animated: true)
     }
-    
-    let idPrefix = "APS ID : "
-    let fnamePrefix = "First Name : "
-    let lnamePrefix = "Last Name : "
-    let snamePrefix = "School Name : "
     
     
     override func viewDidLayoutSubviews() {
@@ -93,11 +75,21 @@ class ProfileViewController : UIViewController {
         picture.layer.shadowPath = UIBezierPath(rect: picture.bounds).cgPath
         picture.layer.shouldRasterize = false
         picture.layer.cornerRadius = 10
+        
+//        dataView.layer.shadowColor = UIColor.black.cgColor
+//        dataView.layer.backgroundColor=UIColor.white.cgColor
+//        dataView.layer.shadowOpacity = 1
+//        dataView.layer.shadowOffset = CGSize.zero
+//        dataView.layer.shadowRadius = 10
+//        dataView.layer.shadowPath = UIBezierPath(rect: dataView.bounds).cgPath
+//        dataView.layer.shouldRasterize = false
+//        dataView.layer.cornerRadius = 10
     }
     
     
     override func viewDidLoad() {
         super .viewDidLoad()
+        
         
         //Code to move view with keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -134,19 +126,22 @@ class ProfileViewController : UIViewController {
         UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
         
         picture.image=spicture
-        idLabel.text=idPrefix+id
-        fnameLabel.text=fnamePrefix+fname
-        lnameLabel.text=lnamePrefix+lname
-        snameLabel.text=snamePrefix+sname
-        print(media)
+        idLabel.text=id
+        fnameLabel.text=fname
+        lnameLabel.text=lname
+        snameLabel.text=sname
+        
+        //Set media waiver values
         if(media=="Y")
         {
-            mediaFlag.setOn(true, animated: true)
+            mediaLabel.text="Signed"
         }
         else if(media=="N")
         {
-            mediaFlag.setOn(false, animated: true)
+            mediaLabel.text="Not Signed"
         }
+        
+        //Check VIP status
         if(vip=="Y")
         {
             vipBanner.isHidden=false
@@ -155,10 +150,40 @@ class ProfileViewController : UIViewController {
         {
             vipBanner.isHidden=true
         }
-        fnameLabel.adjustsFontSizeToFitWidth=true
-        lnameLabel.adjustsFontSizeToFitWidth=true
-        snameLabel.adjustsFontSizeToFitWidth=true
         
+        formatLabel(label: idHeader, header: true)
+        formatLabel(label: idLabel, header: false)
+        formatLabel(label: fnameHeader, header: true)
+        formatLabel(label: fnameLabel, header: false)
+        formatLabel(label: lnameHeader, header: true)
+        formatLabel(label: lnameLabel, header: false)
+        formatLabel(label: snameHeader, header: true)
+        formatLabel(label: snameLabel, header: false)
+        formatLabel(label: mediaHeader, header: true)
+        formatLabel(label: mediaLabel, header: false)
+        formatLabel(label: guestsHeader, header: true)
+        
+    }
+    
+    //Function to configure the labels properties to resize and color
+    func formatLabel(label:UILabel,header:Bool)
+    {
+        var color:UIColor
+        var font:UIFont
+        if(header)
+        {
+            color=UIColor(red:3,green:129,blue:0)
+            font=UIFont(name: "HelveticaNeue-Bold", size: 20)!
+        }
+        else{
+            color=UIColor(red:253,green:201,blue:16)
+            font=UIFont(name: "HelveticaNeue-Bold", size: 20)!
+        }
+        label.numberOfLines=0
+        label.font = font
+        label.minimumScaleFactor=0.1
+        label.adjustsFontSizeToFitWidth=true
+        label.textColor=color
     }
     
     //Function to check if media waiver has been accepted
@@ -175,7 +200,7 @@ class ProfileViewController : UIViewController {
             mediaAlert.addAction(UIAlertAction(title:"Continue", style: .default, handler: {(alert:UIAlertAction) in
                 self.checkInStudent(id: id, fname: fname, lname: lname, guests:guests, media: indicator)
             }))
-            mediaAlert.addAction(UIAlertAction(title: "Go back", style: .cancel, handler: nil))
+//            mediaAlert.addAction(UIAlertAction(title: "Go back", style: .cancel, handler: nil))
             self.present(mediaAlert, animated: true)
         }
             //If media waiver is accepted, proceed with check-in
@@ -213,14 +238,20 @@ class ProfileViewController : UIViewController {
         }
         
         //Print final success message and move back to QR screen
-        let successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
-        successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:
-            {
-                (alertAction: UIAlertAction) in
-                self.navigationController?.popToRootViewController(animated: true)
-                
-        }))
-        self.present(successAlert, animated: true)
+//        let successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
+//        successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:
+//            {
+//                (alertAction: UIAlertAction) in
+//                self.navigationController?.popToRootViewController(animated: true)
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
+//
+//
+//        }))
+//        self.present(successAlert, animated: true)
+        
+        self.navigationController?.popToRootViewController(animated: true)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
+        
     }
     
 }

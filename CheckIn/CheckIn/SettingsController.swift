@@ -66,7 +66,7 @@ class SettingsController :UIViewController
         PushDataHeader.adjustsFontSizeToFitWidth=true
         PushDataHeader.textColor = UIColor(red:253,green:201,blue:16)
 
-        PushDataMessage.text="Push check-in data to cloud storage."
+        PushDataMessage.text="Push check-in data to cloud storage"
         PushDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
         PushDataMessage.numberOfLines = 0
         PushDataMessage.minimumScaleFactor = 0.01
@@ -92,7 +92,7 @@ class SettingsController :UIViewController
         PullDataHeader.adjustsFontSizeToFitWidth=true
         PullDataHeader.textColor = UIColor(red:253,green:201,blue:16)
         
-        PullDataMessage.text="Pull event data from cloud storage."
+        PullDataMessage.text="Pull event data from cloud storage"
         PullDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
         PullDataMessage.numberOfLines = 0
         PullDataMessage.minimumScaleFactor = 0.01
@@ -254,7 +254,6 @@ class SettingsController :UIViewController
         decrypter["B"]="X"
         decrypter["P"]="Y"
         decrypter["A"]="Z"
-        decrypter[" "]=" "
     }
     
     func decrypt(x:String) -> String
@@ -262,7 +261,14 @@ class SettingsController :UIViewController
         var temp = ""
         for i in x.indices
         {
-            temp=temp+decrypter[String(x[i])]!
+            if(decrypter.keys.contains(String(x[i])))
+            {
+                temp=temp+decrypter[String(x[i])]!
+            }
+            else{
+                print(String(x[i]))
+                temp=temp+String(x[i])
+            }
         }
         return temp
     }

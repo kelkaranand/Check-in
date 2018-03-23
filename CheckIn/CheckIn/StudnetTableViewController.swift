@@ -28,21 +28,8 @@ class StudentTableViewController: UIViewController {
     var filteredStudents: [NSManagedObject] = []
     let searchController = UISearchController(searchResultsController: nil)
     
-    //var students=[student]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
-//        let textFieldInsideSearchBar = searchBar.value(forKey: "text") as? UITextField
-//        textFieldInsideSearchBar?.textColor = UIColor.white
-        
-        //searchController.searchBar.barTintColor=UIColor.white
-        //searchController.searchBar.tintColor=UIColor.white
-        //searchController.searchBar.keyboardAppearance
-//        UITextField.appearance().defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
         
         // TextField Color Customization
         let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
@@ -106,33 +93,6 @@ class StudentTableViewController: UIViewController {
         }
     }
     
-    
-    
-    //Experimental code
-    
-//    func getDirectoryPath() -> String {
-//        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("customDirectory")
-//        let documentsDirectory = path
-//        return documentsDirectory
-//    }
-//
-//    func getImage(id: String) -> UIImage{
-//        let fileManager = FileManager.default
-//        let imagePAth = (self.getDirectoryPath() as NSString).appendingPathComponent(id+".jpg")
-//        if fileManager.fileExists(atPath: imagePAth){
-//            //            self.imageView.image = UIImage(contentsOfFile: imagePAth)
-//            return UIImage(contentsOfFile: imagePAth)!
-//        }else{
-//            print("No Image")
-//        }
-//        print("Default image")
-//        return UIImage(named:"default")!
-//    }
-    
-    
-    //End Experimental code
-    
-    
     var gid:String=""
     var gfname:String=""
     var glname:String=""
@@ -169,171 +129,28 @@ class StudentTableViewController: UIViewController {
         do {
             student = try managedContext.fetch(fetchRequest)
             
+            //Fields and labels
+            let studentRecord=student.first
+            self.gfname=studentRecord?.value(forKey:"firstName") as! String
+            self.glname=studentRecord?.value(forKey:"lastName") as! String
+            self.gsname=studentRecord?.value(forKey:"school") as! String
+            self.gmedia=studentRecord?.value(forKey:"media") as! String
+            self.gid=studentRecord?.value(forKey:"studentId") as! String
+            self.gvip=studentRecord?.value(forKey: "vip") as! String
             
+            if(UIImage(named:self.gid) != nil)
+            {
+                self.gpicture=UIImage(named:self.gid)!
+            }
+            else{
+                self.gpicture=UIImage(named:"default")!
+            }
                 
-//                let foundAlert = UIAlertController(title:"Success", message:"Student record found.", preferredStyle: .alert)
-//                foundAlert.addAction(UIAlertAction(title:"Continue", style: .default, handler:
-//                    {
-//                        (alertAction: UIAlertAction) in
-                        
-                        //Fields and labels
-                        let studentRecord=student.first
-                        self.gfname=studentRecord?.value(forKey:"firstName") as! String
-                        self.glname=studentRecord?.value(forKey:"lastName") as! String
-                        self.gsname=studentRecord?.value(forKey:"school") as! String
-                        self.gmedia=studentRecord?.value(forKey:"media") as! String
-                        self.gid=studentRecord?.value(forKey:"studentId") as! String
-                        self.gvip=studentRecord?.value(forKey: "vip") as! String
-                        
-                        //Retrieve image from directory
-//                        self.gpicture = self.getImage(id: id)
-                        if(UIImage(named:self.gid) != nil)
-                        {
-                            self.gpicture=UIImage(named:self.gid)!
-                        }
-                        else{
-                            self.gpicture=UIImage(named:"default")!
-                        }
-                
-                        self.performSegue(withIdentifier: "tableToProfile", sender: self)
-                        
-//                }
-//                ))
-//                self.present(foundAlert, animated:true)
+            self.performSegue(withIdentifier: "tableToProfile", sender: self)
             
         }catch _ as NSError {
             print ("Could not fetch data")
         }
-    }
-    
-    
-    
-    
-    
-    
-    //Shows the alert pop up when QRCode is scanned
-    func showAlert(id: String) {
-        
-        //Find student record by APS ID
-        var student : [NSManagedObject]
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
-        fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
-        
-        do {
-            student = try managedContext.fetch(fetchRequest)
-            
-            if(student.isEmpty)
-            {
-                let invalidQrAlert = UIAlertController(title:"No record found", message:"No record was found for the scanned code. Try using the manual search", preferredStyle: .alert)
-                invalidQrAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
-                self.present(invalidQrAlert, animated:true)
-            }
-            else{
-                //Fields and labels
-                let studentRecord=student.first
-                let fname=studentRecord?.value(forKey:"firstName") as! String
-                let lname=studentRecord?.value(forKey:"lastName") as! String
-                let sname=studentRecord?.value(forKey:"school") as! String
-                let media=studentRecord?.value(forKey:"media") as! String
-                let id=studentRecord?.value(forKey:"studentId") as! String
-                let flabel="First Name: "
-                let llabel="Last Name: "
-                let ilabel="APS ID: "
-                let mlabel="Media Waiver: "
-                let slabel="School Name: "
-                let nextLine="\n"
-                
-                //Create alert on screen
-                let alert = UIAlertController(title: "Record Found", message: nextLine+ilabel+id+nextLine+flabel+fname+nextLine+llabel+lname+nextLine+slabel+sname+nextLine+nextLine+mlabel+media, preferredStyle: .alert)
-                
-//                let profilePicture = UIAlertAction(title: "", style: .default, handler: nil)
-//                profilePicture.setValue(self.getImage(id: id).withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
-//                alert.addAction(profilePicture)
-                
-                alert.addTextField(configurationHandler: {(textField) in
-                    textField.placeholder = "Number of Guests"
-                })
-                
-                alert.addAction(UIAlertAction(title: "Check-in", style: .default, handler:
-                    {
-                        (alertAction: UIAlertAction) in
-                        //Code after Check-in is pressed
-                        //Check if media waiver is not accepted and show alert as required
-                        var guests:String=alert.textFields![0].text!
-                        if(guests.isEmpty)
-                        {
-                            guests="0"
-                        }
-                        self.checkMediaWaiver(indicator: media, id:id, fname:fname, lname:lname, guests: guests)
-                }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true)
-                
-            }
-            
-        } catch _ as NSError {
-            print ("Could not fetch data")
-        }
-    }
-    
-    //Function to check if media waiver has been accepted
-    func checkMediaWaiver(indicator: String, id:String, fname: String, lname: String, guests: String)
-    {
-        //If media waiver is not accepted, display alert
-        if indicator=="N"
-        {
-            let mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
-            
-            
-            //Make Check in call once accepted
-            mediaAlert.addAction(UIAlertAction(title:"Accepted", style: .default, handler: {(alert:UIAlertAction) in
-                self.checkInStudent(id: id, fname: fname, lname: lname, guests:guests)
-            }))
-            self.present(mediaAlert, animated: true)
-        }
-            //If media waiver is accepted, proceed with check-in
-        else{
-            self.checkInStudent(id: id, fname:fname, lname:lname, guests:guests)
-        }
-    }
-    
-    
-    //Function to complete the check in
-    func checkInStudent(id: String, fname: String, lname: String, guests:String)
-    {
-        let space=" "
-        let successlabel="Successfully checked in "
-        
-        //Write to local data
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "CheckedInStudent", in: managedContext)
-        let checkedStudent = NSManagedObject(entity: entity!, insertInto: managedContext)
-        
-        checkedStudent.setValue(id, forKey: "id")
-        checkedStudent.setValue("Y", forKey: "media")
-        if(!guests.isEmpty){
-            checkedStudent.setValue(guests, forKey: "guests")
-        }
-        do{
-            try managedContext.save()
-        }
-        catch _ as NSError{
-            print("Could not check-in student")
-        }
-        //Print final success message
-        let successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
-        successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:nil))
-        self.present(successAlert, animated: true)
     }
     
     func searchBarIsEmpty() -> Bool {
