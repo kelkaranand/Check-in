@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class LaunchViewController :UIViewController
 {
@@ -27,11 +28,8 @@ class LaunchViewController :UIViewController
     
     func generateLogo()
     {
-        
         imagelayer.frame=animatedView.bounds
         animatedView.layer.addSublayer(imagelayer)
-        
-        
         
         imagelayer.contents = UIImage(named: "LJFF-logo")?.cgImage
         imagelayer.contentsGravity = kCAGravityResizeAspect
@@ -42,18 +40,12 @@ class LaunchViewController :UIViewController
         imagelayer.isHidden = false
         imagelayer.masksToBounds = false
         
-        
-    
-        
-        
         UIView.animate(withDuration: 2.0, animations: {
             self.animatedView.alpha = 1.0
         }, completion: { finished in
             self.performSegue(withIdentifier: "moveToMain", sender: self)
         })
-        
-        
-        
     }
+    
     
 }

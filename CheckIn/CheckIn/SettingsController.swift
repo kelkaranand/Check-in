@@ -19,9 +19,13 @@ class SettingsController :UIViewController
     @IBOutlet weak var PushDataMessage: UILabel!
     @IBOutlet weak var PullDataHeader: UILabel!
     @IBOutlet weak var PullDataMessage: UILabel!
+    @IBOutlet weak var FilterListView: UIView!
+    @IBOutlet weak var FilterListHeader: UILabel!
+    @IBOutlet weak var FilterListMessage: UILabel!
     
     @IBOutlet var mainView: UIView!
     
+    var schoolList:[String]=[]
     
     @objc func pushAction(_ : UITapGestureRecognizer){
         let alert=UIAlertController(title: "Data Upload", message: "You are about to upload the check-in data on this device into the database. Are you sure you want to continue?", preferredStyle: .alert)
@@ -42,67 +46,81 @@ class SettingsController :UIViewController
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true)
     }
+   
+    @objc func filterAction(_ : UITapGestureRecognizer)
+    {
+        self.performSegue(withIdentifier: "filterList", sender: self)
+    }
     
     func updateTable()
     {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
     }
     
+    //Function to set up the schoolList from the schools captured from the latest data pull
+    func initializeSchoolList()
+    {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "School")
+        
+        do {
+            let localData = try managedContext.fetch(fetchRequest)
+            
+            for data in localData
+            {
+                self.schoolList.append(data.value(forKey: "name") as! String)
+            }
+        }
+        catch _ as NSError
+        {
+            print("Error reading school list")
+        }
+    }
+    
+    
+    //Function to format the look of the individual views
+    func formatView(view: UIView, header: UILabel, message: UILabel)
+    {
+        view.layer.borderColor=UIColor.black.cgColor
+        view.layer.borderWidth=3
+        view.layer.backgroundColor=UIColor.white.cgColor
+        view.layer.shouldRasterize = false
+        view.layer.cornerRadius = 10
+        
+        header.font = UIFont(name: "HelveticaNeue-Bold", size: 600)
+        header.numberOfLines = 0
+        header.minimumScaleFactor = 0.01
+        header.baselineAdjustment = .alignCenters
+        header.textAlignment  = .center
+        header.adjustsFontSizeToFitWidth=true
+        header.textColor = UIColor(red:253,green:201,blue:16)
+        
+        message.font = UIFont(name: "HelveticaNeue", size: 200)
+        message.numberOfLines = 0
+        message.minimumScaleFactor = 0.01
+        message.baselineAdjustment = .alignCenters
+        message.textAlignment  = .center
+        message.adjustsFontSizeToFitWidth=true
+        message.textColor = UIColor(red:253,green:201,blue:16)
+    }
+    
     
     
     override func viewDidLayoutSubviews() {
-        PushDataView.layer.borderColor=UIColor.black.cgColor
-        PushDataView.layer.borderWidth=5
-        PushDataView.layer.backgroundColor=UIColor.white.cgColor
-        PushDataView.layer.shouldRasterize = false
-        PushDataView.layer.cornerRadius = 10
-        
+        formatView(view: PushDataView, header: PushDataHeader, message: PushDataMessage)
         PushDataHeader.text="Push Data"
-        PushDataHeader.font = UIFont(name: "HelveticaNeue-Bold", size: 600)
-        PushDataHeader.numberOfLines = 0
-        PushDataHeader.minimumScaleFactor = 0.01
-        PushDataHeader.baselineAdjustment = .alignCenters
-        PushDataHeader.textAlignment  = .center
-        PushDataHeader.adjustsFontSizeToFitWidth=true
-        PushDataHeader.textColor = UIColor(red:253,green:201,blue:16)
-
         PushDataMessage.text="Push check-in data to cloud storage"
-        PushDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
-        PushDataMessage.numberOfLines = 0
-        PushDataMessage.minimumScaleFactor = 0.01
-        PushDataMessage.baselineAdjustment = .alignCenters
-        PushDataMessage.textAlignment  = .center
-        PushDataMessage.adjustsFontSizeToFitWidth=true
-        PushDataMessage.textColor = UIColor(red:253,green:201,blue:16)
         
-        
-        
-        PullDataView.layer.borderColor=UIColor.black.cgColor
-        PullDataView.layer.borderWidth=5
-        PullDataView.layer.backgroundColor=UIColor.white.cgColor
-        PullDataView.layer.shouldRasterize = false
-        PullDataView.layer.cornerRadius = 10
-        
+        formatView(view: PullDataView, header: PullDataHeader, message: PullDataMessage)
         PullDataHeader.text="Pull Data"
-        PullDataHeader.font = UIFont(name: "HelveticaNeue-Bold", size: 600)
-        PullDataHeader.numberOfLines = 0
-        PullDataHeader.minimumScaleFactor = 0.01
-        PullDataHeader.baselineAdjustment = .alignCenters
-        PullDataHeader.textAlignment  = .center
-        PullDataHeader.adjustsFontSizeToFitWidth=true
-        PullDataHeader.textColor = UIColor(red:253,green:201,blue:16)
-        
         PullDataMessage.text="Pull event data from cloud storage"
-        PullDataMessage.font = UIFont(name: "HelveticaNeue", size: 200)
-        PullDataMessage.numberOfLines = 0
-        PullDataMessage.minimumScaleFactor = 0.01
-        PullDataMessage.baselineAdjustment = .alignCenters
-        PullDataMessage.textAlignment  = .center
-        PullDataMessage.adjustsFontSizeToFitWidth=true
-        PullDataMessage.textColor = UIColor(red:253,green:201,blue:16)
         
-        
-        
+        formatView(view: FilterListView, header: FilterListHeader, message: FilterListMessage)
+        FilterListHeader.text="Set Filter"
+        FilterListMessage.text="Filter Student list displayed"
         
     }
     
@@ -120,9 +138,11 @@ class SettingsController :UIViewController
         
         let pullClick = UITapGestureRecognizer(target: self, action:#selector(pullAction(_ :)))
         
+        let filterClick = UITapGestureRecognizer(target: self, action:#selector(filterAction(_:)))
+        
         self.PushDataView.addGestureRecognizer(pushClick)
         self.PullDataView.addGestureRecognizer(pullClick)
-        
+        self.FilterListView.addGestureRecognizer(filterClick)
         
         
         let alert = UIAlertController(title: "Warning", message: "You are entering the admin page, do you want to continue?", preferredStyle: .alert)
@@ -136,9 +156,9 @@ class SettingsController :UIViewController
                 {
                     let internetAlert = UIAlertController(title: "No internet connection.", message: "The device is not connected to the internet at the moment. Admin functions cannot be performed without an internet connection.", preferredStyle: .alert)
                     internetAlert.addAction(UIAlertAction(title: "Go back", style: .cancel, handler:
-                    {
-                        (alertAction: UIAlertAction) in
-                        self.navigationController?.popToRootViewController(animated: true)
+                        {
+                            (alertAction: UIAlertAction) in
+                            self.navigationController?.popToRootViewController(animated: true)
                     }))
                     self.present(internetAlert, animated: true)
                 }
@@ -149,6 +169,7 @@ class SettingsController :UIViewController
                 self.navigationController?.popToRootViewController(animated: true)
         }))
         self.present(alert, animated: true)
+
     }
     
     
@@ -278,6 +299,7 @@ class SettingsController :UIViewController
     func pullData()
     {
         initializeDecrypter()
+        schoolList=[]
         
         //Pull data from database
         
@@ -287,6 +309,7 @@ class SettingsController :UIViewController
 
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Student", in: managedContext)
+        let schoolEntity = NSEntityDescription.entity(forEntityName: "School", in: managedContext)
 
 
 
@@ -311,6 +334,17 @@ class SettingsController :UIViewController
                 student.setValue(id, forKey: "studentId")
                 student.setValue(self.decrypt(x:school), forKey: "school")
                 student.setValue(vip, forKey: "vip")
+                student.setValue(false, forKey: "checkedIn")
+                
+                //Generate a list of schools
+                let temp=self.decrypt(x: school)
+                if !(self.schoolList.contains(temp))
+                {
+                    self.schoolList.append(temp)
+                    let schoolName = NSManagedObject(entity: schoolEntity!, insertInto: managedContext)
+                    schoolName.setValue(temp, forKey: "name")
+                    schoolName.setValue(false, forKey: "filter")
+                }
 
                 do{
                     try managedContext.save()
@@ -319,9 +353,9 @@ class SettingsController :UIViewController
                     print("Error when pulling new data"+error.localizedDescription)
                 }
             }
+            
+            
         })
-        
-        
         
         //Get event name
         let eventEntity = NSEntityDescription.entity(forEntityName: "Event", in: managedContext)

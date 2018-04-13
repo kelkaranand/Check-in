@@ -28,6 +28,16 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.view.addSubview(pageControl)
     }
     
+    @objc func hidePageControl(notification: NSNotification)
+    {
+        pageControl.isHidden=true;
+    }
+    
+    @objc func unhidePageControl(notification: NSNotification)
+    {
+        pageControl.isHidden=false;
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +50,10 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         
         NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.disableSwipe(notification:)), name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.enableSwipe(notification:)), name: NSNotification.Name(rawValue: "createSwipeList"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.hidePageControl(notification:)), name: NSNotification.Name(rawValue: "hidePageControl"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.unhidePageControl(notification:)), name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
         
 
         self.delegate = self

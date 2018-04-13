@@ -4,12 +4,19 @@
         <attribute name="guests" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="media" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="method" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="vip" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
         <attribute name="lastPull" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="School" representedClassName="School" syncable="YES" codeGenerationType="class">
+        <attribute name="filter" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="class">
+        <attribute name="checkedIn" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="media" optional="YES" attributeType="String" syncable="YES"/>
@@ -18,8 +25,9 @@
         <attribute name="vip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CheckedInStudent" positionX="-36" positionY="45" width="128" height="90"/>
+        <element name="CheckedInStudent" positionX="-36" positionY="45" width="128" height="120"/>
         <element name="Event" positionX="-36" positionY="54" width="128" height="75"/>
-        <element name="Student" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="Student" positionX="-54" positionY="-9" width="128" height="150"/>
+        <element name="School" positionX="-45" positionY="54" width="128" height="75"/>
     </elements>
 </model>

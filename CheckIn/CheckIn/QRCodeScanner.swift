@@ -37,6 +37,13 @@ class QRScannerController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        //Unhide page control
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
+        
+        //Enable swipe
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createSwipeList"), object: nil)
+        
         enableScan()
     }
     
@@ -48,6 +55,8 @@ class QRScannerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Unhide page control
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(enableScan), name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
         
@@ -112,6 +121,7 @@ class QRScannerController: UIViewController {
     var gmedia:String=""
     var gvip:String=""
     var gpicture:UIImage=UIImage(named:"default")!
+    var gchecked:Bool=false
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
@@ -124,6 +134,7 @@ class QRScannerController: UIViewController {
             profile.media=gmedia
             profile.spicture=gpicture
             profile.vip=gvip
+            profile.method=1
             
         }
     }

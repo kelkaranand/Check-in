@@ -11,10 +11,10 @@ import CoreData
 import os.log
 
 class StudentTableViewCell: UITableViewCell {
-    @IBOutlet weak var studentId: UILabel!
-    @IBOutlet weak var firstName: UILabel!
+    @IBOutlet weak var checkMark: UIImageView!
     @IBOutlet weak var lastName: UILabel!
-    //@IBOutlet weak var school: UILabel!
+    @IBOutlet weak var firstName: UILabel!
+    var studentId=""
     
 }
 
@@ -30,6 +30,9 @@ class StudentTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Unhide page control
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
         
         // TextField Color Customization
         let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
@@ -50,7 +53,6 @@ class StudentTableViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-//        title = "Check In"
         studentTableView.dataSource = self
         studentTableView.delegate = self
         studentTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -58,6 +60,13 @@ class StudentTableViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //Unhide page control
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
+        
+        //Enable swipe
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createSwipeList"), object: nil)
+        
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
         self.navigationController?.navigationBar.tintColor=UIColor(red:253,green:201,blue:16)
         
@@ -112,6 +121,7 @@ class StudentTableViewController: UIViewController {
             profile.media=gmedia
             profile.spicture=gpicture
             profile.vip=gvip
+            profile.method=2;
         }
     }
     
@@ -163,7 +173,10 @@ class StudentTableViewController: UIViewController {
             let lName = student.value(forKey: "lastName") as! String
             let id = student.value(forKey: "studentId") as! String
             let fullName = fName + " " + lName + " " + id
-            return fullName.lowercased().contains(searchText.lowercased())
+            let apostropheChar : Character = "\u{27}"
+            let rightApostropheChar : Character = "\u{2019}"
+            let replacedSearchText : String = searchText.replacingOccurrences(of: String(rightApostropheChar), with: String(apostropheChar))
+            return fullName.lowercased().contains(replacedSearchText.lowercased())
             
         })
         studentTableView.reloadData()
@@ -171,6 +184,31 @@ class StudentTableViewController: UIViewController {
     
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    //Function to check if student has already checkedIn
+    func checkForCheckIn(id:String) -> Bool
+    {
+        var checkIn : [NSManagedObject]
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return false
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CheckedInStudent")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            checkIn = try managedContext.fetch(fetchRequest)
+            
+            if(!checkIn.isEmpty)
+            {
+                return true
+            }
+        }
+        catch _ as NSError {
+            print ("Error when checking if already checked in")
+            return false
+        }
+        return false
     }
     
     override func didReceiveMemoryWarning() {
@@ -200,25 +238,32 @@ extension StudentTableViewController: UITableViewDataSource {
         else {
             student = students[indexPath.row]
         }
-        cell.studentId!.text = student.value(forKey: "studentId") as? String
+        cell.studentId = (student.value(forKey: "studentId") as? String)!
         cell.firstName!.text = student.value(forKey: "firstName") as? String
         cell.lastName!.text = student.value(forKey: "lastName") as? String
         
-        cell.studentId.numberOfLines=0;
-        cell.studentId.font = UIFont(name: "HelveticaNeue", size: 25)
-        cell.studentId.minimumScaleFactor = 0.1
-        cell.studentId.adjustsFontSizeToFitWidth=true
-        cell.studentId.textColor=UIColor(red:3,green:129,blue:0)
+//        cell.studentId.numberOfLines=0;
+//        cell.studentId.font = UIFont(name: "HelveticaNeue", size: 20)
+//        cell.studentId.minimumScaleFactor = 0.1
+//        cell.studentId.adjustsFontSizeToFitWidth=true
+//        cell.studentId.textColor=UIColor(red:3,green:129,blue:0)
         
+        if(student.value(forKey: "checkedIn") as! Bool)
+        {
+            cell.checkMark.image=UIImage(named:"checkmark")
+        }
+        else{
+            cell.checkMark.image=nil
+        }
         
         cell.firstName.numberOfLines=0;
-        cell.firstName.font = UIFont(name: "HelveticaNeue", size: 25)
+        cell.firstName.font = UIFont(name: "HelveticaNeue", size: 20)
         cell.firstName.minimumScaleFactor = 0.1
         cell.firstName.adjustsFontSizeToFitWidth=true
         cell.firstName.textColor = UIColor(red:253,green:201,blue:16)
         
         cell.lastName.numberOfLines=0;
-        cell.lastName.font = UIFont(name: "HelveticaNeue", size: 25)
+        cell.lastName.font = UIFont(name: "HelveticaNeue", size: 20)
         cell.lastName.minimumScaleFactor = 0.1
         cell.lastName.adjustsFontSizeToFitWidth=true
         cell.lastName.textColor = UIColor(red:253,green:201,blue:16)
@@ -233,7 +278,7 @@ extension StudentTableViewController: UITableViewDelegate {
         print("CELL PRESSED")
         let selectedCell = tableView.cellForRow(at: indexPath) as! StudentTableViewCell
 //        showAlert(id: selectedStudent.value(forKey: "studentId") as! String)
-        showProfile(id: selectedCell.studentId.text as! String)
+        showProfile(id: selectedCell.studentId )
     }
 }
 

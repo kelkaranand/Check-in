@@ -13,6 +13,7 @@
 		142E12F9203619CB009FA335 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F8203619CB009FA335 /* PageViewController.swift */; };
 		144849562045D93A00898655 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144849552045D93A00898655 /* ProfileViewController.swift */; };
 		144C7A9A20580CA2005744EE /* LandingController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144C7A9920580CA2005744EE /* LandingController2.swift */; };
+		1468553D2081330E0085BD38 /* SetFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1468553C2081330E0085BD38 /* SetFilterViewController.swift */; };
 		1478EA892049085F00DA2C02 /* InternetConnectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */; };
 		1478EA8B2049D3FC00DA2C02 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */; };
 		1478EA8D204A04CC00DA2C02 /* QRCheckIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */; };
@@ -21,6 +22,9 @@
 		1478EA952051CF5000DA2C02 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1478EA942051CF5000DA2C02 /* Launch.storyboard */; };
 		1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1497D14D203DD05D005824EA /* GoogleService-Info.plist */; };
 		14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */; };
+		14B716B7207E577A0006447E /* LoadDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B716B6207E577A0006447E /* LoadDataViewController.swift */; };
+		14BFC10C207FA3E000B3A1C9 /* CheckInListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BFC10B207FA3E000B3A1C9 /* CheckInListViewController.swift */; };
+		14EBD65D207CF7EB007E4E17 /* CheckInStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14EBD65C207CF7EB007E4E17 /* CheckInStoryboard.storyboard */; };
 		14F86D46206186420026A016 /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F86D45206186420026A016 /* SignatureViewController.swift */; };
 		17E2EC6D519EF46F72D8F5D6 /* Pods_CheckInUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */; };
 		2997EEBF262EA3FEDE249A4B /* Pods_CheckIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAED172584136CC47B4A6F3 /* Pods_CheckIn.framework */; };
@@ -61,6 +65,7 @@
 		142E12F8203619CB009FA335 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		144849552045D93A00898655 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		144C7A9920580CA2005744EE /* LandingController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingController2.swift; sourceTree = "<group>"; };
+		1468553C2081330E0085BD38 /* SetFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFilterViewController.swift; sourceTree = "<group>"; };
 		1478EA882049085F00DA2C02 /* InternetConnectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectionTest.swift; sourceTree = "<group>"; };
 		1478EA8A2049D3FC00DA2C02 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCheckIn.storyboard; sourceTree = "<group>"; };
@@ -69,6 +74,9 @@
 		1478EA942051CF5000DA2C02 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		1497D14D203DD05D005824EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirTableViewController.swift; sourceTree = "<group>"; };
+		14B716B6207E577A0006447E /* LoadDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDataViewController.swift; sourceTree = "<group>"; };
+		14BFC10B207FA3E000B3A1C9 /* CheckInListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListViewController.swift; sourceTree = "<group>"; };
+		14EBD65C207CF7EB007E4E17 /* CheckInStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CheckInStoryboard.storyboard; sourceTree = "<group>"; };
 		14F86D45206186420026A016 /* SignatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
 		1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.release.xcconfig"; sourceTree = "<group>"; };
 		3C146E9A3B6824943B471C57 /* Pods-CheckIn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.debug.xcconfig"; sourceTree = "<group>"; };
@@ -181,6 +189,10 @@
 				1478EA8C204A04CC00DA2C02 /* QRCheckIn.storyboard */,
 				1478EA922051CED100DA2C02 /* LaunchViewController.swift */,
 				14F86D45206186420026A016 /* SignatureViewController.swift */,
+				14EBD65C207CF7EB007E4E17 /* CheckInStoryboard.storyboard */,
+				14B716B6207E577A0006447E /* LoadDataViewController.swift */,
+				14BFC10B207FA3E000B3A1C9 /* CheckInListViewController.swift */,
+				1468553C2081330E0085BD38 /* SetFilterViewController.swift */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -337,6 +349,7 @@
 				B1AB0FDA20337C6E00D3C1BB /* Assets.xcassets in Resources */,
 				B1AB0FD520337C6E00D3C1BB /* Main.storyboard in Resources */,
 				1478EA8B2049D3FC00DA2C02 /* Settings.storyboard in Resources */,
+				14EBD65D207CF7EB007E4E17 /* CheckInStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +530,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14B716B7207E577A0006447E /* LoadDataViewController.swift in Sources */,
 				B1AB0FD220337C6E00D3C1BB /* StudnetTableViewController.swift in Sources */,
 				142E12F720361826009FA335 /* SettingsController.swift in Sources */,
 				B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */,
@@ -525,10 +539,12 @@
 				14F86D46206186420026A016 /* SignatureViewController.swift in Sources */,
 				142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */,
 				144C7A9A20580CA2005744EE /* LandingController2.swift in Sources */,
+				1468553D2081330E0085BD38 /* SetFilterViewController.swift in Sources */,
 				B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */,
 				144849562045D93A00898655 /* ProfileViewController.swift in Sources */,
 				1478EA932051CED100DA2C02 /* LaunchViewController.swift in Sources */,
 				1419C2F2204878FB00850B36 /* LandingViewController.swift in Sources */,
+				14BFC10C207FA3E000B3A1C9 /* CheckInListViewController.swift in Sources */,
 				14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

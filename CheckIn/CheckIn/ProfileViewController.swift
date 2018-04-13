@@ -20,6 +20,13 @@ class ProfileViewController : UIViewController {
     var media : String = ""
     var vip : String = ""
     var spicture : UIImage = UIImage(named:"default")!
+    var checked : Bool = false
+    /*
+     method used
+     1-QRCode
+     2-Manual Search
+    */
+    var method : Int? = nil
     
     //Data stack view
     @IBOutlet weak var dataView: UIView!
@@ -45,7 +52,7 @@ class ProfileViewController : UIViewController {
     @IBAction func checkIn(_ sender: UIButton) {
         //Get status of media switch
         var flag:String
-        if(media=="Y")
+        if(media=="")
         {
             flag="Y"
         }
@@ -62,7 +69,7 @@ class ProfileViewController : UIViewController {
         else{
             guests="0";
         }
-        self.checkMediaWaiver(indicator: flag, id:self.id, fname:self.fname, lname:self.lname, guests: guests!)
+        self.checkMediaWaiver(indicator: flag, id:self.id, fname:self.fname, lname:self.lname, guests: guests!, documents: media)
     }
     
     
@@ -95,8 +102,14 @@ class ProfileViewController : UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        //Hide page control
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePageControl"), object: nil)
+        
         //Code to dismiss keyboard when user clicks on the view
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
+        
+        //Check if already checked in
+        self.checkIfAlreadyCheckedIn(id: self.id)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -118,6 +131,9 @@ class ProfileViewController : UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        //Disable swipe
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
+        
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
         self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
@@ -132,11 +148,11 @@ class ProfileViewController : UIViewController {
         snameLabel.text=sname
         
         //Set media waiver values
-        if(media=="Y")
+        if(media=="")
         {
             mediaLabel.text="Signed"
         }
-        else if(media=="N")
+        else
         {
             mediaLabel.text="Not Signed"
         }
@@ -144,7 +160,8 @@ class ProfileViewController : UIViewController {
         //Check VIP status
         if(vip=="Y")
         {
-            vipBanner.isHidden=false
+            //change to false to start showing vip stamp
+            vipBanner.isHidden=true
         }
         else if(vip=="N")
         {
@@ -173,11 +190,11 @@ class ProfileViewController : UIViewController {
         if(header)
         {
             color=UIColor(red:3,green:129,blue:0)
-            font=UIFont(name: "HelveticaNeue-Bold", size: 20)!
+            font=UIFont(name: "HelveticaNeue", size: 20)!
         }
         else{
             color=UIColor(red:253,green:201,blue:16)
-            font=UIFont(name: "HelveticaNeue-Bold", size: 20)!
+            font=UIFont(name: "HelveticaNeue", size: 18)!
         }
         label.numberOfLines=0
         label.font = font
@@ -186,14 +203,47 @@ class ProfileViewController : UIViewController {
         label.textColor=color
     }
     
+    //Function to check if student has already checkedIn
+    func checkIfAlreadyCheckedIn(id:String)
+    {
+        var checkIn : [NSManagedObject]
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CheckedInStudent")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            checkIn = try managedContext.fetch(fetchRequest)
+            
+            if(!checkIn.isEmpty)
+            {
+                let checkInAlert = UIAlertController(title:"Warning", message:"Student has already checked-in on this device", preferredStyle: .alert)
+                checkInAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:{(alertAction : UIAlertAction) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
+                }))
+                self.present(checkInAlert, animated:true)
+            }
+        }
+        catch _ as NSError {
+            print ("Error when checking if already checked in")
+        }
+    }
+    
     //Function to check if media waiver has been accepted
-    func checkMediaWaiver(indicator: String, id:String, fname: String, lname: String, guests: String)
+    func checkMediaWaiver(indicator: String, id:String, fname: String, lname: String, guests: String, documents:String)
     {
         
         //If media waiver is not accepted, display alert
         if indicator=="N"
         {
-            let mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the media waiver!", preferredStyle: .alert)
+            let docs:[String]=documents.components(separatedBy: "-")
+            var tempDocumentString=""
+            for value in docs{
+                tempDocumentString=tempDocumentString+value+"\n"
+            }
+            let mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the following documents : \n "+tempDocumentString, preferredStyle: .alert)
             
             
             //Make Check in call once accepted
@@ -213,41 +263,47 @@ class ProfileViewController : UIViewController {
     //Function to complete the check in
     func checkInStudent(id: String, fname: String, lname: String, guests:String, media: String)
     {
-        let space=" "
-        let successlabel="Successfully checked in "
-        
         //Write to local data
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
+        
+        //Write to CheckInStudent object
         let entity = NSEntityDescription.entity(forEntityName: "CheckedInStudent", in: managedContext)
         let checkedStudent = NSManagedObject(entity: entity!, insertInto: managedContext)
         
         checkedStudent.setValue(id, forKey: "id")
         checkedStudent.setValue(media, forKey: "media")
         if(!guests.isEmpty){
-            checkedStudent.setValue(guests, forKey: "guests")
+            //Subtract 1 to get guest count
+            let temp=Int(guests)!-1
+            checkedStudent.setValue(String(temp), forKey: "guests")
         }
-        do{
+        if(self.vip=="Y")
+        {
+            checkedStudent.setValue(true, forKey: "vip")
+        }
+        else{
+            checkedStudent.setValue(false, forKey: "vip")
+        }
+        checkedStudent.setValue(method, forKey: "method")
+        
+        //Update checkedIn flag
+        var studentResult : [NSManagedObject]
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+        fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
+        do {
+            studentResult = try managedContext.fetch(fetchRequest)
+            let student=studentResult.first
+            student?.setValue(true, forKey: "checkedIn")
             try managedContext.save()
         }
         catch _ as NSError{
             print("Could not check-in student")
         }
         
-        //Print final success message and move back to QR screen
-//        let successAlert=UIAlertController(title:"Success", message:successlabel+fname+space+lname , preferredStyle: .alert)
-//        successAlert.addAction(UIAlertAction(title:"OK", style: .default, handler:
-//            {
-//                (alertAction: UIAlertAction) in
-//                self.navigationController?.popToRootViewController(animated: true)
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
-//
-//
-//        }))
-//        self.present(successAlert, animated: true)
         
         self.navigationController?.popToRootViewController(animated: true)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
