@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1212" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1314" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CheckedInStudent" representedClassName="CheckedInStudent" syncable="YES" codeGenerationType="class">
         <attribute name="guests" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,6 +10,13 @@
     <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
         <attribute name="lastPull" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Filter" representedClassName="Filter" syncable="YES" codeGenerationType="class">
+        <attribute name="from" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="killSwitch" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="school" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="to" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="School" representedClassName="School" syncable="YES" codeGenerationType="class">
         <attribute name="filter" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -27,7 +34,8 @@
     <elements>
         <element name="CheckedInStudent" positionX="-36" positionY="45" width="128" height="120"/>
         <element name="Event" positionX="-36" positionY="54" width="128" height="75"/>
-        <element name="Student" positionX="-54" positionY="-9" width="128" height="150"/>
+        <element name="Filter" positionX="-36" positionY="63" width="128" height="120"/>
         <element name="School" positionX="-45" positionY="54" width="128" height="75"/>
+        <element name="Student" positionX="-54" positionY="-9" width="128" height="150"/>
     </elements>
 </model>

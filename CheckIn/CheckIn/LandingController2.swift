@@ -76,7 +76,14 @@ class LandingController2: UIViewController {
                 view.data=self.vipList
             }
         }
+        
+        if let view = segue.destination as? SettingsController
+        {
+            view.comingFromLanding=true
+        }
     }
+    
+    
     
     
     override func viewDidLayoutSubviews() {

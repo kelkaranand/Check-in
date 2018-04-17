@@ -73,6 +73,7 @@ class StudentTableViewController: UIViewController {
         //Sets text color for text in the search bar
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
         
+        reloadTable()
         loadTableData()
     }
     
@@ -242,11 +243,6 @@ extension StudentTableViewController: UITableViewDataSource {
         cell.firstName!.text = student.value(forKey: "firstName") as? String
         cell.lastName!.text = student.value(forKey: "lastName") as? String
         
-//        cell.studentId.numberOfLines=0;
-//        cell.studentId.font = UIFont(name: "HelveticaNeue", size: 20)
-//        cell.studentId.minimumScaleFactor = 0.1
-//        cell.studentId.adjustsFontSizeToFitWidth=true
-//        cell.studentId.textColor=UIColor(red:3,green:129,blue:0)
         
         if(student.value(forKey: "checkedIn") as! Bool)
         {

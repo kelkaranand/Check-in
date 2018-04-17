@@ -21,6 +21,9 @@ class ProfileViewController : UIViewController {
     var vip : String = ""
     var spicture : UIImage = UIImage(named:"default")!
     var checked : Bool = false
+    
+    let alphabets:[String]=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    
     /*
      method used
      1-QRCode
@@ -108,8 +111,12 @@ class ProfileViewController : UIViewController {
         //Code to dismiss keyboard when user clicks on the view
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: Selector("endEditing:")))
         
+        //Check if filtered
+        self.checkWithFilter(x: self.sname, last: self.lname)
+        
         //Check if already checked in
         self.checkIfAlreadyCheckedIn(id: self.id)
+        
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -243,7 +250,7 @@ class ProfileViewController : UIViewController {
             for value in docs{
                 tempDocumentString=tempDocumentString+value+"\n"
             }
-            let mediaAlert = UIAlertController(title:"Media Waiver not accepted", message:"The student is yet to accept the following documents : \n "+tempDocumentString, preferredStyle: .alert)
+            let mediaAlert = UIAlertController(title:"Documents not Signed", message: tempDocumentString, preferredStyle: .alert)
             
             
             //Make Check in call once accepted
@@ -278,8 +285,11 @@ class ProfileViewController : UIViewController {
         checkedStudent.setValue(media, forKey: "media")
         if(!guests.isEmpty){
             //Subtract 1 to get guest count
-            let temp=Int(guests)!-1
-            checkedStudent.setValue(String(temp), forKey: "guests")
+            if(Int(guests)! as Int > 0)
+            {
+                let temp=Int(guests)!-1
+                checkedStudent.setValue(String(temp), forKey: "guests")
+            }
         }
         if(self.vip=="Y")
         {
@@ -305,9 +315,61 @@ class ProfileViewController : UIViewController {
         }
         
         
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         self.navigationController?.popToRootViewController(animated: true)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
         
+    }
+    
+    //Function to check if profile passes the filter if any
+    func checkWithFilter(x:String ,last:String)
+    {
+        guard let appDelegate = UIApplication.shared.delegate as?AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        //Get event name
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Filter")
+        do{
+            let temp = try managedContext.fetch(fetchRequest).first
+            if(!(temp?.value(forKey: "killSwitch")==nil) && temp?.value(forKey: "killSwitch") as! Bool)
+            {
+                if (temp?.value(forKey: "type") as! Int)==1
+                {
+                    if !(x == (temp?.value(forKey: "school")) as! String)
+                    {
+                        self.showFilterAlert()
+                    }
+                }
+                else if (temp?.value(forKey: "type") as! Int)==2
+                {
+                    let from = alphabets.index(of: temp?.value(forKey: "from") as! String)!
+                    let to = alphabets.index(of: temp?.value(forKey: "to") as! String)!
+                    let testIndex = alphabets.index(of: String((last.first)!))!
+                    
+                    if testIndex<from || testIndex>to {
+                        self.showFilterAlert()
+                    }
+                    
+                }
+            }
+        }
+        catch _ as NSError
+        {
+            print("Error checking profile against filter")
+        }
+    }
+    
+    
+    //Function to display a filtering alert
+    func showFilterAlert()
+    {
+        let checkFilterAlert = UIAlertController(title:"Warning", message:"Student cannot be checked-in on this device. Please check your filters from the admin menu.", preferredStyle: .alert)
+        checkFilterAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:{(alertAction : UIAlertAction) in
+            self.navigationController?.popToRootViewController(animated: true)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
+        }))
+        self.present(checkFilterAlert, animated:true)
     }
     
 }

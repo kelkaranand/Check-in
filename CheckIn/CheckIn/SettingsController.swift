@@ -26,6 +26,8 @@ class SettingsController :UIViewController
     @IBOutlet var mainView: UIView!
     
     var schoolList:[String]=[]
+    //Flag to check if coming from landing screen. Allows to manage admin alert
+    var comingFromLanding = false
     
     @objc func pushAction(_ : UITapGestureRecognizer){
         let alert=UIAlertController(title: "Data Upload", message: "You are about to upload the check-in data on this device into the database. Are you sure you want to continue?", preferredStyle: .alert)
@@ -50,7 +52,17 @@ class SettingsController :UIViewController
     @objc func filterAction(_ : UITapGestureRecognizer)
     {
         self.performSegue(withIdentifier: "filterList", sender: self)
+        self.comingFromLanding=false
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let view = segue.destination as? SetFilterViewController
+        {
+            view.schoolList=self.schoolList
+        }
+    }
+    
     
     func updateTable()
     {
@@ -60,6 +72,7 @@ class SettingsController :UIViewController
     //Function to set up the schoolList from the schools captured from the latest data pull
     func initializeSchoolList()
     {
+        self.schoolList=[]
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -144,31 +157,35 @@ class SettingsController :UIViewController
         self.PullDataView.addGestureRecognizer(pullClick)
         self.FilterListView.addGestureRecognizer(filterClick)
         
+        self.initializeSchoolList()
         
-        let alert = UIAlertController(title: "Warning", message: "You are entering the admin page, do you want to continue?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:
-            {
-                (alertAction: UIAlertAction) in
-                
-                //Disable swipe
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
-                if (!InternetConnectionTest.isInternetAvailable())
+        if comingFromLanding
+        {
+            let alert = UIAlertController(title: "Warning", message: "You are entering the admin page, do you want to continue?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:
                 {
-                    let internetAlert = UIAlertController(title: "No internet connection.", message: "The device is not connected to the internet at the moment. Admin functions cannot be performed without an internet connection.", preferredStyle: .alert)
-                    internetAlert.addAction(UIAlertAction(title: "Go back", style: .cancel, handler:
-                        {
-                            (alertAction: UIAlertAction) in
-                            self.navigationController?.popToRootViewController(animated: true)
-                    }))
-                    self.present(internetAlert, animated: true)
-                }
-        }))
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler:
-            {
-                (alertAction: UIAlertAction) in
-                self.navigationController?.popToRootViewController(animated: true)
-        }))
-        self.present(alert, animated: true)
+                    (alertAction: UIAlertAction) in
+                    
+                    //Disable swipe
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
+                    if (!InternetConnectionTest.isInternetAvailable())
+                    {
+                        let internetAlert = UIAlertController(title: "No internet connection.", message: "The device is not connected to the internet at the moment. Admin functions cannot be performed without an internet connection.", preferredStyle: .alert)
+                        internetAlert.addAction(UIAlertAction(title: "Go back", style: .cancel, handler:
+                            {
+                                (alertAction: UIAlertAction) in
+                                self.navigationController?.popToRootViewController(animated: true)
+                        }))
+                        self.present(internetAlert, animated: true)
+                    }
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler:
+                {
+                    (alertAction: UIAlertAction) in
+                    self.navigationController?.popToRootViewController(animated: true)
+            }))
+            self.present(alert, animated: true)
+        }
 
     }
     
@@ -287,7 +304,6 @@ class SettingsController :UIViewController
                 temp=temp+decrypter[String(x[i])]!
             }
             else{
-                print(String(x[i]))
                 temp=temp+String(x[i])
             }
         }
@@ -378,15 +394,12 @@ class SettingsController :UIViewController
         }))
         self.present(alert, animated: true)
         
-        print("UNCOMMITTED CHANGES?")
-        print(managedContext.hasChanges)
         
     }
     
     //Function to clear all local data
     func clearData()
     {
-        print("clearing data")
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -405,6 +418,18 @@ class SettingsController :UIViewController
         
         //Clear Event data
         ReqVar = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
+        DelAllReqVar = NSBatchDeleteRequest(fetchRequest: ReqVar)
+        do { try managedContext.execute(DelAllReqVar) }
+        catch { print("Error when clearing data"+error.localizedDescription) }
+        
+        //Clear School data
+        ReqVar = NSFetchRequest<NSFetchRequestResult>(entityName: "School")
+        DelAllReqVar = NSBatchDeleteRequest(fetchRequest: ReqVar)
+        do { try managedContext.execute(DelAllReqVar) }
+        catch { print("Error when clearing data"+error.localizedDescription) }
+        
+        //Clear Filter data
+        ReqVar = NSFetchRequest<NSFetchRequestResult>(entityName: "Filter")
         DelAllReqVar = NSBatchDeleteRequest(fetchRequest: ReqVar)
         do { try managedContext.execute(DelAllReqVar) }
         catch { print("Error when clearing data"+error.localizedDescription) }
