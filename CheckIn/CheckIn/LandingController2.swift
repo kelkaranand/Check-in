@@ -23,18 +23,8 @@ class LandingController2: UIViewController {
     @IBOutlet weak var LineView: UIView!
     @IBOutlet weak var NumberLabel: UILabel!
     @IBOutlet weak var EventNameView: UIView!
-    
-    @IBOutlet weak var StudentNumberView: UIView!
-    @IBOutlet weak var StudentNumberMessage: UILabel!
-    @IBOutlet weak var StudentNumber: UILabel!
-    
-    @IBOutlet weak var GuestNumberView: UIView!
-    @IBOutlet weak var GuestNumberMessage: UILabel!
-    @IBOutlet weak var GuestNumber: UILabel!
-    
-    @IBOutlet weak var VipNumberView: UIView!
-    @IBOutlet weak var VipNumberMessage: UILabel!
-    @IBOutlet weak var VipNumber: UILabel!
+    @IBOutlet weak var FilterView: UIView!
+    @IBOutlet weak var FilterLabel: UILabel!
     
     var checkInList : [String] = []
     var vipList : [String] = []
@@ -43,40 +33,30 @@ class LandingController2: UIViewController {
     var checkIns:Int=0
     var guests:Int=0
     var vips:Int=0
-    var studentRecords:Int=0
+    var studentRecords:String="StudentRecords"
     
-    /*
-     1-CheckInList
-     2-VipList
-    */
-    var click:Int?
+    var filterStatus:Bool = false
+    var filterType:Int = 0
+    var FilterString:String = "message"
     
     
-    @objc func checkInClickAction(_ : UITapGestureRecognizer){
-        self.click=1
-        self.performSegue(withIdentifier: "showCheckInList", sender: self)
-    }
-    
-    @objc func vipClickAction(_ : UITapGestureRecognizer){
-        self.click=2
-        self.performSegue(withIdentifier: "showCheckInList", sender: self)
+    @objc func detailsClickAction(_ : UITapGestureRecognizer){
+        self.performSegue(withIdentifier: "showEventDetails", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if let view = segue.destination as? CheckInListViewController
+        if let view = segue.destination as? EventDetailViewController
         {
-            if self.click==1
-            {
-                view.image=UIImage(named:"checkmark")
-                view.data=self.checkInList
-            }
-            else{
-                view.image=UIImage(named:"vip")
-                view.data=self.vipList
-            }
+            view.checkInList=self.checkInList
+            view.EventName=self.EventName
+            view.guests=self.guests
+            view.vipList=self.vipList
+            view.studentRecords=self.studentRecords
+            view.filterStatus=self.filterStatus
+            view.filterType=self.filterType
+            view.FilterString=self.FilterString
         }
-        
         if let view = segue.destination as? SettingsController
         {
             view.comingFromLanding=true
@@ -96,9 +76,7 @@ class LandingController2: UIViewController {
             EventNameView.isHidden=true
             LoadDataMessage.isHidden=false
             LineView.isHidden=true
-            StudentNumberView.isHidden=true
-            GuestNumberView.isHidden=true
-            VipNumberView.isHidden=true
+            FilterView.isHidden=true
             
         }
         else{
@@ -109,15 +87,13 @@ class LandingController2: UIViewController {
             NumberView.isHidden=false
             EventNameView.isHidden=false
             LineView.isHidden=false
-            StudentNumberView.isHidden=false
-            GuestNumberView.isHidden=false
-            VipNumberView.isHidden=false
             LineView.backgroundColor=UIColor(red:3,green:129,blue:0)
             
             addBorderToView(view: NumberView)
-            addBorderToView(view: StudentNumberView)
-            addBorderToView(view: GuestNumberView)
-            addBorderToView(view: VipNumberView)
+            
+//            NumberView.backgroundColor=UIColor(red:2,green:86,blue:0)
+//            VipNumberView.backgroundColor=UIColor(red:2,green:86,blue:0)
+            
             
         }
     }
@@ -125,8 +101,14 @@ class LandingController2: UIViewController {
     
     func addBorderToView(view:UIView)
     {
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = 10
+        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+        
         view.layer.borderColor=UIColor(red:3,green:129,blue:0).cgColor
-        view.layer.borderWidth=2
+        view.layer.borderWidth=1
         view.layer.backgroundColor=UIColor.white.cgColor
         view.layer.shouldRasterize = false
         view.layer.cornerRadius = 10
@@ -169,11 +151,11 @@ class LandingController2: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
-        let checkInClick = UITapGestureRecognizer(target: self, action:#selector(checkInClickAction(_ :)))
-        self.NumberView.addGestureRecognizer(checkInClick)
+        let detailsClick = UITapGestureRecognizer(target: self, action:#selector(detailsClickAction(_ :)))
+        self.NumberView.addGestureRecognizer(detailsClick)
         
-        let vipClick = UITapGestureRecognizer(target: self, action:#selector(vipClickAction(_ :)))
-        self.VipNumberView.addGestureRecognizer(vipClick)
+//        let vipClick = UITapGestureRecognizer(target: self, action:#selector(vipClickAction(_ :)))
+//        self.VipNumberView.addGestureRecognizer(vipClick)
         
         
         
@@ -186,12 +168,14 @@ class LandingController2: UIViewController {
         else{
             //Enable swipe
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createSwipeList"), object: nil)
+            //Unhide page control
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
         }
         
         self.checkIns=0
         self.vips=0
         self.guests=0
-        self.studentRecords=0
+        self.studentRecords="StudentRecords"
         
         self.checkInList=[]
         self.vipList=[]
@@ -247,37 +231,56 @@ class LandingController2: UIViewController {
                 }
             }
             NumberLabel.text=(String) (self.checkIns)
-            GuestNumber.text=(String) (self.guests)
-            VipNumber.text=(String) (self.vips)
         } catch _ as NSError {
             print ("Could not fetch data")
         }
         
 
         formatNumbers(label: NumberLabel)
-
-        formatHeaders(label: StudentNumberMessage, text: "Students records")
         
         //Get number of student records
         let studentfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
         do {
-            StudentNumber.text = (String)(try (managedContext.fetch(studentfetchRequest)).count)
+            studentRecords = (String)(try (managedContext.fetch(studentfetchRequest)).count)
         } catch _ as NSError {
             print ("Could not fetch data")
         }
 
-        formatNumbers(label: StudentNumber)
-
-        formatHeaders(label: GuestNumberMessage, text: "Guests checked in")
         
-        formatNumbers(label: GuestNumber)
+        checkFilters()
         
+        FilterLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        FilterLabel.numberOfLines = 0
+        FilterLabel.minimumScaleFactor = 0.01
+        FilterLabel.baselineAdjustment = .alignCenters
+        FilterLabel.textAlignment  = .center
+        FilterLabel.adjustsFontSizeToFitWidth=true
+        FilterLabel.textColor = UIColor(red:253,green:201,blue:16)
         
-
-        formatHeaders(label: VipNumberMessage, text: "VIPs checked in")
-        formatNumbers(label: VipNumber)
+        if filterStatus
+        {
+            FilterView.isHidden=false
+            FilterLabel.text=FilterString
+        }
+        else{
+            FilterView.isHidden=true
+        }
     }
     
+    func formatDataViewElement(label:UILabel)
+    {
+        label.font = UIFont(name: "Chalkboard", size: 100)
+        label.numberOfLines = 0
+        label.minimumScaleFactor = 0.1
+        label.baselineAdjustment = .alignCenters
+        label.textAlignment  = .center
+        label.adjustsFontSizeToFitWidth=true
+        label.textColor = UIColor(red:253,green:201,blue:16)
+    }
+    
+    
+    
+    //Function to get event name
     func checkEventName()
     {
         guard let appDelegate = UIApplication.shared.delegate as?AppDelegate else {
@@ -296,6 +299,46 @@ class LandingController2: UIViewController {
                 catch _ as NSError {
                     self.EventName = "Load data from the admin controls to set up the device for the event."
                 }
+    }
+    
+    //Function to check if any filters are active
+    func checkFilters()
+    {
+        guard let appDelegate = UIApplication.shared.delegate as?AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Filter")
+        do{
+            let temp = try managedContext.fetch(fetchRequest).first
+            if (!(temp==nil))
+            {
+                let type=temp?.value(forKey: "type")! as! Int
+                filterType=type
+                let killSwitch=temp?.value(forKey: "killSwitch")! as! Bool
+                if killSwitch
+                {
+                    filterStatus=true
+                    if type==1
+                    {
+                        let mainString = "Device set up for "
+                        FilterString = mainString+(temp?.value(forKey: "school")! as! String)
+                    }
+                    else if type==2
+                    {
+                        let mainString = "Device set up for last names from "
+                        FilterString = mainString+(temp?.value(forKey: "from")! as! String)+" to "+(temp?.value(forKey: "to")! as! String)
+                    }
+                    
+                }
+                else{
+                    filterStatus=false
+                }
+            }
+        }
+        catch _ as NSError{
+            print("Error checking filter status")
+        }
     }
     
     

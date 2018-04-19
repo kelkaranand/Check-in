@@ -24,6 +24,8 @@
 		14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */; };
 		14B716B7207E577A0006447E /* LoadDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B716B6207E577A0006447E /* LoadDataViewController.swift */; };
 		14BFC10C207FA3E000B3A1C9 /* CheckInListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BFC10B207FA3E000B3A1C9 /* CheckInListViewController.swift */; };
+		14C1F0932087D3C700EE62D0 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C1F0922087D3C700EE62D0 /* EventDetailViewController.swift */; };
+		14E3116E2088CB330090EB45 /* EventDetailsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14E3116D2088CB330090EB45 /* EventDetailsStoryboard.storyboard */; };
 		14EBD65D207CF7EB007E4E17 /* CheckInStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14EBD65C207CF7EB007E4E17 /* CheckInStoryboard.storyboard */; };
 		14F86D46206186420026A016 /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F86D45206186420026A016 /* SignatureViewController.swift */; };
 		17E2EC6D519EF46F72D8F5D6 /* Pods_CheckInUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E180EE3D33F7384F4B6DAE /* Pods_CheckInUITests.framework */; };
@@ -76,6 +78,8 @@
 		14B2E9B4203F26C100A459C3 /* FirTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirTableViewController.swift; sourceTree = "<group>"; };
 		14B716B6207E577A0006447E /* LoadDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDataViewController.swift; sourceTree = "<group>"; };
 		14BFC10B207FA3E000B3A1C9 /* CheckInListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListViewController.swift; sourceTree = "<group>"; };
+		14C1F0922087D3C700EE62D0 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		14E3116D2088CB330090EB45 /* EventDetailsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EventDetailsStoryboard.storyboard; sourceTree = "<group>"; };
 		14EBD65C207CF7EB007E4E17 /* CheckInStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CheckInStoryboard.storyboard; sourceTree = "<group>"; };
 		14F86D45206186420026A016 /* SignatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
 		1BD2B14F6F65AD0913179066 /* Pods-CheckIn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckIn.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckIn/Pods-CheckIn.release.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +197,8 @@
 				14B716B6207E577A0006447E /* LoadDataViewController.swift */,
 				14BFC10B207FA3E000B3A1C9 /* CheckInListViewController.swift */,
 				1468553C2081330E0085BD38 /* SetFilterViewController.swift */,
+				14C1F0922087D3C700EE62D0 /* EventDetailViewController.swift */,
+				14E3116D2088CB330090EB45 /* EventDetailsStoryboard.storyboard */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -346,6 +352,7 @@
 				1478EA8D204A04CC00DA2C02 /* QRCheckIn.storyboard in Resources */,
 				1478EA952051CF5000DA2C02 /* Launch.storyboard in Resources */,
 				1497D14E203DD05D005824EA /* GoogleService-Info.plist in Resources */,
+				14E3116E2088CB330090EB45 /* EventDetailsStoryboard.storyboard in Resources */,
 				B1AB0FDA20337C6E00D3C1BB /* Assets.xcassets in Resources */,
 				B1AB0FD520337C6E00D3C1BB /* Main.storyboard in Resources */,
 				1478EA8B2049D3FC00DA2C02 /* Settings.storyboard in Resources */,
@@ -545,6 +552,7 @@
 				1478EA932051CED100DA2C02 /* LaunchViewController.swift in Sources */,
 				1419C2F2204878FB00850B36 /* LandingViewController.swift in Sources */,
 				14BFC10C207FA3E000B3A1C9 /* CheckInListViewController.swift in Sources */,
+				14C1F0932087D3C700EE62D0 /* EventDetailViewController.swift in Sources */,
 				14B2E9B5203F26C100A459C3 /* FirTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

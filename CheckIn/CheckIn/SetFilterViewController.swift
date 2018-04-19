@@ -73,7 +73,7 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
     //Formats the main views
     func formatView(view: UIView, header: UILabel){
         view.layer.borderColor=UIColor.black.cgColor
-        view.layer.borderWidth=3
+        view.layer.borderWidth=1
         view.layer.backgroundColor=UIColor.white.cgColor
         view.layer.shouldRasterize = false
         view.layer.cornerRadius = 10
@@ -123,7 +123,6 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
             return
         }
         let managedContext = appDelegate.persistentContainer.viewContext
-        //Get event name
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Filter")
         do{
             let temp = try managedContext.fetch(fetchRequest).first?.value(forKey: "killSwitch") as? Bool

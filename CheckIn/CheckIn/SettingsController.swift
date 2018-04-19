@@ -97,8 +97,14 @@ class SettingsController :UIViewController
     //Function to format the look of the individual views
     func formatView(view: UIView, header: UILabel, message: UILabel)
     {
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = 10
+        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+        
         view.layer.borderColor=UIColor.black.cgColor
-        view.layer.borderWidth=3
+        view.layer.borderWidth=1
         view.layer.backgroundColor=UIColor.white.cgColor
         view.layer.shouldRasterize = false
         view.layer.cornerRadius = 10
@@ -133,7 +139,7 @@ class SettingsController :UIViewController
         
         formatView(view: FilterListView, header: FilterListHeader, message: FilterListMessage)
         FilterListHeader.text="Set Filter"
-        FilterListMessage.text="Filter Student list displayed"
+        FilterListMessage.text="Select who can check in from this device"
         
     }
     
@@ -143,6 +149,8 @@ class SettingsController :UIViewController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //Hide page control
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePageControl"), object: nil)
         
         self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
         self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
