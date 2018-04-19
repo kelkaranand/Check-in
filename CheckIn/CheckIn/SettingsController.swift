@@ -97,11 +97,12 @@ class SettingsController :UIViewController
     //Function to format the look of the individual views
     func formatView(view: UIView, header: UILabel, message: UILabel)
     {
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = CGSize.zero
-        view.layer.shadowRadius = 10
-        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+        
+//        view.layer.shadowColor = UIColor.black.cgColor
+//        view.layer.shadowOpacity = 1
+//        view.layer.shadowOffset = CGSize.zero
+//        view.layer.shadowRadius = 10
+//        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
         
         view.layer.borderColor=UIColor.black.cgColor
         view.layer.borderWidth=1

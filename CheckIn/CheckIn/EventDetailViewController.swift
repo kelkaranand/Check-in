@@ -75,11 +75,11 @@ class EventDetailViewController : UIViewController {
         header.text=x
         message.text=y
         
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = CGSize.zero
-        view.layer.shadowRadius = 10
-        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+//        view.layer.shadowColor = UIColor.black.cgColor
+//        view.layer.shadowOpacity = 1
+//        view.layer.shadowOffset = CGSize.zero
+//        view.layer.shadowRadius = 10
+//        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
         
         view.layer.borderColor=UIColor.black.cgColor
         view.layer.borderWidth=1

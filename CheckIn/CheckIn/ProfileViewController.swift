@@ -197,11 +197,11 @@ class ProfileViewController : UIViewController {
         if(header)
         {
             color=UIColor(red:3,green:129,blue:0)
-            font=UIFont(name: "HelveticaNeue", size: 20)!
+            font=UIFont(name: "HelveticaNeue", size: 25)!
         }
         else{
             color=UIColor(red:253,green:201,blue:16)
-            font=UIFont(name: "HelveticaNeue", size: 18)!
+            font=UIFont(name: "HelveticaNeue", size: 23)!
         }
         label.numberOfLines=0
         label.font = font
