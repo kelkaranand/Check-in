@@ -347,7 +347,7 @@ class ProfileViewController : UIViewController {
                 {
                     if !(x == (temp?.value(forKey: "school")) as! String)
                     {
-                        self.showFilterAlert()
+                        self.showFilterAlert(x: x)
                     }
                 }
                 else if (temp?.value(forKey: "type") as! Int)==2
@@ -357,7 +357,7 @@ class ProfileViewController : UIViewController {
                     let testIndex = alphabets.index(of: String((last.first)!))!
                     
                     if testIndex<from || testIndex>to {
-                        self.showFilterAlert()
+                        self.showFilterAlert(x: (temp?.value(forKey: "from") as! String+" to "+(temp?.value(forKey: "to") as! String)))
                     }
                     
                 }
@@ -371,9 +371,9 @@ class ProfileViewController : UIViewController {
     
     
     //Function to display a filtering alert
-    func showFilterAlert()
+    func showFilterAlert(x: String)
     {
-        let checkFilterAlert = UIAlertController(title:"Warning", message:"Student cannot be checked-in on this device. Please check your filters from the admin menu.", preferredStyle: .alert)
+        let checkFilterAlert = UIAlertController(title:"Warning", message:"Student cannot be checked-in on this device. Filter active for "+x, preferredStyle: .alert)
         checkFilterAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:{(alertAction : UIAlertAction) in
             self.navigationController?.popToRootViewController(animated: true)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)

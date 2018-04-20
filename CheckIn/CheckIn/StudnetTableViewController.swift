@@ -256,13 +256,13 @@ extension StudentTableViewController: UITableViewDataSource {
         cell.firstName.font = UIFont(name: "HelveticaNeue", size: 20)
         cell.firstName.minimumScaleFactor = 0.1
         cell.firstName.adjustsFontSizeToFitWidth=true
-        cell.firstName.textColor = UIColor(red:253,green:201,blue:16)
+        cell.firstName.textColor = UIColor(red:3,green:129,blue:0)
         
         cell.lastName.numberOfLines=0;
         cell.lastName.font = UIFont(name: "HelveticaNeue", size: 20)
         cell.lastName.minimumScaleFactor = 0.1
         cell.lastName.adjustsFontSizeToFitWidth=true
-        cell.lastName.textColor = UIColor(red:253,green:201,blue:16)
+        cell.lastName.textColor = UIColor(red:3,green:129,blue:0)
         
         return cell
     }
@@ -275,6 +275,7 @@ extension StudentTableViewController: UITableViewDelegate {
         let selectedCell = tableView.cellForRow(at: indexPath) as! StudentTableViewCell
 //        showAlert(id: selectedStudent.value(forKey: "studentId") as! String)
         showProfile(id: selectedCell.studentId )
+        searchController.searchBar.text=nil
     }
 }
 

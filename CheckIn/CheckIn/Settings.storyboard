@@ -718,6 +718,7 @@
                         <outlet property="AlphabetFilterView" destination="Evb-ZQ-ybG" id="CU5-TX-Pha"/>
                         <outlet property="AlphabetPicker" destination="cCl-Q6-csH" id="x8v-h8-sG7"/>
                         <outlet property="AlphabetPicker2" destination="rNP-Tf-lfr" id="hZc-Y7-0un"/>
+                        <outlet property="AlphabetPickerView" destination="eg1-Ld-8O1" id="UyA-Ai-Qu5"/>
                         <outlet property="SchoolFilterHeader" destination="WDp-Ir-hcO" id="82F-ix-mye"/>
                         <outlet property="SchoolFilterStatus" destination="DGy-pB-SKn" id="xFf-UT-5JI"/>
                         <outlet property="SchoolFilterView" destination="oWF-Cn-aiz" id="Vjo-TQ-a77"/>

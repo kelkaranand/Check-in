@@ -34,6 +34,20 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
         }
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 1 || pickerView.tag == 2
+        {
+            if SchoolFilterStatus.isOn {
+                self.toggleFilterStatus(on: SchoolFilterStatus.isOn, type: 1, school: self.schoolList[SchoolPicker.selectedRow(inComponent: 0)], from: nil, to: nil)
+                self.checkFilterStatus()
+            }
+            else {
+                self.toggleFilterStatus(on: false, type: 2, school: nil, from: nil, to: nil)
+                checkFilterStatus()
+            }
+        }
+    }
+    
     
     
     @IBOutlet weak var SchoolFilterView: UIView!
@@ -48,6 +62,7 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
     
     
     @IBOutlet weak var AlphabetFilterView: UIView!
+    @IBOutlet weak var AlphabetPickerView: UIView!
     @IBOutlet weak var AlphabetFilterHeader: UILabel!
     @IBOutlet weak var AlphabetFilterStatus: UISwitch!
     @IBAction func AlphabetFilterToggle(_ sender: UISwitch) {
@@ -66,6 +81,11 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
     }
     @IBOutlet weak var AlphabetPicker: UIPickerView!
     @IBOutlet weak var AlphabetPicker2: UIPickerView!
+    
+    
+    
+    
+    
     
     var schoolList:[String]=[]
     let alphabets:[String]=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
@@ -110,6 +130,7 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
         SchoolPicker.tag=1
         AlphabetPicker.tag=2
         AlphabetPicker2.tag=3
+        
         
         
         self.checkFilterStatus()

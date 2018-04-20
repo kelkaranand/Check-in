@@ -91,10 +91,6 @@ class LandingController2: UIViewController {
             
             addBorderToView(view: NumberView)
             
-//            NumberView.backgroundColor=UIColor(red:2,green:86,blue:0)
-//            VipNumberView.backgroundColor=UIColor(red:2,green:86,blue:0)
-            
-            
         }
     }
     
