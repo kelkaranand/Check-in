@@ -290,6 +290,15 @@ class ProfileViewController : UIViewController {
                 let temp=Int(guests)!-1
                 checkedStudent.setValue(String(temp), forKey: "guests")
             }
+            //Set guests to 0 if number goes below 0 after subtracting student
+            else
+            {
+                checkedStudent.setValue("0", forKey: "guests")
+            }
+        }
+        //Set guests to 0 if field is left empty on check in
+        else {
+            checkedStudent.setValue("0", forKey: "guests")
         }
         if(self.vip=="Y")
         {
