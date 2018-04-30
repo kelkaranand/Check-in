@@ -40,26 +40,19 @@ class LandingController2: UIViewController {
     var FilterString:String = "message"
     
     
-    @objc func detailsClickAction(_ : UITapGestureRecognizer){
-        self.performSegue(withIdentifier: "showEventDetails", sender: self)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if let view = segue.destination as? EventDetailViewController
+        if let view = segue.destination as? SettingsController
         {
+            view.comingFromLanding=true
             view.checkInList=self.checkInList
-            view.EventName=self.EventName
+            view.eventName=self.EventName
             view.guests=self.guests
             view.vipList=self.vipList
             view.studentRecords=self.studentRecords
             view.filterStatus=self.filterStatus
             view.filterType=self.filterType
             view.FilterString=self.FilterString
-        }
-        if let view = segue.destination as? SettingsController
-        {
-            view.comingFromLanding=true
         }
     }
     
@@ -147,13 +140,9 @@ class LandingController2: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
-        let detailsClick = UITapGestureRecognizer(target: self, action:#selector(detailsClickAction(_ :)))
-        self.NumberView.addGestureRecognizer(detailsClick)
-        
-//        let vipClick = UITapGestureRecognizer(target: self, action:#selector(vipClickAction(_ :)))
-//        self.VipNumberView.addGestureRecognizer(vipClick)
-        
-        
+        //Reset flags to default values
+        filterStatus=false
+        EventName=""
         
         checkEventName()
         if(EventName=="")

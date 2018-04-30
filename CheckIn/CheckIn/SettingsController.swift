@@ -22,8 +22,23 @@ class SettingsController :UIViewController
     @IBOutlet weak var FilterListView: UIView!
     @IBOutlet weak var FilterListHeader: UILabel!
     @IBOutlet weak var FilterListMessage: UILabel!
+    @IBOutlet weak var EventDetailsView: UIView!
+    @IBOutlet weak var EventDetailsHeader: UILabel!
+    @IBOutlet weak var EventDetailsMessage: UILabel!
     
     @IBOutlet var mainView: UIView!
+    
+    //Fields used for event details button
+    var checkInList:[String]=[]
+    var eventName:String=""
+    var guests:Int=0
+    var vipList:[String]=[]
+    var studentRecords:String=""
+    var filterStatus:Bool = false
+    var filterType:Int = 0
+    var FilterString:String = "message"
+    
+    
     
     var schoolList:[String]=[]
     //Flag to check if coming from landing screen. Allows to manage admin alert
@@ -55,11 +70,27 @@ class SettingsController :UIViewController
         self.comingFromLanding=false
     }
     
+    @objc func detailsClickAction(_ : UITapGestureRecognizer){
+        self.performSegue(withIdentifier: "showEventDetails", sender: self)
+        self.comingFromLanding=false
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if let view = segue.destination as? SetFilterViewController
         {
             view.schoolList=self.schoolList
+        }
+        if let view = segue.destination as? EventDetailViewController
+        {
+            view.checkInList=self.checkInList
+            view.EventName=self.eventName
+            view.guests=self.guests
+            view.vipList=self.vipList
+            view.studentRecords=self.studentRecords
+            view.filterStatus=self.filterStatus
+            view.filterType=self.filterType
+            view.FilterString=self.FilterString
         }
     }
     
@@ -104,7 +135,7 @@ class SettingsController :UIViewController
         view.layer.shadowRadius = 10
         view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
         
-        view.layer.borderColor=UIColor.black.cgColor
+        view.layer.borderColor=UIColor(red:3,green:129,blue:0).cgColor
         view.layer.borderWidth=1
         view.layer.backgroundColor=UIColor.white.cgColor
         view.layer.shouldRasterize = false
@@ -127,10 +158,7 @@ class SettingsController :UIViewController
         message.textColor = UIColor(red:253,green:201,blue:16)
     }
     
-    
-    
     override func viewDidLayoutSubviews() {
-        super .viewDidLayoutSubviews()
         
         formatView(view: PushDataView, header: PushDataHeader, message: PushDataMessage)
         PushDataHeader.text="Push Data"
@@ -144,7 +172,30 @@ class SettingsController :UIViewController
         FilterListHeader.text="Set Filter"
         FilterListMessage.text="Select who can check in from this device"
         
+        formatView(view: EventDetailsView, header: EventDetailsHeader, message: EventDetailsMessage)
+        EventDetailsHeader.text="Event Details"
+        EventDetailsMessage.text="View check-in details for current event"
+        
+
     }
+//    
+//    override func viewDidAppear(_ animated: Bool) {
+//        formatView(view: PushDataView, header: PushDataHeader, message: PushDataMessage)
+//        PushDataHeader.text="Push Data"
+//        PushDataMessage.text="Push check-in data to cloud storage"
+//        
+//        formatView(view: PullDataView, header: PullDataHeader, message: PullDataMessage)
+//        PullDataHeader.text="Pull Data"
+//        PullDataMessage.text="Pull event data from cloud storage"
+//        
+//        formatView(view: FilterListView, header: FilterListHeader, message: FilterListMessage)
+//        FilterListHeader.text="Set Filter"
+//        FilterListMessage.text="Select who can check in from this device"
+//        
+//        formatView(view: EventDetailsView, header: EventDetailsHeader, message: EventDetailsMessage)
+//        EventDetailsHeader.text="Event Details"
+//        EventDetailsMessage.text="View check-in details for current event"
+//    }
     
     
     var students: [NSManagedObject] = []
@@ -164,9 +215,12 @@ class SettingsController :UIViewController
         
         let filterClick = UITapGestureRecognizer(target: self, action:#selector(filterAction(_:)))
         
+        let detailsClick = UITapGestureRecognizer(target: self, action: #selector(detailsClickAction(_:)))
+        
         self.PushDataView.addGestureRecognizer(pushClick)
         self.PullDataView.addGestureRecognizer(pullClick)
         self.FilterListView.addGestureRecognizer(filterClick)
+        self.EventDetailsView.addGestureRecognizer(detailsClick)
         
         self.initializeSchoolList()
         

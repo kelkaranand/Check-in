@@ -21,6 +21,7 @@ class ProfileViewController : UIViewController {
     var vip : String = ""
     var spicture : UIImage = UIImage(named:"default")!
     var checked : Bool = false
+    var checkedRecord : NSManagedObject?
     
     let alphabets:[String]=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     
@@ -226,10 +227,10 @@ class ProfileViewController : UIViewController {
             if(!checkIn.isEmpty)
             {
                 let checkInAlert = UIAlertController(title:"Warning", message:"Student has already checked-in on this device", preferredStyle: .alert)
-                checkInAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:{(alertAction : UIAlertAction) in
-                    self.navigationController?.popToRootViewController(animated: true)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scanEnable"), object: nil)
-                }))
+                checkInAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
+                guestCount.text=(String)(Int(checkIn.first?.value(forKey: "guests") as! String)!+1)
+                checkedRecord=checkIn.first
+                checked=true
                 self.present(checkInAlert, animated:true)
             }
         }
@@ -277,52 +278,79 @@ class ProfileViewController : UIViewController {
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        //Write to CheckInStudent object
-        let entity = NSEntityDescription.entity(forEntityName: "CheckedInStudent", in: managedContext)
-        let checkedStudent = NSManagedObject(entity: entity!, insertInto: managedContext)
-        
-        checkedStudent.setValue(id, forKey: "id")
-        checkedStudent.setValue(media, forKey: "media")
-        if(!guests.isEmpty){
-            //Subtract 1 to get guest count
-            if(Int(guests)! as Int > 0)
-            {
-                let temp=Int(guests)!-1
-                checkedStudent.setValue(String(temp), forKey: "guests")
+        if !checked
+        {
+            //Write to CheckInStudent object
+            let entity = NSEntityDescription.entity(forEntityName: "CheckedInStudent", in: managedContext)
+            let checkedStudent = NSManagedObject(entity: entity!, insertInto: managedContext)
+            
+            checkedStudent.setValue(id, forKey: "id")
+            checkedStudent.setValue(media, forKey: "media")
+            if(!guests.isEmpty){
+                //Subtract 1 to get guest count
+                if(Int(guests)! as Int > 0)
+                {
+                    let temp=Int(guests)!-1
+                    checkedStudent.setValue(String(temp), forKey: "guests")
+                }
+                    //Set guests to 0 if number goes below 0 after subtracting student
+                else
+                {
+                    checkedStudent.setValue("0", forKey: "guests")
+                }
             }
-            //Set guests to 0 if number goes below 0 after subtracting student
-            else
-            {
+                //Set guests to 0 if field is left empty on check in
+            else {
                 checkedStudent.setValue("0", forKey: "guests")
             }
+            if(self.vip=="Y")
+            {
+                checkedStudent.setValue(true, forKey: "vip")
+            }
+            else{
+                checkedStudent.setValue(false, forKey: "vip")
+            }
+            checkedStudent.setValue(method, forKey: "method")
+            
+            //Update checkedIn flag
+            var studentResult : [NSManagedObject]
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
+            fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
+            do {
+                studentResult = try managedContext.fetch(fetchRequest)
+                let student=studentResult.first
+                student?.setValue(true, forKey: "checkedIn")
+                try managedContext.save()
+            }
+            catch _ as NSError{
+                print("Could not check-in student")
+            }
         }
-        //Set guests to 0 if field is left empty on check in
-        else {
-            checkedStudent.setValue("0", forKey: "guests")
+        else if checked{
+            if(!guests.isEmpty){
+                //Subtract 1 to get guest count
+                if(Int(guests)! as Int > 0)
+                {
+                    let temp=Int(guests)!-1
+                    checkedRecord?.setValue(String(temp), forKey: "guests")
+                }
+                    //Set guests to 0 if number goes below 0 after subtracting student
+                else
+                {
+                    checkedRecord?.setValue("0", forKey: "guests")
+                }
+            }
+                //Set guests to 0 if field is left empty on check in
+            else {
+                checkedRecord?.setValue("0", forKey: "guests")
+            }
+            do {
+                try managedContext.save()
+            }
+            catch _ as NSError{
+                print("Error updating guest count")
+            }
         }
-        if(self.vip=="Y")
-        {
-            checkedStudent.setValue(true, forKey: "vip")
-        }
-        else{
-            checkedStudent.setValue(false, forKey: "vip")
-        }
-        checkedStudent.setValue(method, forKey: "method")
-        
-        //Update checkedIn flag
-        var studentResult : [NSManagedObject]
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
-        fetchRequest.predicate = NSPredicate(format: "studentId == %@", id)
-        do {
-            studentResult = try managedContext.fetch(fetchRequest)
-            let student=studentResult.first
-            student?.setValue(true, forKey: "checkedIn")
-            try managedContext.save()
-        }
-        catch _ as NSError{
-            print("Could not check-in student")
-        }
-        
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         self.navigationController?.popToRootViewController(animated: true)
@@ -347,7 +375,7 @@ class ProfileViewController : UIViewController {
                 {
                     if !(x == (temp?.value(forKey: "school")) as! String)
                     {
-                        self.showFilterAlert(x: x)
+                        self.showFilterAlert(x: (temp?.value(forKey: "school")) as! String)
                     }
                 }
                 else if (temp?.value(forKey: "type") as! Int)==2

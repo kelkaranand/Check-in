@@ -220,7 +220,7 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                showProfile(id: metadataObj.stringValue!)
+                showProfile(id: metadataObj.stringValue!.trimmingCharacters(in: .whitespacesAndNewlines))
             }
         }
     }

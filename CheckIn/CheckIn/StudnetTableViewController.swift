@@ -79,7 +79,6 @@ class StudentTableViewController: UIViewController {
     
     @objc func reloadTable(){
         loadTableData()
-        print("here")
         self.studentTableView.reloadData()
     }
     

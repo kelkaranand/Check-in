@@ -35,7 +35,7 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView.tag == 1 || pickerView.tag == 2
+        if pickerView.tag == 2 || pickerView.tag == 3
         {
             if SchoolFilterStatus.isOn {
                 self.toggleFilterStatus(on: SchoolFilterStatus.isOn, type: 1, school: self.schoolList[SchoolPicker.selectedRow(inComponent: 0)], from: nil, to: nil)
@@ -75,6 +75,7 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
         }
         else{
             let checkFilterAlert = UIAlertController(title:"Error", message:"Please check the alphabets selected", preferredStyle: .alert)
+            AlphabetFilterStatus.isOn=false
             checkFilterAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler: nil))
             self.present(checkFilterAlert, animated:true)
         }
@@ -139,7 +140,6 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
     //Sets the toggle display
     func checkFilterStatus()
     {
-        print("Setting toggles on screen")
         guard let appDelegate = UIApplication.shared.delegate as?AppDelegate else {
             return
         }
@@ -149,7 +149,6 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
             let temp = try managedContext.fetch(fetchRequest).first?.value(forKey: "killSwitch") as? Bool
             if(!(temp==nil) && temp!)
             {
-                print("Found")
                 let type = try managedContext.fetch(fetchRequest).first?.value(forKey: "type") as! Int
                 
                 if type == 1
