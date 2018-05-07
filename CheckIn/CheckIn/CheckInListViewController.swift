@@ -87,7 +87,7 @@ class CheckInListViewController : UIViewController, UITableViewDataSource {
         label.font = UIFont(name: "HelveticaNeue", size: 20)
         label.minimumScaleFactor = 0.01
         label.adjustsFontSizeToFitWidth=true
-        label.textColor = UIColor(red:253,green:201,blue:16)
+        label.textColor = ColorSettings.labelColor
 
     }
     

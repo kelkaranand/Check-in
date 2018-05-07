@@ -23,8 +23,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         self.pageControl.numberOfPages = orderedViewControllers.count
         self.pageControl.currentPage = 1
         self.pageControl.tintColor = UIColor.black
-        self.pageControl.pageIndicatorTintColor = UIColor(red:253,green:201,blue:16)
-        self.pageControl.currentPageIndicatorTintColor = UIColor(red:2,green:86,blue:0)
+        self.pageControl.pageIndicatorTintColor = ColorSettings.textColor
+        self.pageControl.currentPageIndicatorTintColor = ColorSettings.navBarColor
         self.view.addSubview(pageControl)
     }
     
@@ -36,6 +36,13 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
     @objc func unhidePageControl(notification: NSNotification)
     {
         pageControl.isHidden=false;
+    }
+    
+    @objc func changeColor(notification: NSNotification)
+    {
+        self.pageControl.pageIndicatorTintColor = ColorSettings.textColor
+        self.pageControl.currentPageIndicatorTintColor = ColorSettings.navBarColor
+        print("here")
     }
     
     override func viewDidLoad() {
@@ -54,6 +61,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDelegate, UI
         NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.hidePageControl(notification:)), name: NSNotification.Name(rawValue: "hidePageControl"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.unhidePageControl(notification:)), name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(PageViewController.changeColor(notification:)), name: NSNotification.Name(rawValue: "changeColor"), object: nil)
         
 
         self.delegate = self

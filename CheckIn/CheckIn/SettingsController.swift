@@ -88,9 +88,6 @@ class SettingsController :UIViewController
             view.guests=self.guests
             view.vipList=self.vipList
             view.studentRecords=self.studentRecords
-            view.filterStatus=self.filterStatus
-            view.filterType=self.filterType
-            view.FilterString=self.FilterString
         }
     }
     
@@ -135,7 +132,7 @@ class SettingsController :UIViewController
         view.layer.shadowRadius = 10
         view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
         
-        view.layer.borderColor=UIColor(red:3,green:129,blue:0).cgColor
+        view.layer.borderColor=UIColor.black.cgColor
         view.layer.borderWidth=1
         view.layer.backgroundColor=UIColor.white.cgColor
         view.layer.shouldRasterize = false
@@ -147,7 +144,7 @@ class SettingsController :UIViewController
         header.baselineAdjustment = .alignCenters
         header.textAlignment  = .center
         header.adjustsFontSizeToFitWidth=true
-        header.textColor = UIColor(red:253,green:201,blue:16)
+        header.textColor = ColorSettings.textColor
         
         message.font = UIFont(name: "HelveticaNeue", size: 200)
         message.numberOfLines = 0
@@ -155,7 +152,7 @@ class SettingsController :UIViewController
         message.baselineAdjustment = .alignCenters
         message.textAlignment  = .center
         message.adjustsFontSizeToFitWidth=true
-        message.textColor = UIColor(red:253,green:201,blue:16)
+        message.textColor = ColorSettings.textColor
     }
     
     override func viewDidLayoutSubviews() {
@@ -206,8 +203,8 @@ class SettingsController :UIViewController
         //Hide page control
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePageControl"), object: nil)
         
-        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
+        self.navigationController?.navigationBar.barTintColor=ColorSettings.navBarColor
+        self.navigationController?.navigationBar.tintColor = ColorSettings.navTextColor
         
         let pushClick = UITapGestureRecognizer(target:self, action:#selector(pushAction(_ :)))
         
@@ -434,7 +431,6 @@ class SettingsController :UIViewController
                     print("Error when pulling new data"+error.localizedDescription)
                 }
             }
-            
             
         })
         

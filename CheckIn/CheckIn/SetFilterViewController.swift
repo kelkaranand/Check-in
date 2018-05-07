@@ -27,7 +27,7 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == 1 {
-        return self.schoolList[row]
+            return self.schoolList[row]
         }
         else {
             return self.alphabets[row]
@@ -105,7 +105,7 @@ class SetFilterViewController : UIViewController, UIPickerViewDataSource, UIPick
         header.baselineAdjustment = .alignCenters
         header.textAlignment  = .center
         header.adjustsFontSizeToFitWidth=true
-        header.textColor = UIColor(red:253,green:201,blue:16)
+        header.textColor = ColorSettings.textColor
     }
     override func viewDidLoad() {
         super .viewDidLoad()

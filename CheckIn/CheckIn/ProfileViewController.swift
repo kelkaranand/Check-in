@@ -11,7 +11,19 @@ import CoreData
 import Firebase
 import UIKit
 
-class ProfileViewController : UIViewController {
+class ProfileViewController : UIViewController,UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 11
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return (String)(row+1)
+    }
+    
     
     var id : String = ""
     var fname : String = ""
@@ -40,7 +52,6 @@ class ProfileViewController : UIViewController {
     @IBOutlet weak var fnameHeader: UILabel!
     @IBOutlet weak var lnameHeader: UILabel!
     @IBOutlet weak var snameHeader: UILabel!
-    @IBOutlet weak var mediaHeader: UILabel!
     @IBOutlet weak var guestsHeader: UILabel!
     
     //Data labels
@@ -48,8 +59,7 @@ class ProfileViewController : UIViewController {
     @IBOutlet weak var fnameLabel: UILabel!
     @IBOutlet weak var lnameLabel: UILabel!
     @IBOutlet weak var snameLabel: UILabel!
-    @IBOutlet weak var mediaLabel: UILabel!
-    @IBOutlet weak var guestCount: UITextField!
+    @IBOutlet weak var partySizePicker: UIPickerView!
     
     @IBOutlet weak var vipBanner: UIImageView!
     @IBOutlet weak var picture: UIImageView!
@@ -65,15 +75,15 @@ class ProfileViewController : UIViewController {
         }
         
         
-        var guests=self.guestCount?.text
-        if(!(guests?.isEmpty)!)
-        {
-            guests=self.guestCount.text!
-        }
-        else{
-            guests="0";
-        }
-        self.checkMediaWaiver(indicator: flag, id:self.id, fname:self.fname, lname:self.lname, guests: guests!, documents: media)
+        let guests=(String)(self.partySizePicker.selectedRow(inComponent: 0))
+//        if(!(guests?.isEmpty)!)
+//        {
+//            guests=self.guestCount.text!
+//        }
+//        else{
+//            guests="0";
+//        }
+        self.checkMediaWaiver(indicator: flag, id:self.id, fname:self.fname, lname:self.lname, guests: guests, documents: media)
     }
     
     
@@ -94,6 +104,8 @@ class ProfileViewController : UIViewController {
 //        dataView.layer.shadowRadius = 10
 //        dataView.layer.shadowPath = UIBezierPath(rect: dataView.bounds).cgPath
 //        dataView.layer.shouldRasterize = false
+//        dataView.layer.borderColor = UIColor.black.cgColor
+//        dataView.layer.borderWidth = 1
 //        dataView.layer.cornerRadius = 10
     }
     
@@ -101,6 +113,9 @@ class ProfileViewController : UIViewController {
     override func viewDidLoad() {
         super .viewDidLoad()
         
+        partySizePicker.dataSource=self
+        partySizePicker.delegate=self
+        partySizePicker.autoresizesSubviews=true
         
         //Code to move view with keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -143,10 +158,10 @@ class ProfileViewController : UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
+        self.navigationController?.navigationBar.barTintColor=ColorSettings.navBarColor
+        self.navigationController?.navigationBar.tintColor = ColorSettings.textColor
         
-        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor(red:253,green:201,blue:16)]
+        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: ColorSettings.textColor]
         UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
         
         picture.image=spicture
@@ -156,14 +171,14 @@ class ProfileViewController : UIViewController {
         snameLabel.text=sname
         
         //Set media waiver values
-        if(media=="")
-        {
-            mediaLabel.text="Signed"
-        }
-        else
-        {
-            mediaLabel.text="Not Signed"
-        }
+//        if(media=="")
+//        {
+//            mediaLabel.text="Signed"
+//        }
+//        else
+//        {
+//            mediaLabel.text="Not Signed"
+//        }
         
         //Check VIP status
         if(vip=="Y")
@@ -184,8 +199,8 @@ class ProfileViewController : UIViewController {
         formatLabel(label: lnameLabel, header: false)
         formatLabel(label: snameHeader, header: true)
         formatLabel(label: snameLabel, header: false)
-        formatLabel(label: mediaHeader, header: true)
-        formatLabel(label: mediaLabel, header: false)
+//        formatLabel(label: mediaHeader, header: true)
+//        formatLabel(label: mediaLabel, header: false)
         formatLabel(label: guestsHeader, header: true)
         
     }
@@ -197,12 +212,12 @@ class ProfileViewController : UIViewController {
         var font:UIFont
         if(header)
         {
-            color=UIColor(red:3,green:129,blue:0)
-            font=UIFont(name: "HelveticaNeue", size: 25)!
+            color=ColorSettings.labelColor
+            font=UIFont(name: "HelveticaNeue", size: 20)!
         }
         else{
-            color=UIColor(red:253,green:201,blue:16)
-            font=UIFont(name: "HelveticaNeue", size: 23)!
+            color=ColorSettings.textColor
+            font=UIFont(name: "HelveticaNeue", size: 18)!
         }
         label.numberOfLines=0
         label.font = font
@@ -228,7 +243,9 @@ class ProfileViewController : UIViewController {
             {
                 let checkInAlert = UIAlertController(title:"Warning", message:"Student has already checked-in on this device", preferredStyle: .alert)
                 checkInAlert.addAction(UIAlertAction(title:"OK", style: .cancel, handler:nil))
-                guestCount.text=(String)(Int(checkIn.first?.value(forKey: "guests") as! String)!+1)
+//                guestCount.text=(String)(Int(checkIn.first?.value(forKey: "guests") as! String)!+1)
+                let partySize=Int(checkIn.first?.value(forKey: "guests") as! String)!
+                partySizePicker.selectRow(partySize, inComponent: 0, animated: true)
                 checkedRecord=checkIn.first
                 checked=true
                 self.present(checkInAlert, animated:true)
@@ -290,8 +307,8 @@ class ProfileViewController : UIViewController {
                 //Subtract 1 to get guest count
                 if(Int(guests)! as Int > 0)
                 {
-                    let temp=Int(guests)!-1
-                    checkedStudent.setValue(String(temp), forKey: "guests")
+//                    let temp=Int(guests)!-1
+                    checkedStudent.setValue(guests, forKey: "guests")
                 }
                     //Set guests to 0 if number goes below 0 after subtracting student
                 else
@@ -331,8 +348,8 @@ class ProfileViewController : UIViewController {
                 //Subtract 1 to get guest count
                 if(Int(guests)! as Int > 0)
                 {
-                    let temp=Int(guests)!-1
-                    checkedRecord?.setValue(String(temp), forKey: "guests")
+//                    let temp=Int(guests)!-1
+                    checkedRecord?.setValue(guests, forKey: "guests")
                 }
                     //Set guests to 0 if number goes below 0 after subtracting student
                 else

@@ -40,7 +40,7 @@ class StudentTableViewController: UIViewController {
         
         
         //Sets the cancel button text color
-        let cancelButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor(red:253,green:201,blue:16)]
+        let cancelButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: ColorSettings.textColor]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
         
         
@@ -67,8 +67,8 @@ class StudentTableViewController: UIViewController {
         //Enable swipe
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createSwipeList"), object: nil)
         
-        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor=UIColor(red:253,green:201,blue:16)
+        self.navigationController?.navigationBar.barTintColor=ColorSettings.navBarColor
+        self.navigationController?.navigationBar.tintColor=ColorSettings.textColor
         
         //Sets text color for text in the search bar
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
@@ -255,13 +255,13 @@ extension StudentTableViewController: UITableViewDataSource {
         cell.firstName.font = UIFont(name: "HelveticaNeue", size: 20)
         cell.firstName.minimumScaleFactor = 0.1
         cell.firstName.adjustsFontSizeToFitWidth=true
-        cell.firstName.textColor = UIColor(red:3,green:129,blue:0)
+        cell.firstName.textColor = ColorSettings.labelColor
         
         cell.lastName.numberOfLines=0;
         cell.lastName.font = UIFont(name: "HelveticaNeue", size: 20)
         cell.lastName.minimumScaleFactor = 0.1
         cell.lastName.adjustsFontSizeToFitWidth=true
-        cell.lastName.textColor = UIColor(red:3,green:129,blue:0)
+        cell.lastName.textColor = ColorSettings.labelColor
         
         return cell
     }

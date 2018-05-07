@@ -39,6 +39,7 @@ class LandingController2: UIViewController {
     var filterType:Int = 0
     var FilterString:String = "message"
     
+    var easterEggSwitchCount:Int=0
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
@@ -56,6 +57,15 @@ class LandingController2: UIViewController {
         }
     }
     
+    @objc func eventNameClickAction(_ : UITapGestureRecognizer){
+        self.easterEggSwitchCount=self.easterEggSwitchCount+1
+        if easterEggSwitchCount==23{
+            ColorSettings.switchToColor()
+            self.viewWillAppear(true)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeColor"), object: nil)
+        }
+    }
+
     
     
     
@@ -80,9 +90,8 @@ class LandingController2: UIViewController {
             NumberView.isHidden=false
             EventNameView.isHidden=false
             LineView.isHidden=false
-            LineView.backgroundColor=UIColor(red:3,green:129,blue:0)
             
-            addBorderToView(view: NumberView)
+//            addBorderToView(view: NumberView)
             
         }
     }
@@ -96,7 +105,7 @@ class LandingController2: UIViewController {
         view.layer.shadowRadius = 10
         view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
         
-        view.layer.borderColor=UIColor(red:3,green:129,blue:0).cgColor
+        view.layer.borderColor=UIColor.black.cgColor
         view.layer.borderWidth=1
         view.layer.backgroundColor=UIColor.white.cgColor
         view.layer.shouldRasterize = false
@@ -112,7 +121,7 @@ class LandingController2: UIViewController {
         label.baselineAdjustment = .alignCenters
         label.textAlignment  = .center
         label.adjustsFontSizeToFitWidth=true
-        label.textColor = UIColor(red:253,green:201,blue:16)
+        label.textColor = ColorSettings.textColor
     }
     
     func formatNumbers(label:UILabel)
@@ -123,7 +132,7 @@ class LandingController2: UIViewController {
         label.baselineAdjustment = .alignCenters
         label.textAlignment  = .center
         label.adjustsFontSizeToFitWidth=true
-        label.textColor = UIColor(red:253,green:201,blue:16)
+        label.textColor = ColorSettings.textColor
     }
     
     func toInt(s: String?) -> Int {
@@ -139,6 +148,11 @@ class LandingController2: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
+        
+        easterEggSwitchCount=0
+        let eventNameClick = UITapGestureRecognizer(target: self, action: #selector(eventNameClickAction(_:)))
+        self.EventNameView.addGestureRecognizer(eventNameClick)
+        LineView.backgroundColor=ColorSettings.lineColor
         
         //Reset flags to default values
         filterStatus=false
@@ -166,8 +180,8 @@ class LandingController2: UIViewController {
         self.vipList=[]
         
         
-        self.navigationController?.navigationBar.barTintColor=UIColor(red:2,green:86,blue:0)
-        self.navigationController?.navigationBar.tintColor = UIColor(red:253,green:201,blue:16)
+        self.navigationController?.navigationBar.barTintColor=ColorSettings.navBarColor
+        self.navigationController?.navigationBar.tintColor = ColorSettings.navTextColor
         
         LoadDataMessage.text="Load data from the admin controls to set up the device for the event."
         LoadDataMessage.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
@@ -176,7 +190,7 @@ class LandingController2: UIViewController {
         LoadDataMessage.baselineAdjustment = .alignCenters
         LoadDataMessage.textAlignment  = .center
         LoadDataMessage.adjustsFontSizeToFitWidth=true
-        LoadDataMessage.textColor = UIColor(red:253,green:201,blue:16)
+        LoadDataMessage.textColor = ColorSettings.textColor
         
         formatHeaders(label: EventNameLabel, text: self.EventName)
 
@@ -240,7 +254,7 @@ class LandingController2: UIViewController {
         FilterLabel.baselineAdjustment = .alignCenters
         FilterLabel.textAlignment  = .center
         FilterLabel.adjustsFontSizeToFitWidth=true
-        FilterLabel.textColor = UIColor(red:253,green:201,blue:16)
+        FilterLabel.textColor = ColorSettings.textColor
         
         if filterStatus
         {
@@ -260,7 +274,7 @@ class LandingController2: UIViewController {
         label.baselineAdjustment = .alignCenters
         label.textAlignment  = .center
         label.adjustsFontSizeToFitWidth=true
-        label.textColor = UIColor(red:253,green:201,blue:16)
+        label.textColor = ColorSettings.textColor
     }
     
     
