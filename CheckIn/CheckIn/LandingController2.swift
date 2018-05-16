@@ -149,6 +149,9 @@ class LandingController2: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
+        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: ColorSettings.navTextColor]
+        UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
+        
         easterEggSwitchCount=0
         let eventNameClick = UITapGestureRecognizer(target: self, action: #selector(eventNameClickAction(_:)))
         self.EventNameView.addGestureRecognizer(eventNameClick)

@@ -14,6 +14,7 @@ public class ColorSettings {
 //    public static var labelColor:UIColor=UIColor(red:3,green:129,blue:0)
 //    public static var textColor:UIColor=UIColor(red:253,green:201,blue:16)
 //    public static var lineColor:UIColor=UIColor(red:3,green:129,blue:0)
+//    public static var navTextColor:UIColor=UIColor(red:253,green:201,blue:16)
     
     public static var navBarColor:UIColor=UIColor(red:32,green:32,blue:32)
     public static var labelColor:UIColor=UIColor.black

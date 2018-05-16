@@ -133,6 +133,7 @@ class EventDetailViewController : UIViewController {
     func checkInAnalytics()
     {
         var count:Int=0
+        qrCheckIns=0
         guard let appDelegate = UIApplication.shared.delegate as?AppDelegate else {
             return
         }
@@ -153,6 +154,7 @@ class EventDetailViewController : UIViewController {
         catch _ as NSError {
             print("Error getting check-in analytics")
         }
+        print(count)
         perc=Double(round(10*(((Double)(qrCheckIns))/(Double)(count)*100))/10)
     }
     

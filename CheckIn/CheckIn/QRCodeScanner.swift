@@ -38,6 +38,9 @@ class QRScannerController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
+        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: ColorSettings.navTextColor]
+        UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
+        
         //Unhide page control
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
         
@@ -51,6 +54,7 @@ class QRScannerController: UIViewController {
     {
         scan=true
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

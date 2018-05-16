@@ -61,6 +61,9 @@ class StudentTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: ColorSettings.navTextColor]
+        UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
+        
         //Unhide page control
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "unhidePageControl"), object: nil)
         

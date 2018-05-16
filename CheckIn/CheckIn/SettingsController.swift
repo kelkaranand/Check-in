@@ -451,7 +451,8 @@ class SettingsController :UIViewController
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler:
             {
                 (alertAction: UIAlertAction) in
-                self.navigationController?.popToRootViewController(animated: true)
+                    try! managedContext.save()
+                    self.navigationController?.popToRootViewController(animated: true)
         }))
         self.present(alert, animated: true)
         

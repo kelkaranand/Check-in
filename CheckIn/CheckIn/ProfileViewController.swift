@@ -44,24 +44,18 @@ class ProfileViewController : UIViewController,UIPickerViewDataSource, UIPickerV
     */
     var method : Int? = nil
     
-    //Data stack view
-    @IBOutlet weak var dataView: UIView!
+    @IBOutlet weak var CardView: UIView!
+    
     
     //Headers
-    @IBOutlet weak var idHeader: UILabel!
-    @IBOutlet weak var fnameHeader: UILabel!
-    @IBOutlet weak var lnameHeader: UILabel!
-    @IBOutlet weak var snameHeader: UILabel!
     @IBOutlet weak var guestsHeader: UILabel!
     
     //Data labels
-    @IBOutlet weak var idLabel: UILabel!
-    @IBOutlet weak var fnameLabel: UILabel!
-    @IBOutlet weak var lnameLabel: UILabel!
-    @IBOutlet weak var snameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var schoolLabel: UILabel!
+    @IBOutlet weak var apsLabel: UILabel!
     @IBOutlet weak var partySizePicker: UIPickerView!
     
-    @IBOutlet weak var vipBanner: UIImageView!
     @IBOutlet weak var picture: UIImageView!
     @IBAction func checkIn(_ sender: UIButton) {
         //Get status of media switch
@@ -88,25 +82,15 @@ class ProfileViewController : UIViewController,UIPickerViewDataSource, UIPickerV
     
     
     override func viewDidLayoutSubviews() {
-        picture.layer.shadowColor = UIColor.black.cgColor
-        picture.layer.backgroundColor=UIColor.white.cgColor
-        picture.layer.shadowOpacity = 1
-        picture.layer.shadowOffset = CGSize.zero
-        picture.layer.shadowRadius = 10
-        picture.layer.shadowPath = UIBezierPath(rect: picture.bounds).cgPath
-        picture.layer.shouldRasterize = false
-        picture.layer.cornerRadius = 10
+        CardView.layer.shadowColor = UIColor.black.cgColor
+        CardView.layer.backgroundColor=UIColor.white.cgColor
+        CardView.layer.shadowOpacity = 1
+        CardView.layer.shadowOffset = CGSize.zero
+        CardView.layer.shadowRadius = 10
+        CardView.layer.shadowPath = UIBezierPath(rect: CardView.bounds).cgPath
+        CardView.layer.shouldRasterize = false
+        CardView.layer.cornerRadius = 10
         
-//        dataView.layer.shadowColor = UIColor.black.cgColor
-//        dataView.layer.backgroundColor=UIColor.white.cgColor
-//        dataView.layer.shadowOpacity = 1
-//        dataView.layer.shadowOffset = CGSize.zero
-//        dataView.layer.shadowRadius = 10
-//        dataView.layer.shadowPath = UIBezierPath(rect: dataView.bounds).cgPath
-//        dataView.layer.shouldRasterize = false
-//        dataView.layer.borderColor = UIColor.black.cgColor
-//        dataView.layer.borderWidth = 1
-//        dataView.layer.cornerRadius = 10
     }
     
     
@@ -154,69 +138,49 @@ class ProfileViewController : UIViewController,UIPickerViewDataSource, UIPickerV
     
     
     override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
         //Disable swipe
+        
+        self.navigationController?.navigationBar.barTintColor=ColorSettings.navBarColor
+        self.navigationController?.navigationBar.tintColor = ColorSettings.navTextColor
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "clearSwipeList"), object: nil)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.barTintColor=ColorSettings.navBarColor
-        self.navigationController?.navigationBar.tintColor = ColorSettings.textColor
         
-        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: ColorSettings.textColor]
-        UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
+//        let backButtonAttributes: NSDictionary = [NSAttributedStringKey.foregroundColor: ColorSettings.navTextColor]
+//        UIBarButtonItem.appearance().setTitleTextAttributes(backButtonAttributes as? [NSAttributedStringKey:Any], for: UIControlState.normal)
         
         picture.image=spicture
-        idLabel.text=id
-        fnameLabel.text=fname
-        lnameLabel.text=lname
-        snameLabel.text=sname
-        
-        //Set media waiver values
-//        if(media=="")
-//        {
-//            mediaLabel.text="Signed"
-//        }
-//        else
-//        {
-//            mediaLabel.text="Not Signed"
-//        }
-        
-        //Check VIP status
-        if(vip=="Y")
-        {
-            //change to false to start showing vip stamp
-            vipBanner.isHidden=true
-        }
-        else if(vip=="N")
-        {
-            vipBanner.isHidden=true
-        }
-        
-        formatLabel(label: idHeader, header: true)
-        formatLabel(label: idLabel, header: false)
-        formatLabel(label: fnameHeader, header: true)
-        formatLabel(label: fnameLabel, header: false)
-        formatLabel(label: lnameHeader, header: true)
-        formatLabel(label: lnameLabel, header: false)
-        formatLabel(label: snameHeader, header: true)
-        formatLabel(label: snameLabel, header: false)
-//        formatLabel(label: mediaHeader, header: true)
-//        formatLabel(label: mediaLabel, header: false)
-        formatLabel(label: guestsHeader, header: true)
+        nameLabel.text=fname+" "+lname
+        schoolLabel.text=sname
+        apsLabel.text="APS ID:  "+id
+        formatLabel(label: nameLabel, header: true, background: true)
+        formatLabel(label: schoolLabel, header: false, background: false)
+        formatLabel(label: apsLabel, header: false, background: false)
+        formatLabel(label: guestsHeader, header: true, background: false)
         
     }
     
     //Function to configure the labels properties to resize and color
-    func formatLabel(label:UILabel,header:Bool)
+    func formatLabel(label:UILabel,header:Bool,background:Bool)
     {
         var color:UIColor
         var font:UIFont
         if(header)
         {
             color=ColorSettings.labelColor
-            font=UIFont(name: "HelveticaNeue", size: 20)!
+            font=UIFont(name: "HelveticaNeue", size: 24)!
+            if background {
+                label.backgroundColor=ColorSettings.lineColor
+                color=ColorSettings.navTextColor
+            }
         }
         else{
             color=ColorSettings.textColor
+            if !background {
+             color=ColorSettings.labelColor
+            }
             font=UIFont(name: "HelveticaNeue", size: 18)!
         }
         label.numberOfLines=0
