@@ -189,6 +189,7 @@
                         <outlet property="NumberLabel" destination="SrO-1B-zQ4" id="Qbd-0d-mUQ"/>
                         <outlet property="NumberMessageLabel" destination="2Co-X9-7pl" id="hPa-A9-3TA"/>
                         <outlet property="NumberView" destination="BUU-Nl-9FC" id="7hp-c0-Vqq"/>
+                        <segue destination="gZA-dP-Cki" kind="show" identifier="showLebron" animates="NO" id="AeO-5E-yRb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ad1-dv-yw7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -880,6 +881,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJ7-5e-va7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1854" y="977"/>
+        </scene>
+        <!--Gif View Controller-->
+        <scene sceneID="24U-O3-9we">
+            <objects>
+                <viewController id="gZA-dP-Cki" customClass="gifViewController" customModule="CheckIn" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ai0-Xd-hM5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ucb-XN-hX2">
+                                <rect key="frame" x="0.0" y="32" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ucb-XN-hX2" firstAttribute="centerX" secondItem="sCg-Xj-gkF" secondAttribute="centerX" id="CTH-I1-Dx6"/>
+                            <constraint firstItem="ucb-XN-hX2" firstAttribute="height" secondItem="ai0-Xd-hM5" secondAttribute="height" id="UU7-8p-huW"/>
+                            <constraint firstItem="ucb-XN-hX2" firstAttribute="centerY" secondItem="sCg-Xj-gkF" secondAttribute="centerY" id="bt9-ZW-OVe"/>
+                            <constraint firstItem="ucb-XN-hX2" firstAttribute="width" secondItem="ai0-Xd-hM5" secondAttribute="width" id="sXy-Sb-hNm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sCg-Xj-gkF"/>
+                    </view>
+                    <connections>
+                        <outlet property="gifView" destination="ucb-XN-hX2" id="TtQ-4J-3nr"/>
+                        <outlet property="mainView" destination="ai0-Xd-hM5" id="BVN-ko-bJb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MKZ-YU-1jg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1383" y="1203"/>
         </scene>
     </scenes>
     <resources>

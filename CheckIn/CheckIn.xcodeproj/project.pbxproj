@@ -11,6 +11,9 @@
 		142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F420360D3A009FA335 /* QRCodeScanner.swift */; };
 		142E12F720361826009FA335 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F620361826009FA335 /* SettingsController.swift */; };
 		142E12F9203619CB009FA335 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E12F8203619CB009FA335 /* PageViewController.swift */; };
+		1445BB8420AC86F90043BEB1 /* gifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445BB8320AC86F90043BEB1 /* gifViewController.swift */; };
+		1445BB8620ACACC60043BEB1 /* GifControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445BB8520ACACC60043BEB1 /* GifControl.swift */; };
+		1445BB8820ACB77D0043BEB1 /* lj.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1445BB8720ACB77D0043BEB1 /* lj.gif */; };
 		144849562045D93A00898655 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144849552045D93A00898655 /* ProfileViewController.swift */; };
 		144C7A9A20580CA2005744EE /* LandingController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144C7A9920580CA2005744EE /* LandingController2.swift */; };
 		1468553D2081330E0085BD38 /* SetFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1468553C2081330E0085BD38 /* SetFilterViewController.swift */; };
@@ -66,6 +69,9 @@
 		142E12F420360D3A009FA335 /* QRCodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanner.swift; sourceTree = "<group>"; };
 		142E12F620361826009FA335 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		142E12F8203619CB009FA335 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		1445BB8320AC86F90043BEB1 /* gifViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gifViewController.swift; sourceTree = "<group>"; };
+		1445BB8520ACACC60043BEB1 /* GifControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifControl.swift; sourceTree = "<group>"; };
+		1445BB8720ACB77D0043BEB1 /* lj.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = lj.gif; path = ../../../lj.gif; sourceTree = "<group>"; };
 		144849552045D93A00898655 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		144C7A9920580CA2005744EE /* LandingController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingController2.swift; sourceTree = "<group>"; };
 		1468553C2081330E0085BD38 /* SetFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFilterViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				144C7A9920580CA2005744EE /* LandingController2.swift */,
+				1445BB8720ACB77D0043BEB1 /* lj.gif */,
 				1478EA942051CF5000DA2C02 /* Launch.storyboard */,
 				1478EA8E204A5C8E00DA2C02 /* ManualCheckIn.storyboard */,
 				1497D14D203DD05D005824EA /* GoogleService-Info.plist */,
@@ -202,6 +209,8 @@
 				14C1F0922087D3C700EE62D0 /* EventDetailViewController.swift */,
 				14E3116D2088CB330090EB45 /* EventDetailsStoryboard.storyboard */,
 				14ADB0AE209A058D00F3DA48 /* ColorSettings.swift */,
+				1445BB8320AC86F90043BEB1 /* gifViewController.swift */,
+				1445BB8520ACACC60043BEB1 /* GifControl.swift */,
 			);
 			path = CheckIn;
 			sourceTree = "<group>";
@@ -351,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1478EA8F204A5C8E00DA2C02 /* ManualCheckIn.storyboard in Resources */,
+				1445BB8820ACB77D0043BEB1 /* lj.gif in Resources */,
 				B1AB0FDD20337C6E00D3C1BB /* LaunchScreen.storyboard in Resources */,
 				1478EA8D204A04CC00DA2C02 /* QRCheckIn.storyboard in Resources */,
 				1478EA952051CF5000DA2C02 /* Launch.storyboard in Resources */,
@@ -547,12 +557,14 @@
 				B1AB0FD820337C6E00D3C1BB /* CheckIn.xcdatamodeld in Sources */,
 				142E12F9203619CB009FA335 /* PageViewController.swift in Sources */,
 				1478EA892049085F00DA2C02 /* InternetConnectionTest.swift in Sources */,
+				1445BB8420AC86F90043BEB1 /* gifViewController.swift in Sources */,
 				14F86D46206186420026A016 /* SignatureViewController.swift in Sources */,
 				142E12F520360D3A009FA335 /* QRCodeScanner.swift in Sources */,
 				144C7A9A20580CA2005744EE /* LandingController2.swift in Sources */,
 				1468553D2081330E0085BD38 /* SetFilterViewController.swift in Sources */,
 				B1AB0FD020337C6E00D3C1BB /* AppDelegate.swift in Sources */,
 				144849562045D93A00898655 /* ProfileViewController.swift in Sources */,
+				1445BB8620ACACC60043BEB1 /* GifControl.swift in Sources */,
 				1478EA932051CED100DA2C02 /* LaunchViewController.swift in Sources */,
 				1419C2F2204878FB00850B36 /* LandingViewController.swift in Sources */,
 				14BFC10C207FA3E000B3A1C9 /* CheckInListViewController.swift in Sources */,

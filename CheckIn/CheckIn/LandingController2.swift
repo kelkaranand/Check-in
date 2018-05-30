@@ -62,6 +62,7 @@ class LandingController2: UIViewController {
         if easterEggSwitchCount==23{
             ColorSettings.switchToColor()
             self.viewWillAppear(true)
+            self.performSegue(withIdentifier: "showLebron", sender: self)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeColor"), object: nil)
         }
     }
